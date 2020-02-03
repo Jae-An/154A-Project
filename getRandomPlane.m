@@ -9,7 +9,8 @@ plane.geo.body.W = 5 + rand(1)*(20 - 5); %ft, fuselage width
 plane.geo.body.D = 1 + rand(1)*(20 - 1); %ft, fuselage depth
 
 %wing
-plane.geo.wing. = 20 + rand(1)*(80 - 20); %ft, fuselage length
+plane.geo.wing.S = 20 + rand(1)*(2000 - 20); %ft^2, wing area
+
 
 
 
