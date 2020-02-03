@@ -1,5 +1,5 @@
 function plane = plane()
-%Creates an instance of the rocket class
+%Creates an instance of the plane class
 
 plane = struct('geo',[],'prop',[],'data',[]);
 
