@@ -1,2 +1,2 @@
-% test ytp 12345
+% test ytp
 x = 2;
