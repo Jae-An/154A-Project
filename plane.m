@@ -16,4 +16,4 @@ plane.prop = struct('W',[],'hp',[],'eta_p',[],'c_p',[],'fuel_mass',[],'eng_mass'
 
 
 %% Performance, Aerodynamics, Stability
-plane.data = struct('',[],'',[],'',[]); % *fill out later*
+plane.data = struct('random1',[],'random2',[],'random3',[]); % *fill out later*
