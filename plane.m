@@ -12,7 +12,7 @@ plane.geo = struct('body',[],'wing',[],'h_tail',[],'v_tail',[],'nacelle',[]);
     plane.geo.nacelle = struct(); % *fill out later*
 
 %% Propulsion
-plane.prop = struct('W',[],'hp',[],'eta_p',[],'c_p',[]);
+plane.prop = struct('W',[],'hp',[],'eta_p',[],'c_p',[],'fuel_mass',[],'eng_mass',[]);
 
 
 %% Performance, Aerodynamics, Stability
