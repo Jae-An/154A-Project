@@ -75,7 +75,7 @@ W_struct = W_wing + Weight_fuselage + W_horizontal_tail + Weight_vertical_tail +
 
 %% Total Propulsion Unit (minus Fuel system) Weight
 
-W_eng = plane.propulsion.engine_mass; %(lbs)     %Bare Engine Weight
+W_eng = plane.propulsion.W; %(lbs)     %Bare Engine Weight
 N_eng = 2;             %# Engines
 
 W_prop = 2.575*(W_eng)^0.922*N_eng;    %this equation likely over-estimates propulsion unit weight for a small UAV
