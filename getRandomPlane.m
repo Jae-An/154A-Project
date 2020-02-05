@@ -1,10 +1,10 @@
-function [plane] = getRandomPlane()
+function [plane] = getRandomPlane(plane)
 
 %randomization format
 %rand_value = min_value + rand(1)*(max_value - min_value)
 
 %fuselage
-plane.geo.body.L = 20 + rand(1)*(80 - 20); %ft, fuselage length
+plane.geo.body.L = 20 + rand(1)*(80 - 20); %ft, fuselage L
 plane.geo.body.W = 5 + rand(1)*(20 - 5); %ft, fuselage width
 plane.geo.body.D = 1 + rand(1)*(20 - 1); %ft, fuselage depth
 
@@ -29,8 +29,8 @@ plane.geo.h_tail.b = (plane.geo.h_tail.AR * plane.geo.h_tail.S)^0.5; %ft, h_tail
 plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.3 + rand(1)*(0.4-0.3);
 plane.geo.h_tail.sweep = 0 + rand(1)*(15-0); %degrees, sweep length
-plane.geo.h_tail.cg = plane.geo.wing.cg + rand(1)*(plane.geo.body.length - plane.geo.wing.cg); %ft, distance from h_tail leading edge to CG
-                                                                                        %set to be at least the distance of the wing from cg, to (fuselage_length - wing_Xcg)
+plane.geo.h_tail.cg = plane.geo.wing.cg + rand(1)*(plane.geo.body.L - plane.geo.wing.cg); %ft, distance from h_tail leading edge to CG
+%set to be at least the distance of the wing from cg, to (fuselage_length - wing_Xcg)
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
 plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c; %ft, distance from h_tail leading edge to AC, set to quarter chord
 plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to AC
