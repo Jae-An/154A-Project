@@ -9,9 +9,9 @@ wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
 v_tail = plane.geo.v_tail;
 body = plane.geo.body;
-weight = plane.data.W;
-v_stall = plane.data.v_stall; %v_ref set to stall velocity, ft/s
-v_max = plane.data.v_max;
+weight = plane.data.weight;
+v_stall = plane.data.requirements.v_stall; %v_ref set to stall velocity, ft/s
+v_max = plane.data.requirements.v_max;
 
 v_ref = linspace(v_stall, v_max);
 
