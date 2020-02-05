@@ -42,7 +42,7 @@ h_ac_vertical = plane.geo.v_tail.h_ac;    %nondimensional distance from AC to ve
 lh = 35 / 12 + (.5 - h_ac_wing) * chord_wing - (.5 - h_ac_horizontal) * chord_horizontal_tail; %ft       %Distance from Wing MAC to Tail MAC
 thr = chord_horizontal_tail*.12*12; %ft      %horizontal tail max root thickness (chord * thick/chord)
 
-W_horizontal_tail = 127*((Weight * N/10^5)^0.87*(S_horizontal_tail/100)^1.2*(lh/10)^0.483*(b_horizontal_tail/thr)^0.5)^0.458; %horizontal tail weight
+Weight_horizontal_tail = 127*((Weight * N/10^5)^0.87*(S_horizontal_tail/100)^1.2*(lh/10)^0.483*(b_horizontal_tail/thr)^0.5)^0.458; %horizontal tail weight
 
 %% Vertical Tail Weight
 
@@ -70,7 +70,7 @@ Weight_landing_gear = 0.054*(Llg)^0.501*(Weight*N_land)^0.684;
 
 %% TOTAL STRUCTURAL WEIGHT
 
-W_struct = W_wing + Weight_fuselage + W_horizontal_tail + Weight_vertical_tail + Weight_landing_gear;
+W_struct = W_wing + Weight_fuselage + Weight_horizontal_tail + Weight_vertical_tail + Weight_landing_gear;
 
 
 %% Total Propulsion Unit (minus Fuel system) Weight
@@ -120,11 +120,18 @@ hold on
 
 %W_struct = W_wing + Weight_fuselage + W_horizontal_tail + Weight_vertical_tail + Weight_landing_gear;
 %Weight_total = W_struct + W_prop + Wfs + Wsc + W_payload + W_fuel + W_avionics;
-Weight = zeros(10,1);
+Weight = zeros(11,1);
 Weight(1,1) = W_wing;
 Weight(2,1) = Weight_fuselage;
-Weight(3,1) = W_horizontal_tail;
-Weight(4,1) = 
+Weight(3,1) = Weight_horizontal_tail;
+Weight(4,1) = Weight_vertical_tail;
+Weight(5,1) = Weight_landing_gear;
+Weight(6,1) = W_prop;
+Weight(7,1) = Wfs;
+Weight(8,1) = Wsc;
+Weight(9,1) = W_payload;
+Weight(10,1) = W_fuel;
+Weight(11,1) = W_avionics;
 
 %plot(Wto,'.-m')
 
