@@ -1,5 +1,5 @@
 
-function [plane,Weight] = weight_function(plane)
+function [plane] = weight_function(plane)
 
 
 
@@ -114,8 +114,10 @@ W_payload = 16000;    %lbs, weight retardent
 
 %% TOTAL WEIGHT
 
+
 W_total(i) = W_struct + W_prop + Wfs + Wsc + W_payload + plane.prop.fuel_mass + W_avionics;
-plane.data.W = W_total(i);
+plane.data.weight.W = W_total(i);
+
 
 end
 
@@ -140,10 +142,10 @@ Weight(11,1) = W_avionics;
 Weight(12,1) = empty_weight;
 Weight(13,1) = Weight_total;
 
-plane.data.weight.weight_dry = Weight_total - W_payload;
-plane.data.weight.weight_wet = Weight_total;
-plane.data.weight.weight_fuel = W_fuel;
-plane.data.weight.weight_retardent = W_payload;
+plane.data.weight.dry = Weight_total - W_payload;
+plane.data.weight.wet = Weight_total;
+plane.data.weight.fuel = W_fuel;
+plane.data.weight.retardent = W_payload;
 
 
 end
