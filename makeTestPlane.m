@@ -12,6 +12,9 @@ plane.geo.v_tail = struct('S',40,'AR',3,'c',4,'b',12,'thickness',.75,'taper',1,'
 %% Propulsion
 plane.prop = struct('W',[],'hp',[],'eta_p',[],'c_p',[],'fuel_mass',[]);
 
+%% DATA
+plane.data = struct('W',30000,'CL',1,'CD',0.5,'CD0',0.1,'CDi',3,'CL_alpha',5,'h_n',30,'N',5,'v_max',217.244,'v_stall',86.8976); % *fill out later*
+
 getPropulsionDetails(plane);
 
 end
