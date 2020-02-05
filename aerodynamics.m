@@ -44,12 +44,12 @@ for i = 1:100
 
     %compute K's
     K_wing = [1 + (0.6/wing.h_cg)*(wing.ThR/wing.c) + 100*(wing.ThR/wing.c)^4]*...
-             [1.24*(Mach^0.18)*cos(wing.sweep)^0.28];
+             [1.24*(Mach^0.18)*cos(wing.sweep*pi/180)^0.28];
 
     K_horizontal_tail = [1 + (0.6/h_tail.h_cg)*(h_tail.ThR/h_tail.c) + 100*(h_tail.ThR/h_tail.c)^4]*...
-             [1.24*(Mach^0.18)*cos(h_tail.sweep)^0.28];
+             [1.24*(Mach^0.18)*cos(h_tail.sweep*pi/180)^0.28];
     K_vertical_tail = [1 + (0.6/v_tail.h_cg)*(v_tail.ThR/v_tail.c) + 100*(v_tail.ThR/v_tail.c)^4]*...
-             [1.24*(Mach^0.18)*cos(v_tail.sweep)^0.28];
+             [1.24*(Mach^0.18)*cos(v_tail.sweep*pi/180)^0.28];
     f = body.L/body.W;
     K_fuselage = (1 + (60/f^3) + (f/400));
 
@@ -80,11 +80,11 @@ end
 
 
 
-plane.data.CL = CL;
-plane.data.CD = CD;
+plane.data.aero.CL = CL;
+plane.data.aero.CD = CD;
 %plane.data.CL_alpha = CL_alpha;
-plane.data.CDi = CDi;
-plane.data.CD0 = CD0;
+plane.data.aero.CDi = CDi;
+plane.data.aero.CD0 = CD0;
 
 plane.geo.wing.alpha = 5;
 plane.geo.h_tail.alpha = 5;
