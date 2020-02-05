@@ -38,7 +38,7 @@ for i = 1:100
     %% CD0 (parasite) estimation (from slide 93, drag lecture, MAE 154s material)
     % computing Cf
 
-    Re = air_density*v_ref(i)*wing.b/viscocity;
+    Re = air_density*v_ref(i)*wing.c/viscocity;
     Mach = v_ref(i)/1125;                      %VMIN MUST BE IN FT/S
     Cf = 0.455/((log10(Re)^2.58)*(1+0.144*Mach^2)^0.65);
 
