@@ -12,11 +12,11 @@ W_total(i) = Weight;
 S = plane.geo.wing.S;                           %wing area, ft^2   % 
 AR = plane.geo.wing.AR;                         %aspect ratio
 
-N = plane.performance.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
+N = plane.data.performance.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
 sweep_angle = plane.geo.wing.sweep;            %Deg %Wing 1/4 chord sweep angle
-taper_ratio = plane.geo.wing.taper_ratio;     %Taper Ratio
-thickness_ratio_wing = plane.geo.thickness_ratio;                  %Maximum Thickness Ratio (GIVEN)
-v_max = plane.performance.v_max;                 %kts   %Equivalent Vmax at SL
+taper_ratio = plane.geo.wing.TR;     %Taper Ratio
+thickness_ratio_wing = plane.geo.ThR;                  %Maximum Thickness Ratio (GIVEN)
+v_max = plane.data.performance.v_max;                 %kts   %Equivalent Vmax at SL
 
 W_wing = 96.948 * ((Weight * N/10^5)^0.65*(AR/cos(sweep_angle))^0.57*(S/100)^0.61*((1 + taper_ratio)/(2*thickness_ratio_wing))^0.36*(1+v_max/500)^0.5)^0.993;
 
@@ -118,6 +118,14 @@ end
 %figure; grid on;
 hold on
 
-plot(Wto,'.-m')
+%W_struct = W_wing + Weight_fuselage + W_horizontal_tail + Weight_vertical_tail + Weight_landing_gear;
+%Weight_total = W_struct + W_prop + Wfs + Wsc + W_payload + W_fuel + W_avionics;
+Weight = zeros(10,1);
+Weight(1,1) = W_wing;
+Weight(2,1) = Weight_fuselage;
+Weight(3,1) = W_horizontal_tail;
+Weight(4,1) = 
+
+%plot(Wto,'.-m')
 
 
