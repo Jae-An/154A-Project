@@ -1,12 +1,12 @@
-clc;
+clc; clear all;
 % make an empty array of good planes
-N = 1; % number of resulting planes
 good = 0;
-all = 0;
-resultPlanes = struct('good',[]);
+i = 0;
+numPlanes = 5;
+resultPlanes = struct('Good',{});
 
 % while we have less than (n) good planes:
-while good < N && all < 100
+while  i < numPlanes
     %   getRandomPlane()
     newPlane = plane();
     newPlane = getRandomPlane(newPlane);
@@ -24,12 +24,16 @@ while good < N && all < 100
     
     %   stability(plane)
     %   performance(plane)
+    newPlane = getPerformance(newPlane);
     %   check if plane is good
-    if stability(newPlane)
-        resultPlanes.good(good+1) = newPlane;
+    newPlane = stability(newPlane);
+    if newPlane.data.stability.is_stable
+        resultPlanes(good+1).Good = newPlane;
         good = good+1;
     end
+    i = i+1;
     %   store plane if above is good
-    all = all+1;
+    
 end
+
 %plot drag / velocity curve

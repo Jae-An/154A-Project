@@ -2,7 +2,7 @@
 
 %function [CL_dry, CL_wet, CD_dry, CD_wet, CD0,CDi_dry,CDi_wet CL_alpha] = aerodynamics(plane)
 
-function [plane] = aerodynamics(plane)
+function plane = aerodynamics(plane)
 
 
 wing = plane.geo.wing;
@@ -27,8 +27,8 @@ CDi = zeros(100,2);
 
 for i = 1:100
     %% overall CLs
-    CL(i,2) = weight.weight_dry/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry CL total for reference speed
-    CL(i,1) = weight.weight_wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet CL total for reference speed
+    CL(i,2) = weight.dry/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry CL total for reference speed
+    CL(i,1) = weight.wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet CL total for reference speed
 
     
     %%
@@ -56,11 +56,12 @@ for i = 1:100
     %Q's
     Q_wing = 1;
     Q_tail = 1.08;
+    
 
-    CDP_wing = K_wing*Q_wing;
-    CDP_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S/wing.S;
-    CDP_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S/wing.S;
-
+    CD0_wing = K_wing*Q_wing;
+    CD0_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S/wing.S;
+    CD0_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S/wing.S;
+    CD0_fuselage = K_fuselage*Cf*(body.L*body.W*body.D)/wing.S;
 
     CD0(i) = CD0_wing + CD0_h_tail + CD0_v_tail + CD0_fuselage;
    % CDi(i) = ((CL_wing^2)/(3.1415*wing.AR*e_wing)) +
@@ -69,11 +70,11 @@ for i = 1:100
 
    
    %% induced drag
-    CDi(i,2) = ((CL_dry^2)/(3.1415*wing.AR*e_wing)); %dry mass induced drag
-    CDi(i,1) = ((CL_wet^2)/(3.1415*wing.AR*e_wing)); %wet mass induced drag
+    CDi(i,2) = ((CL(i,2)^2)/(3.1415*wing.AR*e_wing)); %dry mass induced drag
+    CDi(i,1) = ((CL(i,1)^2)/(3.1415*wing.AR*e_wing)); %wet mass induced drag
 
-    CD(i,2) = CDi_dry(i) + CD0(i);                   %dry mass total drag
-    CD(i,1) = CDi_wet(i) + CD0(i);                   %
+    CD(i,2) = CDi(i,2) + CD0(i);                   %dry mass total drag
+    CD(i,1) = CDi(i,1) + CD0(i);                   %
 end
 
 
@@ -83,5 +84,9 @@ plane.data.CL = CL;
 plane.data.CD = CD;
 %plane.data.CL_alpha = CL_alpha;
 plane.data.CDi = CDi;
-plane.data.CD0 = CDP;
+plane.data.CD0 = CD0;
+
+plane.geo.wing.alpha = 5;
+plane.geo.h_tail.alpha = 5;
+plane.geo.v_tail.alpha = 5;
 

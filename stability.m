@@ -1,4 +1,4 @@
-function stable = stability(plane)
+function plane = stability(plane)
 
     % static stability with neutral point
     h_acw = plane.geo.wing.h_ac;
@@ -13,14 +13,14 @@ function stable = stability(plane)
     eps_alpha = .05; % random guess, need to refine
     
     h_n = (h_acw + h_act*(S_t/S_w)*(alpha_t/alpha_w) * (1-eps_alpha)) / (1 + ((S_t/S_w)*(alpha_t/alpha_w)*(1-eps_alpha)));
-    plane.data.h_n = h_n;
+    
+    plane.data.stability.h_n = h_n;
     
     if (h_n > plane.geo.wing.h_cg)
-        stable = true;
+        plane.data.stability.is_stable = true;
     else
-        stable = false;
+        plane.data.stability.is_stable = false;
     end
-    
     
 end
 

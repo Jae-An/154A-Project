@@ -3,11 +3,11 @@ function [plane] = weight_function(plane)
 
 
 
-Weight = 35000;  %lbs, initial weight guess
+Weight_guess = 35000;  %lbs, initial weight guess
 W_total = zeros(1,20);
-
+W_total(1) = Weight_guess;
+Weight = W_total(1);
 for i = 1:20
-W_total(i) = Weight;
 
 %% wing geometry and weight
 S = plane.geo.wing.S;                           %wing area, ft^2   % 
@@ -15,7 +15,7 @@ AR = plane.geo.wing.AR;                         %aspect ratio
 
 
 N = 5;%plane.data.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
-sweep_angle = plane.geo.wing.sweep;            %Deg %Wing 1/4 chord sweep angle
+sweep_angle = plane.geo.wing.sweep * (3.14/180);            %Deg %Wing 1/4 chord sweep angle
 taper_ratio = plane.geo.wing.TR;     %Taper Ratio
 thickness_ratio_wing = plane.geo.wing.ThR;                  %Maximum Thickness Ratio (GIVEN)
 v_max = plane.data.requirements.v_max;                 %kts   %Equivalent Vmax at SL
@@ -117,6 +117,7 @@ W_payload = 16000;    %lbs, weight retardent
 
 W_total(i) = W_struct + W_prop + Wfs + Wsc + W_payload + plane.prop.fuel_mass + W_avionics;
 plane.data.weight.W = W_total(i);
+Weight = W_total(i);
 
 
 end
