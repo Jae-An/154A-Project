@@ -54,7 +54,7 @@ for i = 1:100
     CDP_wing = K_wing*Q_wing;
     CDP_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S/wing.S;
     CDP_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S/wing.S;
-    CDP_fuselage = K_fuselage*(body.L*3.1415*body*width^2)*Cf/wing.S;
+    CDP_fuselage = K_fuselage*(body.length*3.1415*body*width^2)*Cf/wing.S;
 
     CDP(i) = CDP_wing + CDP_h_tail + CDP_v_tail + CDP_fuselage;
    % CDi(i) = ((CL_wing^2)/(3.1415*wing.AR*e_wing)) +

@@ -1,4 +1,4 @@
-function [] = getPropulsionDetails(plane)
+function [plane] = getPropulsionDetails(plane)
 
 % we could have a bunch of different engines and have this function pick
 % one of them at random
