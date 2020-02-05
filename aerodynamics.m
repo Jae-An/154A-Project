@@ -1,5 +1,5 @@
 %aerodynamics solver function
-function [CL, CD, CL_alpha] = aerodynamics(plane)
+function [plane] = aerodynamics(plane)
 
 wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
@@ -67,5 +67,5 @@ end
 plane.data.CL = CL;
 plane.data.CD = CD;
 plane.data.CL_alpha = CL_alpha;
-
-
+plane.data.CDi = CDi;
+plane.data.CD0 = CDP;

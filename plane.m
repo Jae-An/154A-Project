@@ -16,4 +16,4 @@ plane.prop = struct('W',[],'hp',[],'eta_p',[],'c_p',[],'fuel_mass',[],'eng_mass'
 
 
 %% Performance, Aerodynamics, Stability
-plane.data = struct('W',[],'CL',[],'CD',[],'CL_alpha',[],'h_n',[],'N',5,'v_max',217.244,'v_stall',86.8976); % *fill out later*
+plane.data = struct('W',[],'CL',[],'CD',[],'CD0',[],'CDi',[],'CL_alpha',[],'h_n',[],'N',5,'v_max',217.244,'v_stall',86.8976); % *fill out later*
