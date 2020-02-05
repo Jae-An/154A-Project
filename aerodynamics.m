@@ -86,7 +86,9 @@ plane.data.aero.CD = CD;
 plane.data.aero.CDi = CDi;
 plane.data.aero.CD0 = CD0;
 
+
 plane.geo.wing.alpha = 5;
 plane.geo.h_tail.alpha = 5;
 plane.geo.v_tail.alpha = 5;
+
 
