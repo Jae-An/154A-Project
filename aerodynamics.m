@@ -62,7 +62,7 @@ for i = 1:100
     CDi(i) = ((CL^2)/(3.1415*wing.AR*e_wing));
     CD(i) = CDi(i) + CDP(i);
     
-    
+    %plane.geo.wing.alpha = clmax climb rate
 end
 
 
