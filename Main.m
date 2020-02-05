@@ -1,4 +1,4 @@
-
+clc;
 % make an empty array of good planes
 N = 1; % number of resulting planes
 good = 0;
@@ -12,9 +12,13 @@ while good < N && all < 100
     newPlane = getRandomPlane(newPlane);
     %   nikolai(plane)
     newPlane = getPropulsionDetails(newPlane);
-    newPlane = weight_function(newPlane);
+    
+    temp = weight_function(newPlane);
+    newPlane = temp(1);
+    
     %   aerodynamics(plane)
     newPlane = aerodynamics(newPlane);
+    
     %   propulsion(plane)
 
     

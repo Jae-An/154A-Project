@@ -30,8 +30,8 @@ CDi_wet = CL_dry;
 
 for i = 1:100
     %% overall CLs
-    CL_dry(i) = weight.weight_dry/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry CL total for reference speed
-    CL_wet(i) = weight.weight_wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet CL total for reference speed
+    CL_dry(i) = weight.dry/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry CL total for reference speed
+    CL_wet(i) = weight.wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet CL total for reference speed
     
     %%
     %**** NEED TO DETERMINE WING AND TAIL CL'S INDEPENDENTLY ****

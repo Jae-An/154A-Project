@@ -1,5 +1,5 @@
 
-function [Weight, plane] = weight_function(plane)
+function [plane,Weight] = weight_function(plane)
 
 
 
@@ -16,8 +16,8 @@ AR = plane.geo.wing.AR;                         %aspect ratio
 
 N = 5;%plane.data.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
 sweep_angle = plane.geo.wing.sweep;            %Deg %Wing 1/4 chord sweep angle
-taper_ratio = plane.geo.wing.taper;     %Taper Ratio
-thickness_ratio_wing = plane.geo.wing.thickness;                  %Maximum Thickness Ratio (GIVEN)
+taper_ratio = plane.geo.wing.TR;     %Taper Ratio
+thickness_ratio_wing = plane.geo.wing.ThR;                  %Maximum Thickness Ratio (GIVEN)
 v_max = plane.data.v_max;                 %kts   %Equivalent Vmax at SL
 
 
@@ -114,7 +114,7 @@ W_payload = 16000;    %lbs, weight retardent
 
 %% TOTAL WEIGHT
 
-W_total(i) = W_struct + W_prop + Wfs + Wsc + W_payload + W_fuel + W_avionics;
+W_total(i) = W_struct + W_prop + Wfs + Wsc + W_payload + plane.prop.fuel_mass + W_avionics;
 plane.data.W = W_total(i);
 
 end
