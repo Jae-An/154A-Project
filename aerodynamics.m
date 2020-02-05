@@ -62,6 +62,11 @@ for i = 1:100
    % solve for CL_wing and CL_tail
     CDi(i) = ((CL(i)^2)/(3.1415*wing.AR*e_wing));
     CD(i) = CDi(i) + CDP(i);
+<<<<<<< HEAD
+    
+    %plane.geo.wing.alpha = clmax climb rate
+=======
+>>>>>>> 7770d19f1fe08f4fc3c23fb10b6da65335a718b3
 end
 
 plane.data.CL = CL;
