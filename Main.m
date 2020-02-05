@@ -2,7 +2,7 @@ clc; clear variables;
 % make an empty array of good planes
 good = 0;
 i = 0;
-numPlanes = 5;
+numPlanes = 10;
 resultPlanes = struct('Good',{});
 
 % while we have less than (n) good planes:
