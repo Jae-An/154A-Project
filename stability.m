@@ -12,7 +12,7 @@ function stable = stability(plane)
     
     eps_alpha = .05; % random guess, need to refine
     
-    h_n = (h_acw + h_act*(S_t/S_w)*(alpha_t/alpha_w) * (1-eps_alpha)) / (1 + ((St/Sw)*(alpha_t/alpha_w)*(1-eps_alpha)));
+    h_n = (h_acw + h_act*(S_t/S_w)*(alpha_t/alpha_w) * (1-eps_alpha)) / (1 + ((S_t/S_w)*(alpha_t/alpha_w)*(1-eps_alpha)));
     plane.data.h_n = h_n;
     
     if (h_n > plane.geo.wing.h_cg)

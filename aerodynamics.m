@@ -4,7 +4,7 @@ function [plane] = aerodynamics(plane)
 wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
 v_tail = plane.geo.v_tail;
-fuselage = plane.geo.body;
+body = plane.geo.body;
 weight = plane.data.W;
 v_stall = plane.data.v_stall; %v_ref set to stall velocity, ft/s
 v_max = plane.data.v_max;
@@ -36,14 +36,14 @@ for i = 1:100
     Cf = 0.455/((log10(Re)^2.58)*(1+0.144*Mach^2)^0.65);
 
     %compute K's
-    K_wing = [1 + (0.6/wing.h_cg)*(wing.thickness/wing.c) + 100*(wing.thickness/wing.c)^4]*...
+    K_wing = [1 + (0.6/wing.h_cg)*(wing.ThR/wing.c) + 100*(wing.ThR/wing.c)^4]*...
              [1.24*(Mach^0.18)*cos(wing.sweep)^0.28];
 
-    K_horizontal_tail = [1 + (0.6/h_tail.h_cg)*(h_tail.thickness/h_tail.c) + 100*(h_tail.thickness/h_tail.c)^4]*...
+    K_horizontal_tail = [1 + (0.6/h_tail.h_cg)*(h_tail.ThR/h_tail.c) + 100*(h_tail.ThR/h_tail.c)^4]*...
              [1.24*(Mach^0.18)*cos(h_tail.sweep)^0.28];
-    K_vertical_tail = [1 + (0.6/v_tail.h_cg)*(v_tail.thickness/v_tail.c) + 100*(v_tail.thickness/v_tail.c)^4]*...
+    K_vertical_tail = [1 + (0.6/v_tail.h_cg)*(v_tail.ThR/v_tail.c) + 100*(v_tail.ThR/v_tail.c)^4]*...
              [1.24*(Mach^0.18)*cos(v_tail.sweep)^0.28];
-    f = fuselage.L/fuselage.W;
+    f = body.L/body.W;
     K_fuselage = (1 + (60/f^3) + (f/400));
 
     %Q's
@@ -54,13 +54,13 @@ for i = 1:100
     CDP_wing = K_wing*Q_wing;
     CDP_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S/wing.S;
     CDP_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S/wing.S;
-    CDP_fuselage = K_fuselage*(body.L*3.1415*body*width^2)*Cf/wing.S;
+    CDP_fuselage = K_fuselage*(body.L*3.1415*body.W^2)*Cf/wing.S;
 
     CDP(i) = CDP_wing + CDP_h_tail + CDP_v_tail + CDP_fuselage;
    % CDi(i) = ((CL_wing^2)/(3.1415*wing.AR*e_wing)) +
    % ((CL_tail^2)/(3.1415*tail.AR*e_tail)); %need to figure out how to
    % solve for CL_wing and CL_tail
-    CDi(i) = ((CL^2)/(3.1415*wing.AR*e_wing));
+    CDi(i) = ((CL(i)^2)/(3.1415*wing.AR*e_wing));
     CD(i) = CDi(i) + CDP(i);
 end
 
