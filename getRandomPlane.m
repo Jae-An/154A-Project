@@ -50,7 +50,6 @@ plane.geo.v_tail.ac = plane.geo.h_tail.ac; %ft, distance from v_tail leading edg
 plane.geo.v_tail.h_ac = plane.geo.h_tail.h_ac; %nondimensional, distance from v_tail leading edge to AC, set to h_tail value
 
 
-
 %aero
 
 

@@ -1,5 +1,5 @@
 %aerodynamics solver function
-function [CL, CD0,CDi, CL_alpha] = aerodynamics(plane)
+function [CL, CD, CD0,CDi, CL_alpha] = aerodynamics(plane)
 
 wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
