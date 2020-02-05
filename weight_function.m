@@ -1,4 +1,5 @@
-function [plane] = weight_function(plane)
+
+function [Weight, plane] = weight_function(plane)
 
 
 
@@ -117,13 +118,8 @@ W_total(i) = W_struct + W_prop + Wfs + Wsc + W_payload + W_fuel + W_avionics;
 plane.data.W = W_total(i);
 
 end
-%figure; grid on;
 
-% hold on
-% 
-% plot(Wto,'.-m')
 
-%hold on
 Weight_total = Weight;
 
 %W_struct = W_wing + Weight_fuselage + W_horizontal_tail + Weight_vertical_tail + Weight_landing_gear;
@@ -144,8 +140,11 @@ Weight(11,1) = W_avionics;
 Weight(12,1) = empty_weight;
 Weight(13,1) = Weight_total;
 
+plane.data.weight.weight_dry = Weight_total - W_payload;
+plane.data.weight.weight_wet = Weight_total;
+plane.data.weight.weight_fuel = W_fuel;
+plane.data.weight.weight_retardent = W_payload;
+
+
 end
-
-%plot(Wto,'.-m')
-
 
