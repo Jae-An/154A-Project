@@ -1,5 +1,5 @@
 %aerodynamics solver function
-function [CL, CD, CL_alpha] = aerodynamics(plane)
+function [CL, CD0,CDi, CL_alpha] = aerodynamics(plane)
 
 wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
@@ -65,4 +65,4 @@ for i = 1:100
     %plane.geo.wing.alpha = clmax climb rate
 end
 
-
+CD0 = CDP;
