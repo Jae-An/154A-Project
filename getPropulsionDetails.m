@@ -11,5 +11,6 @@ plane.prop.c_p = 0.5; % lb / hp-h
 plane.prop.fuel_mass = 5000; %lb - guess based off of sfc*1300hp*5hrs
 
 
+
 end
 
