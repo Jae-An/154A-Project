@@ -139,10 +139,10 @@ Weight(11,1) = W_avionics;
 Weight(12,1) = empty_weight;
 Weight(13,1) = Weight_total;
 
-plane.data.weight.weight_dry = Weight_total - W_payload;
-plane.data.weight.weight_wet = Weight_total;
-plane.data.weight.weight_fuel = W_fuel;
-plane.data.weight.weight_retardent = W_payload;
+plane.data.weight.dry = Weight_total - W_payload;
+plane.data.weight.wet = Weight_total;
+plane.data.weight.fuel = W_fuel;
+plane.data.weight.retardent = W_payload;
 
 end
 
