@@ -83,7 +83,7 @@ end
 
 plane.data.CL = CL;
 plane.data.CD = CD;
-plane.data.CL_alpha = CL_alpha;
+%plane.data.CL_alpha = CL_alpha;
 plane.data.CDi = CDi;
 plane.data.CD0 = CDP;
 
