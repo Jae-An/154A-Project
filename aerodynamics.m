@@ -78,9 +78,9 @@ end
 
 
 
-plane.data.CL = CL;
-plane.data.CD = CD;
+plane.data.aero.CL = CL;
+plane.data.aero.CD = CD;
 %plane.data.CL_alpha = CL_alpha;
-plane.data.CDi = CDi;
-plane.data.CD0 = CDP;
+plane.data.aero.CDi = CDi;
+plane.data.aero.CD0 = CD0;
 
