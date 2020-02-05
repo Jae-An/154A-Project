@@ -116,11 +116,13 @@ Weight = W_total(i);
 
 end
 %figure; grid on;
-hold on
+%hold on
+Weight_total = Weight;
 
 %W_struct = W_wing + Weight_fuselage + W_horizontal_tail + Weight_vertical_tail + Weight_landing_gear;
 %Weight_total = W_struct + W_prop + Wfs + Wsc + W_payload + W_fuel + W_avionics;
-Weight = zeros(11,1);
+empty_weight = W_struct + W_prop + Wfs + Wsc + W_avionics;
+Weight = zeros(13,1);
 Weight(1,1) = W_wing;
 Weight(2,1) = Weight_fuselage;
 Weight(3,1) = Weight_horizontal_tail;
@@ -132,6 +134,10 @@ Weight(8,1) = Wsc;
 Weight(9,1) = W_payload;
 Weight(10,1) = W_fuel;
 Weight(11,1) = W_avionics;
+Weight(12,1) = empty_weight;
+Weight(13,1) = Weight_total;
+
+end
 
 %plot(Wto,'.-m')
 
