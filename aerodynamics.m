@@ -20,18 +20,15 @@ viscocity = 3.73*10^-7;     %slug/ft/s
 e_tail = 0.3;
 e_wing = 0.3;
 
-CL_dry = zeros(100,1);
-CL_wet = CL_dry;
-CD_dry = CL_dry;
-CD_wet = CL_dry;
-CD0 = CL_dry;
-CDi_dry = CL_dry;
-CDi_wet = CL_dry;
+CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent)
+CD = zeros(100,2);
+CD0 = zeros(100,1);
+CDi = zeros(100,2);
 
 for i = 1:100
     %% overall CLs
-    CL_dry(i) = weight.weight_dry/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry CL total for reference speed
-    CL_wet(i) = weight.weight_wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet CL total for reference speed
+    CL(i,2) = weight.weight_dry/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry CL total for reference speed
+    CL(i,1) = weight.weight_wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet CL total for reference speed
     
     %%
     %**** NEED TO DETERMINE WING AND TAIL CL'S INDEPENDENTLY ****
@@ -71,11 +68,11 @@ for i = 1:100
 
    
    %% induced drag
-    CDi_dry(i) = ((CL_dry^2)/(3.1415*wing.AR*e_wing)); %dry mass induced drag
-    CDi_wet(i) = ((CL_wet^2)/(3.1415*wing.AR*e_wing)); %wet mass induced drag
+    CDi(i,2) = ((CL_dry^2)/(3.1415*wing.AR*e_wing)); %dry mass induced drag
+    CDi(i,1) = ((CL_wet^2)/(3.1415*wing.AR*e_wing)); %wet mass induced drag
 
-    CD_dry(i) = CDi_dry(i) + CD0(i);                   %dry mass total drag
-    CD_wet(i) = CDi_wet(i) + CD0(i);                   %
+    CD(i,2) = CDi_dry(i) + CD0(i);                   %dry mass total drag
+    CD(i,1) = CDi_wet(i) + CD0(i);                   %
 end
 
 
