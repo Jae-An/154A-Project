@@ -1,5 +1,5 @@
 %aerodynamics solver function
-function [plane] = aerodynamics(plane)
+function [CL, CD, CL_alpha] = aerodynamics(plane)
 
 wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
@@ -54,7 +54,7 @@ for i = 1:100
     CDP_wing = K_wing*Q_wing;
     CDP_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S/wing.S;
     CDP_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S/wing.S;
-    CDP_fuselage = K_fuselage*(body.L*3.1415*body*width^2)*Cf/wing.S;
+    CDP_fuselage = K_fuselage*(body.length*3.1415*body*width^2)*Cf/wing.S;
 
     CDP(i) = CDP_wing + CDP_h_tail + CDP_v_tail + CDP_fuselage;
    % CDi(i) = ((CL_wing^2)/(3.1415*wing.AR*e_wing)) +
@@ -62,15 +62,10 @@ for i = 1:100
    % solve for CL_wing and CL_tail
     CDi(i) = ((CL^2)/(3.1415*wing.AR*e_wing));
     CD(i) = CDi(i) + CDP(i);
-<<<<<<< HEAD
-    
-    %plane.geo.wing.alpha = clmax climb rate
-=======
->>>>>>> 7770d19f1fe08f4fc3c23fb10b6da65335a718b3
 end
 
 plane.data.CL = CL;
 plane.data.CD = CD;
 plane.data.CL_alpha = CL_alpha;
-plane.data.CDi = CDi;
-plane.data.CD0 = CDP;
+
+

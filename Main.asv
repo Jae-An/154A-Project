@@ -10,20 +10,13 @@ while good < N
     newPlane = plane();
     newPlane = getRandomPlane(newPlane);
     %   nikolai(plane)
-    newPlane = getPropulsionDetails(newPlane);
     newPlane = weight_function(newPlane);
     %   aerodynamics(plane)
-    newPlane = aerodynamics(newPlane);
+    newPlane 
     %   propulsion(plane)
-
-    
     %   stability(plane)
     %   performance(plane)
     %   check if plane is good
-    if stability(newPlane)
-        resultPlanes.good(good+1) = newPlane;
-    end
-    resultPlanes.all(end+1) = newPlane;
     %   store plane if above is good
 end
 %plot drag / velocity curve
