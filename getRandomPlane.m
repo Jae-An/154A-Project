@@ -4,7 +4,7 @@ function [plane] = getRandomPlane(plane)
 %rand_value = min_value + rand(1)*(max_value - min_value)
 V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 %fuselage
-plane.geo.body.W = 7 + rand(1)*(15 - 5); %ft, fuselage width
+plane.geo.body.W = 5 + rand(1)*(10 - 5); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
 plane.geo.body.L = 35 + rand(1)*(75 - 35); %ft, fuselage L
 
