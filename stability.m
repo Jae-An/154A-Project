@@ -7,8 +7,8 @@ function plane = stability(plane)
     S_w = plane.geo.wing.S;
     S_t = plane.geo.h_tail.S;
     
-    alpha_w = plane.geo.wing.alpha;
-    alpha_t = plane.geo.h_tail.alpha;
+    alpha_w = plane.geo.wing.cl_a;
+    alpha_t = plane.geo.h_tail.cl_a;
     
     eps_alpha = .05; % random guess, need to refine
     
