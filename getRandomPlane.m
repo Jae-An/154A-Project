@@ -21,9 +21,13 @@ plane.geo.wing.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
 plane.geo.wing.cg = 4 + rand(1)*(12-0); %ft, distance from wing leading edge to CG
 plane.geo.wing.h_cg = plane.geo.wing.cg/plane.geo.wing.c; %nondimensional, distance from wing leading edge to CG
 plane.geo.wing.ac = 0.25*plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord
+
 plane.geo.wing.h_ac = 0.25; %nondimensional, distance from wing leading edge to AC
 plane.geo.wing.lnw = (0.1*body.L) + rand(1)*(0.25*body.L);
 % need to define distance from nosetip to wing edge
+
+plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
+plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 
 
 
@@ -33,6 +37,7 @@ plane.geo.h_tail.cg = body.L - plane.geo.wing.lnw - plane.geo.wing.cg - 8; %ft, 
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
 plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c; %ft, distance from h_tail leading edge to AC, set to quarter chord
 plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to AC
+
 
 % stability components for computing horizontal tail
 epsilon_alpha = 0.3;    %tail angle of attack reduction factor due to downwash
@@ -50,6 +55,10 @@ plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.57;
 plane.geo.h_tail.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
 %%
+
+plane.geo.h_tail.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
+plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
+
 
 %vertical tail
 plane.geo.v_tail.S = 10 + rand(1)*(300 - 30); %ft^2, v_tail area

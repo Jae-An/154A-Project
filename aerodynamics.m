@@ -15,8 +15,8 @@ v_max = plane.data.requirements.v_max;
 
 v_ref = linspace(v_stall, v_max);
 
-air_density = 0.00238;      %slug/ft3
-viscocity = 3.73*10^-7;     %slug/ft/s
+air_density = 0.001267;      %slug/ft3, 20,000 ft.
+viscocity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
 e_tail = 0.3;
 e_wing = 0.3;
 
@@ -43,13 +43,14 @@ for i = 1:100
     Cf = 0.455/((log10(Re)^2.58)*(1+0.144*Mach^2)^0.65);
 
     %compute K's
-    K_wing = [1 + (0.6/wing.h_cg)*(wing.ThR/wing.c) + 100*(wing.ThR/wing.c)^4]*...
-             [1.24*(Mach^0.18)*cos(wing.sweep*pi/180)^0.28];
+    h_tm = 0.3; % "chordwise location of the airfoil maximum thickness point"
+    K_wing = [1 + (0.6/h_tm)*(wing.ThR) + 100*(wing.ThR)^4]*...
+             [1.34*(Mach^0.18)*cos(wing.sweep*pi/180)^0.28];
 
-    K_horizontal_tail = [1 + (0.6/h_tail.h_cg)*(h_tail.ThR/h_tail.c) + 100*(h_tail.ThR/h_tail.c)^4]*...
-             [1.24*(Mach^0.18)*cos(h_tail.sweep*pi/180)^0.28];
-    K_vertical_tail = [1 + (0.6/v_tail.h_cg)*(v_tail.ThR/v_tail.c) + 100*(v_tail.ThR/v_tail.c)^4]*...
-             [1.24*(Mach^0.18)*cos(v_tail.sweep*pi/180)^0.28];
+    K_horizontal_tail = [1 + (0.6/h_tm)*(h_tail.ThR) + 100*(h_tail.ThR)^4]*...
+             [1.34*(Mach^0.18)*cos(h_tail.sweep*pi/180)^0.28];
+    K_vertical_tail = [1 + (0.6/h_tm)*(v_tail.ThR) + 100*(v_tail.ThR)^4]*...
+             [1.34*(Mach^0.18)*cos(v_tail.sweep*pi/180)^0.28];
     f = body.L/body.W;
     K_fuselage = (1 + (60/f^3) + (f/400));
 
@@ -58,7 +59,7 @@ for i = 1:100
     Q_tail = 1.08;
     
 
-    CD0_wing = K_wing*Q_wing;
+    CD0_wing = K_wing*Q_wing*Cf;
     CD0_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S/wing.S;
     CD0_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S/wing.S;
     CD0_fuselage = K_fuselage*Cf*(body.L*body.W*body.D)/wing.S;
@@ -70,8 +71,8 @@ for i = 1:100
 
    
    %% induced drag
-    CDi(i,2) = ((CL(i,2)^2)/(3.1415*wing.AR*e_wing)); %dry mass induced drag
-    CDi(i,1) = ((CL(i,1)^2)/(3.1415*wing.AR*e_wing)); %wet mass induced drag
+    CDi(i,2) = ((CL(i,2)^2)/(pi*wing.AR*e_wing)); %dry mass induced drag
+    CDi(i,1) = ((CL(i,1)^2)/(pi*wing.AR*e_wing)); %wet mass induced drag
 
     CD(i,2) = CDi(i,2) + CD0(i);                   %dry mass total drag
     CD(i,1) = CDi(i,1) + CD0(i);                   %
@@ -85,10 +86,5 @@ plane.data.aero.CD = CD;
 %plane.data.CL_alpha = CL_alpha;
 plane.data.aero.CDi = CDi;
 plane.data.aero.CD0 = CD0;
-
-
-plane.geo.wing.alpha = 5;
-plane.geo.h_tail.alpha = 5;
-plane.geo.v_tail.alpha = 5;
 
 

@@ -6,9 +6,9 @@ plane = struct('geo',[],'prop',[],'data',[]);
 %% Aircraft Geometry
 plane.geo = struct('body',[],'wing',[],'h_tail',[],'v_tail',[],'nacelle',[]);
     plane.geo.body = struct('L',[],'W',[],'D',[]);
-    plane.geo.wing = struct('S',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'alpha',[]);
-    plane.geo.h_tail = struct('S',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'alpha',[]);
-    plane.geo.v_tail = struct('S',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'alpha',[]);
+    plane.geo.wing = struct('S',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'cl_a',[],'cl_0',[]);
+    plane.geo.h_tail = struct('S',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'cl_a',[],'cl_0',[],'i',[]);
+    plane.geo.v_tail = struct('S',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'cl_a',[]);
     plane.geo.nacelle = struct(); % *fill out later*
 
 %% Propulsion
