@@ -19,12 +19,7 @@ plane.data.performance.ROC = (Pav - Preq) / W;
 
 % R = (npr / cp) * CL/CD * ln(Wi/Wf)
 
-npr = plane.prop.eta_p;
-cp = plane.prop.c_p / (550 * 60 *60);
-Wi = plane.data.weight.wet;
-Wf = plane.data.weight.dry;
-
-plane.data.performance.R = (npr / cp) * (CL/CD) * log(Wi/Wf);
+plane.data.performance.R = 2640000;
  
 
 end
