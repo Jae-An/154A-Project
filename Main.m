@@ -30,7 +30,8 @@ while  i < numPlanes
     end
     i = i+1;
     %   store plane if above is good
-    
+
+        
 end
 
 %plot drag / velocity curve

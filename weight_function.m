@@ -82,7 +82,7 @@ v_max = plane.data.requirements.v_max;        %FIX UNITS         %kts   %Equival
     W_eng = plane.prop.W; %(lbs)     %Bare Engine Weight
     N_eng = 2;             %# Engines
 
-    W_prop = 2.575*(W_eng)^0.922*N_eng;    %this equation likely over-estimates propulsion unit weight for a small UAV
+    W_prop = (2.575*(W_eng)^0.922)*N_eng;    %this equation likely over-estimates propulsion unit weight for a small UAV
 
 
     %% Fuel Weight

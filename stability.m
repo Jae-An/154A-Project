@@ -10,7 +10,7 @@ function plane = stability(plane)
     alpha_w = plane.geo.wing.cl_a;
     alpha_t = plane.geo.h_tail.cl_a;
     
-    eps_alpha = .05; % random guess, need to refine
+    eps_alpha = 0.3; % random guess, need to refine
     
     h_n = (h_acw + h_act*(S_t/S_w)*(alpha_t/alpha_w) * (1-eps_alpha)) / (1 + ((S_t/S_w)*(alpha_t/alpha_w)*(1-eps_alpha)));
     

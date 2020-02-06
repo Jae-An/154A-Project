@@ -9,8 +9,7 @@ while 1
     plane = getBregeutFuelWeight(plane);
     plane = weight_function(plane);
     plane = aerodynamics(plane);
-    diff = weight-plane.prop.fuel_mass;
-    if abs(weight-plane.prop.fuel_mass)<err
+    if abs(weight-plane.prop.fuel_mass)<err   
         break;
     end
 end

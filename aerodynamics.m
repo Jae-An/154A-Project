@@ -16,7 +16,7 @@ v_max = plane.data.requirements.v_max;
 v_ref = linspace(v_stall, v_max);
 
 air_density = 0.001267;      %slug/ft3, 20,000 ft.
-viscocity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
+viscosity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
 e_tail = 0.3;
 e_wing = 0.3;
 
@@ -38,13 +38,12 @@ for i = 1:100
     %% CD0 (parasite) estimation (from slide 93, drag lecture, MAE 154s material)
     % computing Cf
 
-    Re = air_density*v_ref(i)*wing.c/viscocity;
+    Re = air_density*v_ref(i)*wing.c/viscosity;
     Mach = v_ref(i)/1125;                      %VMIN MUST BE IN FT/S
     Cf = 0.455/((log10(Re)^2.58)*(1+0.144*Mach^2)^0.65);
 
     %compute K's
-    h_tm = 0.3; % "chordwise location of the airfoil maximum thickness point"
-    K_wing = [1 + (0.6/h_tm)*(wing.ThR) + 100*(wing.ThR)^4]*...
+    K_wing = [1 + (0.6/wing.h_t)*(wing.ThR) + 100*(wing.ThR)^4]*...
              [1.34*(Mach^0.18)*cos(wing.sweep*pi/180)^0.28];
 
     K_horizontal_tail = [1 + (0.6/h_tm)*(h_tail.ThR) + 100*(h_tail.ThR)^4]*...
