@@ -15,7 +15,7 @@ v_max = plane.data.requirements.v_max;
 
 v_ref = linspace(v_stall, v_max);
 
-air_density = 0.001267;      %slug/ft3, 20,000 ft.
+air_density = 0.00200;      %slug/ft3, 20,000 ft.
 viscosity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
 e_tail = 0.3;
 e_wing = 0.3;
