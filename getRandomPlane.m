@@ -28,7 +28,7 @@ plane.geo.wing.lnw = (0.1*plane.geo.body.L) + rand(1)*(0.25*plane.geo.body.L);
 
 plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
-
+plane.geo.wing.h_t = 0.301; %Nondimensional distance to maximum thickness
 
 
 %% horizontal tail
@@ -39,7 +39,7 @@ plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.lnw - plane.geo.wing.cg 
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
 plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c; %ft, distance from h_tail leading edge to AC, set to quarter chord
 plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to AC
-
+plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
 % stability components for computing horizontal tail
 epsilon_alpha = 0.3;    %tail angle of attack reduction factor due to downwash
@@ -71,7 +71,7 @@ plane.geo.v_tail.cg = plane.geo.h_tail.cg; %ft, distance from v_tail leading edg
 plane.geo.v_tail.h_cg = plane.geo.h_tail.h_cg; %nondimensional, distance from v_tail leading edge to CG, set to h_tail value
 plane.geo.v_tail.ac = plane.geo.h_tail.ac; %ft, distance from v_tail leading edge to AC, set to quarter chord, set to h_tail value
 plane.geo.v_tail.h_ac = plane.geo.h_tail.h_ac; %nondimensional, distance from v_tail leading edge to AC, set to h_tail value
-
+plane.geo.v_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
 %aero
 
