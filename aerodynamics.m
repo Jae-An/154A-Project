@@ -58,9 +58,9 @@ for i = 1:100
     Q_tail = 1.08;
     
 
-    CD0_wing = K_wing*Q_wing*Cf;
-    CD0_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S/wing.S;
-    CD0_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S/wing.S;
+    CD0_wing = K_wing*Q_wing*Cf*wing.S_wet/wing.S;
+    CD0_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S_wet/wing.S;
+    CD0_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S_wet/wing.S;
     CD0_fuselage = K_fuselage*Cf*(body.L*body.W*body.D)/wing.S;
 
     CD0(i) = CD0_wing + CD0_h_tail + CD0_v_tail + CD0_fuselage;
