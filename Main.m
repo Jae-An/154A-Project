@@ -2,7 +2,7 @@
 clc; clear variables;
 a = 'started sim'
 % make an empty array of good planes
-good = 0;
+stable = 0;
 i = 0;
 numPlanes = 10;
 resultPlanes = struct('Good',{});
@@ -25,8 +25,8 @@ while  i < numPlanes
     %   check if plane is good
     newPlane = stability(newPlane);
     if newPlane.data.stability.is_stable
-        resultPlanes(good+1).Good = newPlane;
-        good = good+1;
+        resultPlanes(stable+1).Good = newPlane;
+        stable = stable + 1;
     end
     i = i+1;
     %   store plane if above is good

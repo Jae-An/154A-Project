@@ -39,7 +39,7 @@ for i = 1:100
     % computing Cf
 
     Re = air_density*v_ref(i)*wing.c/viscosity;
-    Mach = v_ref(i)/1125;                      %VMIN MUST BE IN FT/S
+    Mach = v_ref(i)/1125;                      %v_ref MUST BE IN FT/S
     Cf = 0.455/((log10(Re)^2.58)*(1+0.144*Mach^2)^0.65);
 
     %compute K's
@@ -79,6 +79,8 @@ for i = 1:100
     
 end
 
+
+
 if ~isreal(CD)
     error =  'imaginary CD'
 end
@@ -91,5 +93,12 @@ plane.data.aero.CD = CD;
 %plane.data.CL_alpha = CL_alpha;
 plane.data.aero.CDi = CDi;
 plane.data.aero.CD0 = CD0;
-
-
+% 
+;
+% [wet_min_Cd, wet_cruise_speed_index] = min(CD(:,1));
+% wet_cruise_speed = v_ref(wet_cruise_speed_index);
+% plane.data.performance.wet_cruise_speed = wet_cruise_speed;
+% 
+% [dry_min_Cd, dry_cruise_speed_index] = min(CD(:,2));
+% dry_cruise_speed = v_ref(dry_cruise_speed_index);
+% plane.data.performance.dry_cruise_speed = dry_cruise_speed;
