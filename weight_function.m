@@ -146,6 +146,7 @@ Weight(13,1) = Weight_total;
 
 plane.data.weight.dry = Weight_total - W_payload;
 plane.data.weight.wet = Weight_total;
+plane.data.weight.empty = Weight_total - (W_fuel+W_payload);
 plane.data.weight.fuel = W_fuel;
 plane.data.weight.retardent = W_payload;
 
