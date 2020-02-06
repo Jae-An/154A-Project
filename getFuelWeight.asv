@@ -1,13 +1,10 @@
 function [plane] = getFuelWeight(plane)
 % Iterate to find fuel weight
-
+weight = plane.prop.fuel_mass % initial guess for fuel weight
 err = 0.1; % lb tolerance 
 
 while 1
-    weight = plane.prop.fuel_mass;
-    plane = getBregeutFuelWeight(plane);
-    plane = weight_function(plane);
-    plane = aerodynamics(plane);
+    
     if abs(weight-plane.prop.fuel_mass)<err
         break;
     end
