@@ -35,7 +35,7 @@ plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.h_tail.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 
-plane.geo.h_tail.cg = body.L - plane.geo.wing.lnw - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
+plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.lnw - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
 plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c; %ft, distance from h_tail leading edge to AC, set to quarter chord
 plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to AC
