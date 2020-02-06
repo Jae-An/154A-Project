@@ -37,20 +37,20 @@ plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 
 plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.lnw - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
-plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c; %ft, distance from h_tail leading edge to AC, set to quarter chord
+plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*6;%plane.geo.h_tail.c; %ft, distance from h_tail leading edge to AC, set to quarter chord
 plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to AC
 
 
 % stability components for computing horizontal tail
 epsilon_alpha = 0.3;    %tail angle of attack reduction factor due to downwash
 at_aw = plane.geo.h_tail.cl_a/plane.geo.wing.cl_a; %ratio of lift slopes
-margin_of_stability = 0.05 + rand(1)*(0.5);
+margin_of_stability = 0.05 + rand(1)*(0.05);
 
 St_Sw = (margin_of_stability + plane.geo.wing.h_cg - plane.geo.wing.h_ac)/[at_aw*(1 - epsilon_alpha)*(plane.geo.h_tail.h_ac - margin_of_stability - plane.geo.wing.h_cg)];
-
+%St_Sw = 0.1;
 plane.geo.h_tail.S = St_Sw*plane.geo.wing.S; %ft^2, h_tail area
 plane.geo.h_tail.AR = 1 + rand(1)*(13 - 7); %h_tail aspect ratio
-plane.geo.h_tail.c = ((4*3.1415*plane.geo.h_tail.S)^2/plane.geo.h_tail.AR)^0.5; %ft, h_tail chord length
+plane.geo.h_tail.c = (16*plane.geo.h_tail.S)/((3.14^2)*plane.geo.h_tail.AR); %ft, h_tail chord length
 plane.geo.h_tail.b = (plane.geo.h_tail.AR * plane.geo.h_tail.S)^0.5; %ft, h_tail span length
 plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.57;
