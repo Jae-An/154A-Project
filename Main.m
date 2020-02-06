@@ -2,7 +2,11 @@ tic
 clc; clear variables;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
+<<<<<<< HEAD
 p = 0;
+=======
+stable = 0;
+>>>>>>> 301659eb37fc4ccf140434cf2760f4a1c7a4e7bb
 i = 0;
 numPlanes = 100;
 resultPlanes = struct('Good',{});
@@ -25,12 +29,18 @@ while  i < numPlanes
     
     %   check if plane is good
     newPlane = stability(newPlane);
+<<<<<<< HEAD
     % check for imagnary lift or drag values
     
     
     if newPlane.data.stability.is_stable && newPlane.data.aero.isreal
         resultPlanes(p+1).Good = newPlane;
         p = p+1;
+=======
+    if newPlane.data.stability.is_stable
+        resultPlanes(stable+1).Good = newPlane;
+        stable = stable + 1;
+>>>>>>> 301659eb37fc4ccf140434cf2760f4a1c7a4e7bb
     end
     i = i+1;
     %   store plane if above is good
