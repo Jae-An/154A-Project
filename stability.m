@@ -17,9 +17,9 @@ function plane = stability(plane)
     plane.data.stability.h_n = h_n;
     
     if (h_n > plane.geo.wing.h_cg)
-        plane.data.stability.is_stable = true;
+        plane.data.test.is_stable = true;
     else
-        plane.data.stability.is_stable = false;
+        plane.data.test.is_stable = false;
     end
     
 end

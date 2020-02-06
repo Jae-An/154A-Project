@@ -28,13 +28,15 @@ plane.geo.wing.lnw = (0.1*plane.geo.body.L) + rand(1)*(0.25*plane.geo.body.L);
 
 plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
+plane.geo.wing.cm_ac = -0.133; %NACA 6412 airfoil from https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19930091662.pdf
 plane.geo.wing.h_t = 0.301; %Nondimensional distance to maximum thickness
 plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
+plane.geo.wing.a_stall = deg2rad(10); % Stall angle for NACA 6412
 
 
 %% horizontal tail
-plane.geo.h_tail.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
-plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
+plane.geo.h_tail.cl_a = 6.92; %Cl/rad for NACA 0012 airfoil
+plane.geo.h_tail.cl_0 = 0; %Cl for 0 AOA for NACA 0012 airfoil
 
 plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.lnw - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
@@ -43,11 +45,11 @@ plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, d
 plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
 % stability components for computing horizontal tail
-epsilon_alpha = 0.3;    %tail angle of attack reduction factor due to downwash
+plane.geo.h_tail.e_a = 0.3;    %tail angle of attack reduction factor due to downwash
 at_aw = plane.geo.h_tail.cl_a/plane.geo.wing.cl_a; %ratio of lift slopes
 margin_of_stability = 0.05 + rand(1)*(0.05);
 
-St_Sw = (margin_of_stability + plane.geo.wing.h_cg - plane.geo.wing.h_ac)/[at_aw*(1 - epsilon_alpha)*(plane.geo.h_tail.h_ac - margin_of_stability - plane.geo.wing.h_cg)];
+St_Sw = (margin_of_stability + plane.geo.wing.h_cg - plane.geo.wing.h_ac)/[at_aw*(1 - plane.geo.h_tail.e_a)*(plane.geo.h_tail.h_ac - margin_of_stability - plane.geo.wing.h_cg)];
 %St_Sw = 0.1;
 plane.geo.h_tail.S = St_Sw*plane.geo.wing.S; %ft^2, h_tail area
 
@@ -58,6 +60,7 @@ plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.57;
 plane.geo.h_tail.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
 plane.geo.h_tail.S_wet = plane.geo.h_tail.S*(1.977 + 0.52*plane.geo.h_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
+plane.geo.h_tail.a_stall = deg2rad(15); % Stall angle for NACA 0012
 %%
 
 

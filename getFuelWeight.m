@@ -27,7 +27,7 @@ CD = plane.data.aero.CD;
 weightPayload = plane.data.weight.retardent;
 weightFinal = plane.data.weight.empty;
 
-CL_CD_1 = CL(end,1)/CD(end,1); %Cruise CL/CD for wet
+CL_CD_1 = CL(end,1)/CD(end,1); %Cruise CL/CD for wet %CHANGE CL/CD FOR ACTUAL CRUISE, NOT MAX
 CL_CD_2 = CL(end,2)/CD(end,2); %Cruise CL/CD for dry
 
 R = 500*5280; %mi * ft/mi (range)
