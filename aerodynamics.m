@@ -75,10 +75,16 @@ for i = 1:100
 
     CD(i,2) = CDi(i,2) + CD0(i);                   %dry mass total drag
     CD(i,1) = CDi(i,1) + CD0(i);                   %
+    
+    
 end
 
-
-
+if ~isreal(CD)
+    error =  'imaginary CD'
+end
+if ~isreal(CL)
+    error = 'imaginary CL'
+end
 
 plane.data.aero.CL = CL;
 plane.data.aero.CD = CD;

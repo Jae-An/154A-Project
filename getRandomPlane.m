@@ -4,7 +4,7 @@ function [plane] = getRandomPlane(plane)
 %rand_value = min_value + rand(1)*(max_value - min_value)
 V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 %fuselage
-plane.geo.body.W = 7 + rand(1)*(15 - 5); %ft, fuselage width
+plane.geo.body.W = 5 + rand(1)*(10 - 5); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
 plane.geo.body.L = 35 + rand(1)*(75 - 35); %ft, fuselage L
 
@@ -48,10 +48,12 @@ at_aw = plane.geo.h_tail.cl_a/plane.geo.wing.cl_a; %ratio of lift slopes
 margin_of_stability = 0.05 + rand(1)*(0.05);
 
 St_Sw = (margin_of_stability + plane.geo.wing.h_cg - plane.geo.wing.h_ac)/[at_aw*(1 - epsilon_alpha)*(plane.geo.h_tail.h_ac - margin_of_stability - plane.geo.wing.h_cg)];
-
+%St_Sw = 0.1;
 plane.geo.h_tail.S = St_Sw*plane.geo.wing.S; %ft^2, h_tail area
+
 plane.geo.h_tail.AR = 4 + rand(1)*(8 - 4); %h_tail aspect ratio
 plane.geo.h_tail.c = ((16*plane.geo.h_tail.S)/(plane.geo.h_tail.AR*3.1415^2))^0.5; %ft, h_tail chord length
+>>>>>>> ed1bf1bb30235296847c2a7733f21a8f894da132
 plane.geo.h_tail.b = (plane.geo.h_tail.AR * plane.geo.h_tail.S)^0.5; %ft, h_tail span length
 plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.57;

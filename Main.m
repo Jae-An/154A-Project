@@ -1,4 +1,6 @@
+
 clc; clear variables;
+a = 'started sim'
 % make an empty array of good planes
 good = 0;
 i = 0;
