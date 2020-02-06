@@ -7,23 +7,18 @@ resultPlanes = struct('Good',{});
 
 % while we have less than (n) good planes:
 while  i < numPlanes
-    %   getRandomPlane()
     newPlane = plane();
     newPlane = getRandomPlane(newPlane);
-    %   nikolai(plane)
+
     newPlane = getPropulsionDetails(newPlane);
     
-    temp = weight_function(newPlane);
-    newPlane = temp(1);
+    newPlane = weight_function(newPlane);
     
-    %   aerodynamics(plane)
     newPlane = aerodynamics(newPlane);
-    
-    %   propulsion(plane)
 
+    % Iterate for fuel weight
+    newPlane = getFuelWeight(newPlane);
     
-    %   stability(plane)
-    %   performance(plane)
     newPlane = getPerformance(newPlane);
     %   check if plane is good
     newPlane = stability(newPlane);
