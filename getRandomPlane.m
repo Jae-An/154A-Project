@@ -23,7 +23,7 @@ plane.geo.wing.h_cg = plane.geo.wing.cg/plane.geo.wing.c; %nondimensional, dista
 plane.geo.wing.ac = 0.25*plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord
 
 plane.geo.wing.h_ac = 0.25; %nondimensional, distance from wing leading edge to AC
-plane.geo.wing.lnw = (0.1*body.L) + rand(1)*(0.25*body.L);
+plane.geo.wing.lnw = (0.1*plane.geo.body.L) + rand(1)*(0.25*plane.geo.body.L);
 % need to define distance from nosetip to wing edge
 
 plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
