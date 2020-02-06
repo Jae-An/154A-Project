@@ -20,6 +20,8 @@ plane.geo.wing.cg = 0 + rand(1)*(12-0); %ft, distance from wing leading edge to 
 plane.geo.wing.h_cg = plane.geo.wing.cg/plane.geo.wing.c; %nondimensional, distance from wing leading edge to CG
 plane.geo.wing.ac = 0.25*plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord
 plane.geo.wing.h_ac = plane.geo.wing.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to AC
+plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
+plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 
 %horizontal tail
 plane.geo.h_tail.S = 10 + rand(1)*(300 - 50); %ft^2, h_tail area
