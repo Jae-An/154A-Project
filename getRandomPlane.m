@@ -53,7 +53,6 @@ plane.geo.h_tail.S = St_Sw*plane.geo.wing.S; %ft^2, h_tail area
 
 plane.geo.h_tail.AR = 4 + rand(1)*(8 - 4); %h_tail aspect ratio
 plane.geo.h_tail.c = ((16*plane.geo.h_tail.S)/(plane.geo.h_tail.AR*3.1415^2))^0.5; %ft, h_tail chord length
->>>>>>> ed1bf1bb30235296847c2a7733f21a8f894da132
 plane.geo.h_tail.b = (plane.geo.h_tail.AR * plane.geo.h_tail.S)^0.5; %ft, h_tail span length
 plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.57;
