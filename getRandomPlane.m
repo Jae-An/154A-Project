@@ -29,6 +29,7 @@ plane.geo.wing.lnw = (0.1*plane.geo.body.L) + rand(1)*(0.25*plane.geo.body.L);
 plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.wing.h_t = 0.301; %Nondimensional distance to maximum thickness
+plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 
 
 %% horizontal tail
@@ -56,6 +57,7 @@ plane.geo.h_tail.b = (plane.geo.h_tail.AR * plane.geo.h_tail.S)^0.5; %ft, h_tail
 plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.57;
 plane.geo.h_tail.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
+plane.geo.h_tail.S_wet = plane.geo.h_tail.S*(1.977 + 0.52*plane.geo.h_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 %%
 
 
@@ -73,7 +75,7 @@ plane.geo.v_tail.h_cg = plane.geo.h_tail.h_cg; %nondimensional, distance from v_
 plane.geo.v_tail.ac = plane.geo.h_tail.ac; %ft, distance from v_tail leading edge to AC, set to quarter chord, set to h_tail value
 plane.geo.v_tail.h_ac = plane.geo.h_tail.h_ac; %nondimensional, distance from v_tail leading edge to AC, set to h_tail value
 plane.geo.v_tail.h_t = 0.301; %nondimensional distance to maximum thickness
-
+plane.geo.v_tail.S_wet = plane.geo.v_tail.S*(1.977 + 0.52*plane.geo.v_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 %aero
 
 
