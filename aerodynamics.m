@@ -15,8 +15,8 @@ v_max = plane.data.requirements.v_max;
 
 v_ref = linspace(v_stall, v_max);
 
-air_density = 0.00238;      %slug/ft3
-viscocity = 3.73*10^-7;     %slug/ft/s
+air_density = 0.002048;      %slug/ft3, 5000 ft.
+viscocity = 3.637*10^-7;     %slug/ft/s, 5000 ft.
 e_tail = 0.3;
 e_wing = 0.3;
 
@@ -86,10 +86,5 @@ plane.data.aero.CD = CD;
 %plane.data.CL_alpha = CL_alpha;
 plane.data.aero.CDi = CDi;
 plane.data.aero.CD0 = CD0;
-
-
-plane.geo.wing.alpha = 5;
-plane.geo.h_tail.alpha = 5;
-plane.geo.v_tail.alpha = 5;
 
 
