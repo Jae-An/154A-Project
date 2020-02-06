@@ -11,9 +11,9 @@ plane.geo.body.L = 35 + rand(1)*(75 - 35); %ft, fuselage L
 tank_length = [(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 %wing
-plane.geo.wing.S = 400 + rand(1)*(1500 - 400); %ft^2, wing area
+plane.geo.wing.S = 400 + rand(1)*(800 - 400); %ft^2, wing area
 plane.geo.wing.AR = 5 + rand(1)*(12 - 5); %wing aspect ratio
-plane.geo.wing.c = ((4*3.1415*plane.geo.wing.S)^2/plane.geo.wing.AR)^0.5; %ft, wing chord length
+plane.geo.wing.c = ((16*plane.geo.wing.S)/(plane.geo.wing.AR*3.1415^2))^0.5; %ft, wing chord length
 plane.geo.wing.b = (plane.geo.wing.AR * plane.geo.wing.S)^0.5; %ft, wing span length
 plane.geo.wing.ThR = 0.12;
 plane.geo.wing.TR = 0.57;
@@ -37,7 +37,7 @@ plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 
 plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.lnw - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
-plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c; %ft, distance from h_tail leading edge to AC, set to quarter chord
+plane.geo.h_tail.ac = plane.geo.h_tail.cg + 0.25*6; %ft, distance from h_tail leading edge to AC, set to quarter chord
 plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to AC
 plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
@@ -49,8 +49,8 @@ margin_of_stability = 0.05 + rand(1)*(0.05);
 St_Sw = (margin_of_stability + plane.geo.wing.h_cg - plane.geo.wing.h_ac)/[at_aw*(1 - epsilon_alpha)*(plane.geo.h_tail.h_ac - margin_of_stability - plane.geo.wing.h_cg)];
 
 plane.geo.h_tail.S = St_Sw*plane.geo.wing.S; %ft^2, h_tail area
-plane.geo.h_tail.AR = 1 + rand(1)*(13 - 7); %h_tail aspect ratio
-plane.geo.h_tail.c = ((4*3.1415*plane.geo.h_tail.S)^2/plane.geo.h_tail.AR)^0.5; %ft, h_tail chord length
+plane.geo.h_tail.AR = 4 + rand(1)*(8 - 4); %h_tail aspect ratio
+plane.geo.h_tail.c = ((16*plane.geo.h_tail.S)/(plane.geo.h_tail.AR*3.1415^2))^0.5; %ft, h_tail chord length
 plane.geo.h_tail.b = (plane.geo.h_tail.AR * plane.geo.h_tail.S)^0.5; %ft, h_tail span length
 plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.TR = 0.57;
