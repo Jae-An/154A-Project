@@ -19,7 +19,7 @@ plane.prop = struct('W',[],'hp',[],'eta_p',[],'c_p',[],'fuel_mass',[]);
 plane.data = struct('requirements',[],'performance',[],'aero',[],'stability',[]);
     plane.data.requirements = struct('R',500,'v_max',367,'v_stall',146);
     plane.data.weight = struct('W',[],'dry',[],'wet',[],'empty',[],'fuel',[],'retardent',[]);
-    plane.data.performance = struct('R',[],'E',[],'ROC',[],'v_max',217.244,'v_stall',86.8976,'N',5);
+    plane.data.performance = struct('R',[],'E',[],'ROC',[],'v_max',366.667,'v_stall',146.667,'N',5);
     plane.data.aero = struct('CL',[],'CL_alpha',[],'CD',[],'CD0',[],'CDi',[]);
     plane.data.stability = struct('h_n',[]);
 
