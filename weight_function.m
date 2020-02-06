@@ -19,7 +19,7 @@ N = 5;%plane.data.N;                      %Ultimate Load Factor (1.5 times limit
 sweep_angle = plane.geo.wing.sweep * (3.14/180);            %Deg %Wing 1/4 chord sweep angle
 taper_ratio = plane.geo.wing.TR;     %Taper Ratio
 thickness_ratio_wing = plane.geo.wing.ThR;                  %Maximum Thickness Ratio (GIVEN)
-v_max = plane.data.requirements.v_max;        %FIX UNITS         %kts   %Equivalent Vmax at SL
+v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %Equivalent Vmax at SL
 
 
     W_wing = 96.948 * ((Weight * N/10^5)^0.65*(AR/cos(sweep_angle))^0.57*(S/100)^0.61*((1 + taper_ratio)/(2*thickness_ratio_wing))^0.36*(1+v_max/500)^0.5)^0.993;
