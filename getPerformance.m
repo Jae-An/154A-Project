@@ -1,16 +1,29 @@
 function plane = getPerformance(plane) %,RC,SC
 
-prop = plane.prop;
-weight = plane.data.weight;
-V_cruise = 200*1.466; %ft/s
+W = plane.data.weight.wet - plane.data.weight.retardent;
 
-%Drag_cruise = plane.data.aero.CD(50,2) * 0.5 * 0.00238 * (V_cruise^2) * plane.geo.wing.S;
-Drag_cruise = plane.data.aero.CD(50,1) * 0.5 * 0.00238 * (V_cruise^2) * plane.geo.wing.S;
+%ROC = (Pav - Preq) / W
+Pav = 2 * plane.prop.hp * 550;
 
-plane.data.performance.R = (prop.eta_p/(prop.c_p / (550*60*60) ))*(plane.data.aero.CL(50,2)/plane.data.aero.CD(50,2))*log(weight.wet/weight.dry);
+S = plane.geo.wing.S;
+CD = plane.data.aero.CD(50,1);
+CL = plane.data.aero.CL(50,1);
+rho = 0.00238;
+
+Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
+
+plane.data.performance.ROC = (Pav - Preq) / W;
+
+
+% R = (npr / cp) * CL/CD * ln(Wi/Wf)
+
+npr = plane.prop.eta_p;
+cp = plane.prop.c_p / (550 * 60 *60);
+Wi = plane.data.weight.wet;
+Wf = plane.data.weight.dry;
+
+plane.data.performance.R = (npr / cp) * (CL/CD) * log(Wi/Wf);
  
-plane.data.performance.ROC = ((prop.hp*550) - (V_cruise*Drag_cruise)) / weight.W;
-
 
 end
 
