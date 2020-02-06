@@ -1,10 +1,10 @@
 
 clc; clear variables;
-a = 'started sim'
+fprintf('Optimization Started \n')
 % make an empty array of good planes
 good = 0;
 i = 0;
-numPlanes = 10;
+numPlanes = 100;
 resultPlanes = struct('Good',{});
 
 % while we have less than (n) good planes:
@@ -33,5 +33,37 @@ while  i < numPlanes
 
         
 end
+%%
+% initialize data variables
+R = zeros(1,numPlanes);
+ROC = zeros(1,numPlanes);
+v_stall = zeros(1,numPlanes);
+L = zeros(1,numPlanes);
+b = zeros(1,numPlanes);
+W = zeros(1,numPlanes);
 
-%plot drag / velocity curve
+% extract data for n planes
+for n = 1:numPlanes
+   R(n) =  resultPlanes(n).Good.data.performance.R;
+   ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
+   v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
+   L(n) =  resultPlanes(n).Good.geo.body.L;
+   b(n) =  resultPlanes(n).Good.geo.wing.b;
+   W(n) =  resultPlanes(n).Good.data.weight.W;
+    
+end
+%%
+
+figure
+stem3(R,ROC,v_stall)
+xlabel('Range')
+ylabel('Rate of Climb')
+zlabel('v_stall')
+% plot drag / velocity curve
+
+figure
+stem3(b,L,W)
+ylabel('Length')
+ylabel('Span')
+zlabel('Weight')
+
