@@ -44,7 +44,7 @@ plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, d
 % stability components for computing horizontal tail
 epsilon_alpha = 0.3;    %tail angle of attack reduction factor due to downwash
 at_aw = plane.geo.h_tail.cl_a/plane.geo.wing.cl_a; %ratio of lift slopes
-margin_of_stability = 0.05 + rand(1)*(0.5);
+margin_of_stability = 0.05 + rand(1)*(0.05);
 
 St_Sw = (margin_of_stability + plane.geo.wing.h_cg - plane.geo.wing.h_ac)/[at_aw*(1 - epsilon_alpha)*(plane.geo.h_tail.h_ac - margin_of_stability - plane.geo.wing.h_cg)];
 
