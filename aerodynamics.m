@@ -79,13 +79,13 @@ for i = 1:100
 
    
    %% induced drag
-    CDi(i,2) = ((CL(i,2)^2)/(pi*wing.AR*e_wing)); %dry mass induced drag
-    CDi(i,1) = ((CL(i,1)^2)/(pi*wing.AR*e_wing)); %wet mass induced drag
+    CDi(i,2) = ((CL(i,2)^2)/(pi*wing.AR*e_wing));    %dry mass induced drag
+    CDi(i,1) = ((CL(i,1)^2)/(pi*wing.AR*e_wing));    %wet mass induced drag
 
-    CD(i,2) = CDi(i,2) + CD0(i);                   %dry mass total drag
-    CD(i,1) = CDi(i,1) + CD0(i);                   %
-    D(i) = 0.5*air_density*v_ref(i)^2*CD(i,2)*wing.S;
-    L(i) = 0.5*air_density*v_ref(i)^2*CL(i,2)*wing.S;
+    CD(i,2) = CDi(i,2) + CD0(i);                        %dry mass total drag
+    CD(i,1) = CDi(i,1) + CD0(i);                        %wet mass total drag
+    D(i) = 0.5*air_density*v_ref(i)^2*CD(i,2)*wing.S;   %drag force values for dry mass 
+    L(i) = 0.5*air_density*v_ref(i)^2*CL(i,2)*wing.S;   %dry masss lift force values
 end
 
 
@@ -104,9 +104,9 @@ plane.data.aero.CD0 = CD0;
 
 plane.data.aero.D = D;
 
-[minD, minDind] = min(D);
-plane.data.aero.v_cruise = v_ref(minDind);
-plane.data.aero.LD = L(minDind)/minD;
+[minD, minD_index] = min(D);                    %minimum drag value and index in drag array
+plane.data.aero.v_cruise = v_ref(minD_index);   %v_cruise is defined as the velocity with minimum drag -> minimum power required
+plane.data.aero.LD = L(minD_index)/minD;        %no idea what purpose this serves, but L/D at min Drag
 
 
 
