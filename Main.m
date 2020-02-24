@@ -6,7 +6,7 @@ fprintf('Optimization Started \n')
 p = 0;
 stable = 0;
 i = 0;
-numPlanes = 100;
+numPlanes = 20;
 resultPlanes = struct('Good',{});
 
 % while we have less than (n) good planes:
@@ -45,8 +45,8 @@ while  i < numPlanes
         v_max = newPlane.data.requirements.v_max;
         v = linspace(v_stall,v_max);
         
-        figure;
-        plot(v,CD);
+        %figure;
+        %plot(v,CD);
         
     end
         

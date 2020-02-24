@@ -1,7 +1,7 @@
 function [plane] = getFuelWeight(plane)
 % Iterate to find fuel weight
 
-err = 0.1; % lb tolerance
+err = 10; % lb tolerance
 
 
 while 1
