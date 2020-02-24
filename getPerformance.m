@@ -12,7 +12,7 @@ rho = 0.00238;
 Vcruise = 290;
 
 %Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
-Preq = CD * 0.5 * .00238 * (Vcruise^2) * S * Vcruise;
+Preq = CD * 0.5 * rho * (Vcruise^2) * S * Vcruise;
 
 plane.data.performance.ROC = (Pav - Preq) / W;
 
