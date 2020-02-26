@@ -10,16 +10,16 @@ AR = plane.geo.wing.AR;
 e = 0.35; % approx oswald efficiency for an eliptical wing
 CD0_min = min(plane.data.aero.CD0);
 CL_maxRC = (3*CD0_min*3.1415*AR*e)^0.5;
-CD_max_RC = CDO_min + (CL_maxRC^2)/(3.1415*AR*e);
+CD_max_RC = CD0_min + (CL_maxRC^2)/(3.1415*AR*e);
 rho = 0.00238;
-V_ref = Dry_weight/(0.5*rho*CL_maxRC*S);
+V_ref = (Dry_weight/(0.5*rho*CL_maxRC*S))^0.5;
 
 %Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
-Preq = CD_max_RC * 0.5 * rho * (V_ref^2) * S * V_ref;
+Preq = 0.5 * CD_max_RC * rho * (V_ref^2) * S * V_ref;
 
 plane.data.performance.ROC = (Pav - Preq) / Dry_weight;
 
-
+%% range
 % R = (npr / cp) * CL/CD * ln(Wi/Wf)
 
 plane.data.performance.R = 2640000;
