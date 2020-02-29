@@ -15,28 +15,31 @@ while  i < numPlanes
     newPlane = getRandomPlane(newPlane);
 
     newPlane = getPropulsionDetails(newPlane);
+        % note: need to randomize fuel mass
     
     newPlane = weight_function(newPlane);
     
     newPlane = aerodynamics(newPlane);
 
-    % Iterate for fuel weight
-    newPlane = getFuelWeight(newPlane);
-    
     newPlane = getPerformance(newPlane);
     
-    %   check if plane is good
+    %   check if plane performance and stability is good
     newPlane = stability(newPlane);
-
+    [rocGood, VcGood] = isGood(newPlane);
+    
+    
     % check for imagnary lift or drag values
-    
-    
-    if newPlane.data.stability.is_stable && newPlane.data.aero.isreal
-        resultPlanes(p+1).Good = newPlane;
-        p = p+1;
+    if newPlane.data.aero.isreal
+        % check if plane is "good"
+        if newPlane.data.stability.is_stable && rocGood && VcGood
+        
+            resultPlanes(p+1).Good = newPlane; %   store plane if above is good
+            p = p+1;
+            i = i+1;
+        end
     end
-    i = i+1;
-    %   store plane if above is good
+    
+    
     
     if isreal(newPlane.data.aero.CD) && isreal(newPlane.data.aero.CL)
         

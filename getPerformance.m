@@ -1,26 +1,37 @@
 function plane = getPerformance(plane) %,RC,SC
 
-W = plane.data.weight.wet - plane.data.weight.retardent;
+Dry_weight = plane.data.weight.wet - plane.data.weight.retardent;
 
-%ROC = (Pav - Preq) / W
+%% ROC = (Pav - Preq) / W
 Pav = 2 * plane.prop.hp * 550;
 
 S = plane.geo.wing.S;
-CD = plane.data.aero.CD(50,2);
-CL = plane.data.aero.CL(50,2);
+AR = plane.geo.wing.AR;
+e = 0.35; % approx oswald efficiency for an eliptical wing
+CD0_min = min(plane.data.aero.CD0);
+CL_maxRC = (3*CD0_min*3.1415*AR*e)^0.5;
+CD_max_RC = CD0_min + (CL_maxRC^2)/(3.1415*AR*e);
 rho = 0.00238;
-Vcruise = 290;
+V_ref = (Dry_weight/(0.5*rho*CL_maxRC*S))^0.5;
 
 %Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
-Preq = CD * 0.5 * .00238 * (Vcruise^2) * S * Vcruise;
+Preq = 0.5 * CD_max_RC * rho * (V_ref^2) * S * V_ref;
 
-plane.data.performance.ROC = (Pav - Preq) / W;
+plane.data.performance.ROC = (Pav - Preq) / Dry_weight;
 
+%% range
+prop = plane.prop;
+weight = plane.data.weight;
+LD = plane.data.aero.LD;
+weightInitial1 = weight.wet;
+weightFinal1 = weightInitial1 - weight.fuel_1;
+weightInitial2 = weightFinal1 - weight.retardent;
+weightFinal2 = weight.empty;
 
-% R = (npr / cp) * CL/CD * ln(Wi/Wf)
+R1 = (prop.eta_p / prop.c_p) * LD(1) * log(weightInitial1/weightFinal1);
+R2 = (prop.eta_p / prop.c_p) * LD(2) * log(weightInitial2/weightFinal2);
 
-plane.data.performance.R = 2640000;
+plane.data.performance.R = R1 + R2;
  
 
 end
-

@@ -11,7 +11,7 @@ plane.geo.body.L = 35 + rand(1)*(75 - 35); %ft, fuselage L
 tank_length = [(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 %wing
-plane.geo.wing.S = 400 + rand(1)*(800 - 400); %ft^2, wing area
+plane.geo.wing.S = 350 + rand(1)*(900 - 350); %ft^2, wing area
 plane.geo.wing.AR = 5 + rand(1)*(12 - 5); %wing aspect ratio
 plane.geo.wing.c = ((16*plane.geo.wing.S)/(plane.geo.wing.AR*3.1415^2))^0.5; %ft, wing chord length
 plane.geo.wing.b = (plane.geo.wing.AR * plane.geo.wing.S)^0.5; %ft, wing span length
@@ -45,7 +45,7 @@ plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 % stability components for computing horizontal tail
 epsilon_alpha = 0.3;    %tail angle of attack reduction factor due to downwash
 at_aw = plane.geo.h_tail.cl_a/plane.geo.wing.cl_a; %ratio of lift slopes
-margin_of_stability = 0.05 + rand(1)*(0.05);
+margin_of_stability = 0 + rand(1)*(0.1);
 
 St_Sw = (margin_of_stability + plane.geo.wing.h_cg - plane.geo.wing.h_ac)/[at_aw*(1 - epsilon_alpha)*(plane.geo.h_tail.h_ac - margin_of_stability - plane.geo.wing.h_cg)];
 %St_Sw = 0.1;
