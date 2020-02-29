@@ -33,9 +33,11 @@ CL_CD_2 = CL(end,2)/CD(end,2); %Cruise CL/CD for dry
 R = 500*5280; %mi * ft/mi (range)
 
 % First leg (with retardent)
-weightRatio1 = exp((R/2)*(cp/prop.eta_p)/(CL_CD_1));
+eta = max(prop.eta_p); % assuming eta at cruise conditions (maximum eta
+
+weightRatio1 = exp((R/2)*(cp/eta)/(CL_CD_1));
 % Second leg (no retardent)
-weightRatio2 = exp((R/2)*(cp/prop.eta_p)/(CL_CD_2));
+weightRatio2 = exp((R/2)*(cp/eta)/(CL_CD_2));
 
 % Overall
 weightRatio = weightRatio1*(weightRatio2 + (weightPayload/weightFinal));
