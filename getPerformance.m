@@ -28,8 +28,9 @@ weightFinal1 = weightInitial1 - weight.fuel_1;
 weightInitial2 = weightFinal1 - weight.retardent;
 weightFinal2 = weight.empty;
 
-R1 = (prop.eta_p / prop.c_p) * LD(1) * log(weightInitial1/weightFinal1);
-R2 = (prop.eta_p / prop.c_p) * LD(2) * log(weightInitial2/weightFinal2);
+eta_p = max(prop.eta_p); %assuming flying at cruise speed with maximum propellar efficiency
+R1 = (eta_p / prop.c_p) * LD(1) * log(weightInitial1/weightFinal1);
+R2 = (eta_p / prop.c_p) * LD(1) * log(weightInitial2/weightFinal2);
 
 plane.data.performance.R = R1 + R2;
  
