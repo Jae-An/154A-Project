@@ -27,13 +27,13 @@ while  i < numPlanes
     
     %   check if plane performance and stability is good
     newPlane = stability(newPlane);
-    [rocGood, VcGood] = isGood(newPlane);
+    [rocGood, VcGood,GeoIsGood] = isGood(newPlane);
     
     
     % check for imagnary lift or drag values
     if newPlane.data.aero.isreal
         % check if plane is "good"
-        if newPlane.data.stability.is_stable && rocGood && VcGood
+        if newPlane.data.stability.is_stable && rocGood && VcGood && GeoisGood
         
             resultPlanes(p+1).Good = newPlane; %   store plane if above is good
             p = p+1;
