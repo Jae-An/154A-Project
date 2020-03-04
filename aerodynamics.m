@@ -105,8 +105,12 @@ function plane = aerodynamics(plane)
     r = LD(1)/LD(2);
     f = @(x,r,Wp,Wf,Wi) (x.^(r+1) - Wp*x.^r - Wf*Wi^r); %rearranged Bregeut eq whose zero gives weightFinal1
     fun = @(x) f(x,r,weightPayload,weightFinal2,weightInitial);
-    weightFinal1 = fzero(fun,weightInitial-(weightFuel/2));
-    
+    if isreal(weightInitial)
+        weightFinal1 = fzero(fun,weightInitial-(weightFuel/2));
+    else
+        % not ideal but only way this stops breaking
+        weightFinal1 = real(weightInitial);
+    end
     plane.data.weight.fuel_1 = weightInitial - weightFinal1;
 
     if isreal(CD) && isreal(CL)

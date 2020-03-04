@@ -31,7 +31,7 @@ while  i < numPlanes
     % check for imagnary lift or drag values
     if newPlane.data.aero.isreal
         % check if plane is "good"
-        if newPlane.data.stability.is_stable && rocGood && VcGood && GeoisGood
+        if newPlane.data.stability.is_stable && rocGood && VcGood && GeoIsGood
         
             resultPlanes(p+1).Good = newPlane; %   store plane if above is good
             p = p+1;
@@ -60,7 +60,7 @@ R = zeros(p,1);
 ROC = zeros(p,1);
 v_stall = zeros(p,1);
 v_max = zeros(p,1);
-v_cruise = zeros(p,1);
+v_cruise = zeros(p,2);
 L = zeros(p,1);
 b = zeros(p,1);
 W = zeros(p,1);
@@ -80,8 +80,8 @@ for n = 1:p
    W(n) =  resultPlanes(n).Good.data.weight.W;
    CL(:,n) = resultPlanes(n).Good.data.aero.CL(:,2);
    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,2);
-   D(:,n) = resultPlanes(n).Good.data.aero.D;
-   v_cruise(n) = resultPlanes(n).Good.data.aero.v_cruise;
+   D(:,n:n+1) = resultPlanes(n).Good.data.aero.D;
+   v_cruise(n,:) = resultPlanes(n).Good.data.aero.v_cruise;
    LD(n) = resultPlanes(n).Good.data.aero.LD;
 end
 v_ref = linspace(v_stall(1), v_max(1),100);
@@ -90,9 +90,10 @@ figure
 x = v_cruise;
 y = ROC;
 z = LD;
-qx = linspace(min(x),max(y),50);
-qy = linspace(min(x),max(y),50);
-F = scatteredInterpolant(x,y,z);
+qx = linspace(min(x(:,1)),max(y),50); %picked the first column but this should be fixed more properly
+qy = linspace(min(x(:,1)),max(y),50);
+
+F = scatteredInterpolant(x(:,1),y,z);
 [Xq,Yq] = meshgrid(qx, qy);
 F.Method = 'natural';
 Z = F(Xq,Yq);
@@ -107,9 +108,9 @@ figure
 x = b;
 y = L;
 z = v_cruise;
-qx = linspace(min(x),max(y),50);
-qy = linspace(min(x),max(y),50);
-F = scatteredInterpolant(x,y,z);
+qx = linspace(min(x(:,1)),max(y),50);
+qy = linspace(min(x(:,1)),max(y),50);
+F = scatteredInterpolant(x(:,1),y,z(:,1));
 [Xq,Yq] = meshgrid(qx, qy);
 F.Method = 'natural';
 Z = F(Xq,Yq);
