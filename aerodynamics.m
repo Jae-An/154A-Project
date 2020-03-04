@@ -100,14 +100,12 @@ function plane = aerodynamics(plane)
         end
         
         
-        
-        
-        [minD, minD_index] = min(D(:,j));                    %minimum drag value and index in drag array
         [maxDiff, maxDiff_index] = max(Difference(:,j));
+        D_cruise = D(maxDiff_index,j);                     %minimum drag value and index in drag array
         plane.data.aero.v_cruise(j) = v_ref(maxDiff_index);   %v_cruise is now defined as max diff between drag and available thrust
-        plane.data.aero.LD(j) = L(minD_index,j)/minD;        %no idea what purpose this serves, but L/D at min Drag
+        plane.data.aero.LD(j) = L(maxDiff_index,j)/D_cruise;        %no idea what purpose this serves, but L/D at cruise Drag
 
-    end                                                     % *** V cruise should be biggest diff betw thrust available and drag
+    end                                                     
     
     %Calculate fuel used for first leg of flight
     LD = plane.data.aero.LD;
