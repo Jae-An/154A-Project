@@ -15,14 +15,12 @@ while  i < numPlanes
     newPlane = getRandomPlane(newPlane);
 
     newPlane = getPropulsionDetails(newPlane);
+        % note: need to randomize fuel mass
     
     newPlane = weight_function(newPlane);
     
     newPlane = aerodynamics(newPlane);
 
-    % Iterate for fuel weight
-    newPlane = getFuelWeight(newPlane);
-    
     newPlane = getPerformance(newPlane);
     
     %   check if plane performance and stability is good

@@ -20,10 +20,18 @@ Preq = 0.5 * CD_max_RC * rho * (V_ref^2) * S * V_ref;
 plane.data.performance.ROC = (Pav - Preq) / Dry_weight;
 
 %% range
-% R = (npr / cp) * CL/CD * ln(Wi/Wf)
+prop = plane.prop;
+weight = plane.data.weight;
+LD = plane.data.aero.LD;
+weightInitial1 = weight.wet;
+weightFinal1 = weightInitial1 - weight.fuel_1;
+weightInitial2 = weightFinal1 - weight.retardent;
+weightFinal2 = weight.empty;
 
-plane.data.performance.R = 2640000;
+R1 = (prop.eta_p / prop.c_p) * LD(1) * log(weightInitial1/weightFinal1);
+R2 = (prop.eta_p / prop.c_p) * LD(2) * log(weightInitial2/weightFinal2);
+
+plane.data.performance.R = R1 + R2;
  
 
 end
-

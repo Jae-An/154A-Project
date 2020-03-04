@@ -1,0 +1,57 @@
+function plane = getPerformance(plane) %,RC,SC
+
+Dry_weight = plane.data.weight.wet - plane.data.weight.retardent;
+
+%% ROC = (Pav - Preq) / W
+Pav = 2 * plane.prop.hp * 550;
+
+S = plane.geo.wing.S;
+AR = plane.geo.wing.AR;
+e = 0.35; % approx oswald efficiency for an eliptical wing
+CD0_min = min(plane.data.aero.CD0);
+CL_maxRC = (3*CD0_min*3.1415*AR*e)^0.5;
+CD_max_RC = CD0_min + (CL_maxRC^2)/(3.1415*AR*e);
+rho = 0.00238;
+V_ref = (Dry_weight/(0.5*rho*CL_maxRC*S))^0.5;
+
+%Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
+Preq = 0.5 * CD_max_RC * rho * (V_ref^2) * S * V_ref;
+
+plane.data.performance.ROC = (Pav - Preq) / Dry_weight;
+
+%% range
+
+prop = plane.prop;
+cp = prop.c_p / (550*60*60);
+LD = plane.data.aero.LD;
+weightPayload = plane.data.weight.retardent;
+weightFinal2 = plane.data.weight.empty;
+weightInitial = weightFinal2 + weightPayload + prop.fuel_mass;
+weightFinal1 = newtonMethod(weightInitial-(prop.fuel_mass/2), weightPayload, weightInitial, weightFinal2, LD);
+
+R1 = (prop.eta_p / cp) * LD * ln(weightInitial/Wweigh)
+
+plane.data.performance.R = 2640000;
+ 
+
+end
+
+function zero = newtonMethod(guess, Wp, Wi, Wf, r)
+%performs Newton's method on the Bregeut function that requires
+% first leg dist = second leg dist to find first leg fuel consumption
+% Note: r = L/D
+x = guess;
+eps = 0.00001;
+err = 1;
+while err > eps
+    zero = guess;
+    
+    fx = x^(r+1) - Wp*x^r - Wf*Wi^r;
+    fx_prime = (r+1)*x^r - r*Wp*x^r-1;
+    x = x - fx/fx_prime;
+    guess = x;
+    
+    err = abs(guess-zero); 
+end
+
+end
