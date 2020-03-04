@@ -127,5 +127,10 @@ hold on
 for i = 1:p
     plot(v_ref,D(:,i))
 end
+eta = resultPlanes(1).Good.prop.eta_p;
+hp = resultPlanes(1).Good.prop.hp;
+thrust = (hp * 550 * eta) ./ v_ref;
+plot(v_ref,thrust);
+hold off
 toc
 %%
