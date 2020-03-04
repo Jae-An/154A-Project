@@ -24,6 +24,14 @@ function plane = aerodynamics(plane)
     CDi = zeros(100,2);
     D = zeros(100,2);
     L = zeros(100,2);
+    
+    
+    %prop stuff
+    eta = plane.prop.eta_p; % eta and hp same for all planes so I just used the first one
+    hp = plane.prop.hp;
+    thrust = (hp * 550 * eta) ./ v_ref;
+    thrust = thrust.';
+    Difference = zeros(100,2);
 
     for j = 1:2
         for i = 1:100
@@ -86,14 +94,20 @@ function plane = aerodynamics(plane)
             CD(i,j) = CDi(i,j) + CD0(i);                        %total drag
             D(i,j) = 0.5*air_density*v_ref(i)^2*CD(i,j)*wing.S;   %drag force values for dry mass 
             L(i,j) = 0.5*air_density*v_ref(i)^2*CL(i,j)*wing.S;   %dry mass lift force values
+            
+            Difference(i,j) = thrust(i) - D(i,j);
 
         end
-
+        
+        
+        
+        
         [minD, minD_index] = min(D(:,j));                    %minimum drag value and index in drag array
-        plane.data.aero.v_cruise(j) = v_ref(minD_index);   %v_cruise is defined as the velocity with minimum drag -> minimum power required
+        [maxDiff, maxDiff_index] = max(Difference(:,j));
+        plane.data.aero.v_cruise(j) = v_ref(maxDiff_index);   %v_cruise is now defined as max diff between drag and available thrust
         plane.data.aero.LD(j) = L(minD_index,j)/minD;        %no idea what purpose this serves, but L/D at min Drag
 
-    end
+    end                                                     % *** V cruise should be biggest diff betw thrust available and drag
     
     %Calculate fuel used for first leg of flight
     LD = plane.data.aero.LD;

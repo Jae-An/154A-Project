@@ -127,7 +127,7 @@ hold on
 for i = 1:p
     plot(v_ref,D(:,i))
 end
-eta = resultPlanes(1).Good.prop.eta_p;
+eta = resultPlanes(1).Good.prop.eta_p; % eta and hp same for all planes so I just used the first one
 hp = resultPlanes(1).Good.prop.hp;
 thrust = (hp * 550 * eta) ./ v_ref;
 plot(v_ref,thrust);
