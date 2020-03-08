@@ -41,7 +41,6 @@ plane.prop.eta_p = interp1(J_table, eta_table, J); %this works, need to integrat
 
 end
 
-=======
 function [plane] = getPropulsionDetails(plane)
 
 % we could have a bunch of different engines and have this function pick
@@ -85,4 +84,3 @@ plane.prop.eta_p = interp1(J_table, eta_table, J); %this works, need to integrat
 
 end
 
->>>>>>> 41d00536efe48b9249638b3b76d52d2317de84e5
