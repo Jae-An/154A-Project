@@ -18,7 +18,7 @@ function plane = aerodynamics(plane)
     e_tail = 0.3;
     e_wing = 0.85;
 
-    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is leg 2(no retardent, no first leg fuel)
+    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent)
     CD = zeros(100,2);
     CD0 = zeros(100,1);
     CDi = zeros(100,2);
