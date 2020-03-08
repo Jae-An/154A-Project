@@ -2,75 +2,72 @@ tic
 clc; clear variables;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
-
-p = 0;
 stable = 0;
-i = 0;
-numPlanes = 20;
-resultPlanes = struct('Good',{});
-counter = 0;
+g = 0;
+b = 0;
+numGoodPlanes = 100;
+resultPlanes = struct(['Good','Bad'],{});
+
 % while we have less than (n) good planes:
-while  i < numPlanes
+fprintf('Finding good planes... \n')
+while  g < numGoodPlanes
+    fprintf('.')
+    if mod(g+b,100) == 0
+        fprintf('\n')
+    end
+    
     newPlane = plane();
     newPlane = getRandomPlane(newPlane);
-
     newPlane = getPropulsionDetails(newPlane);
-        % note: need to randomize fuel mass
-    
+    % TODO: need to randomize fuel mass
     newPlane = weight_function(newPlane);
-    
     newPlane = aerodynamics(newPlane);
-
-    newPlane = getPerformance(newPlane);
-    
-    %   check if plane performance and stability is good
+    newPlane = getPerformance(newPlane); 
+    % check if plane performance and stability is good
     newPlane = stability(newPlane);
-    [rocGood, VcGood, rangeGood, GeoIsGood] = isGood(newPlane);
     
     
     % check for imagnary lift or drag values
-    if newPlane.data.aero.isreal
-        % check if plane is "good"
-        if newPlane.data.stability.is_stable && rocGood && rangeGood && VcGood && GeoIsGood
-        
-            resultPlanes(p+1).Good = newPlane; %   store plane if above is good
-            p = p+1;
-            i = i+1;
-        end
+    if isGood(newPlane)
+       resultPlanes(g+1).Good = newPlane; %   store plane if above is good
+       g = g+1;
+    else
+       resultPlanes(b+1).Bad = newPlane;
+       b = b+1;
     end
     
     
     
     if isreal(newPlane.data.aero.CD) && isreal(newPlane.data.aero.CL)
-        
         CD = newPlane.data.aero.CD;
         v_stall = newPlane.data.requirements.v_stall;
         v_max = newPlane.data.requirements.v_max;
         v = linspace(v_stall,v_max);
         
-        %figure;
-        %plot(v,CD);
-        
     end
-    counter = counter + 1; 
+        
 end
 %%
+fprintf('\n\n%d good planes found \n',g)
+fprintf('%d bad planes discarded \n',b)
+
+%%
 % initialize data variables
-R = zeros(p,1);
-ROC = zeros(p,1);
-v_stall = zeros(p,1);
-v_max = zeros(p,1);
-v_cruise = zeros(p,2);
-L = zeros(p,1);
-b = zeros(p,1);
-W = zeros(p,1);
-CL = zeros(100,p);
-CD = zeros(100,p);
-D = zeros(100,p);
-LD = zeros(p,1);
+R = zeros(g,1);
+ROC = zeros(g,1);
+v_stall = zeros(g,1);
+v_max = zeros(g,1);
+v_cruise = zeros(g,2);
+L = zeros(g,1);
+b = zeros(g,1);
+W = zeros(g,1);
+CL = zeros(100,g);
+CD = zeros(100,g);
+D = zeros(100,g);
+LD = zeros(g,1);
 
 % extract data for n planes
-for n = 1:p
+for n = 1:g
    R(n) =  resultPlanes(n).Good.data.performance.R;
    ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
    v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
@@ -124,8 +121,8 @@ set(gca, 'FontSize', 17, 'FontWeight', 'bold')
 %%
 figure
 hold on
-for i = 1:p
-    plot(v_ref,D(:,i))
+for n = 1:g
+    plot(v_ref,D(:,n))
 end
 eta = resultPlanes(1).Good.prop.eta_p; % eta and hp same for all planes so I just used the first one
 hp = resultPlanes(1).Good.prop.hp;

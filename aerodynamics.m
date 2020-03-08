@@ -128,7 +128,7 @@ function plane = aerodynamics(plane)
     if isreal(CD) && isreal(CL)
         plane.data.aero.isreal = true;
     else
-        fprintf('imaginary CD or CL for plane \n')
+        % fprintf('imaginary CD or CL for plane \n')
         plane.data.aero.isreal = false;
     end
 
