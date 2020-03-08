@@ -27,12 +27,12 @@ v_thr = plane.geo.v_tail.ThR;
 v_tr = plane.geo.v_tail.TR;
 v_sweep = plane.geo.v_tail.sweep; % degrees, sweep length
 
-
-wingColor     = .5*[1 1 1];
-fusColor      = .5*[1 1 1];
-tailWingColor = .5*[1 1 1];
-finColor      = .5*[1 1 1];
-propColor     = .5*[1 1 1];
+color = [1 0.8 0.79];
+wingColor     = color;
+fusColor      = color;
+tailWingColor = color;
+finColor      = color;
+propColor     = color;
 edgeColor     = 'k';
 linestyle     = '-'; 
 scale         = 1; 
@@ -46,7 +46,7 @@ w_b = w_b*scale;
 w_c = w_c*scale; % changing wingWidth will affect several dimensions
 h_b = h_b*scale; 
 h_c = h_b*scale; 
-f_L = f_L*scale;
+f_L = f_L*scale-h_c;
 f_r = f_r*scale;  
 % Center the dimensions: 
 y = y+w_c; 
@@ -83,7 +83,7 @@ h(2) = surface(x+xcn,y-ycn,z+zcn*zscale,...
 x1 = xcf(1,:); 
 x2 = .8*x1;% zeros(size(x1)); 
 y1 = f_L*ones(size(x1)); 
-y2 = y1+h_c; 
+y2 = y1+h_c;
 z1 = zcf(1,:); 
 z2 = f_r*ones(size(z1)); 
 h(3) = surface(x+[x1;x2],y-[y1;y2],z+[z1;z2]*zscale,...
@@ -131,10 +131,10 @@ h(9) = surface(x-xts,y-yts,z+zts*zscale,...
 xp = .4*w_c*sin(0:.2:2*pi); 
 zp = .4*w_c*cos(0:.2:2*pi)+.4*w_c; 
 yp = zeros(size(xp))-1.2*w_c; 
-h(10) = patch(x+xp-2.16*w_c,y+yp,z+zp*zscale,propColor); 
-h(11) = patch(x+xp+2.16*w_c,y+yp,z+zp*zscale,propColor); 
-h(12) = patch(x+xp-1.2*w_c,y+yp,z+zp*zscale,propColor); 
-h(13) = patch(x+xp+1.2*w_c,y+yp,z+zp*zscale,propColor); 
+h(10) = patch(x+xp-w_c,y+yp,z+zp*zscale,propColor); 
+h(11) = patch(x+xp+w_c,y+yp,z+zp*zscale,propColor); 
+h(12) = patch(x+xp-w_c,y+yp,z+zp*zscale,propColor); 
+h(13) = patch(x+xp+w_c,y+yp,z+zp*zscale,propColor); 
 set(h(10:13),'facealpha',.2,'edgealpha',.5)
 
 %% Set view

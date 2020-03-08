@@ -5,7 +5,7 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0;
 b = 0;
-numGoodPlanes = 100;
+numGoodPlanes = 50;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
@@ -49,6 +49,7 @@ v_cruise = zeros(g,2);
 L = zeros(g,1);
 b = zeros(g,1);
 W = zeros(g,1);
+S = zeros(g,1);
 CL = zeros(100,g);
 CD = zeros(100,g);
 D = zeros(100,g);
@@ -56,11 +57,12 @@ LD = zeros(g,1);
 
 % extract data for n planes
 for n = 1:g
-   R(n) =  resultPlanes(n).Good.data.performance.R./5280; % miles
+   R(n) =  resultPlanes(n).Good.data.performance.R; % ft
    ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
    v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
    v_max(n) =  resultPlanes(n).Good.data.performance.v_max;
    L(n) =  resultPlanes(n).Good.geo.body.L;
+   S(n) =  resultPlanes(n).Good.geo.wing.S;
    b(n) =  resultPlanes(n).Good.geo.wing.b;
    W(n) =  resultPlanes(n).Good.data.weight.W;
    CL(:,n) = resultPlanes(n).Good.data.aero.CL(:,2);
@@ -112,12 +114,22 @@ xlabel('Lift-to-Weight')
 ylabel('Range, Miles')
 %%
 figure
-bar(1:g,R)
-ylabel('Range')
+bar(1:g,R/5280)
+ylabel('Range (miles)')
 %%
 figure
-bar(1:g,ROC*60)
+bar(1:g,ROC.*60)
 ylabel('Rate of Climb, fpm')
+
+%%
+figure
+bar(1:g,v_cruise)
+ylabel('Cruise Velocity, ft/s')
+
+%%
+figure
+bar(1:g,S)
+ylabel('Wing Area, ft^2')
 
 %%
 figure

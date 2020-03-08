@@ -92,9 +92,8 @@ function plane = aerodynamics(plane)
             CD(i,j) = CDi(i,j) + CD0(i);                        %total drag
             D(i,j) = 0.5*air_density*v_ref(i)^2*CD(i,j)*wing.S;   %drag force values for dry mass 
             L(i,j) = 0.5*air_density*v_ref(i)^2*CL(i,j)*wing.S;   %dry mass lift force values
-            
-            Difference(i,j) = thrust(i) - D(i,j);
-
+        
+        
         end
     end                                                     
     
@@ -117,9 +116,8 @@ function plane = aerodynamics(plane)
     plane.data.aero.LD = LD;
     plane.data.aero.D = D;
     
-    r = LD(1)/LD(2);
-    f = @(x,r,Wp,Wf,Wi) (x.^(r+1) - Wp*x.^r - Wf*Wi^r); %rearranged Bregeut eq whose zero gives weightFinal1
-    fun = @(x) f(x,r,weightPayload,weightFinal2,weightInitial);
+    f = @(Wi1,Wf1,Wp,Wf2) (log(Wi1/Wf1)-log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
+    fun = @(Wf1) f(weightInitial,Wf1,weightPayload,weightFinal2);
     if isreal(weightInitial)
         weightFinal1 = fzero(fun,weightInitial-(weightFuel/2));
     else
@@ -127,6 +125,7 @@ function plane = aerodynamics(plane)
         weightFinal1 = real(weightInitial);
     end
     plane.data.weight.fuel_1 = weightInitial - weightFinal1;
+    plane.data.weight.fuel_2 = (weightFinal1-weightPayload)-weightFinal2;
 
     if isreal(CD) && isreal(CL)
         plane.data.aero.isreal = true;
