@@ -3,7 +3,7 @@ function plane = getPerformance(plane) %,RC,SC
 Dry_weight = plane.data.weight.wet - plane.data.weight.retardent;
 
 %% ROC = (Pav - Preq) / W
-Pav = 2 * plane.prop.hp * 550;
+Pav = plane.prop.hp * 550;
 
 S = plane.geo.wing.S;
 AR = plane.geo.wing.AR;
