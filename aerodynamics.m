@@ -29,7 +29,7 @@ function plane = aerodynamics(plane)
     %prop stuff
     eta = plane.prop.eta_p; % eta and hp same for all planes so I just used the first one
     hp = plane.prop.hp;
-    thrust = (hp * 550 * eta) ./ v_ref;
+    thrust = plane.prop.numengines*(hp * 550 * eta) ./ v_ref;
     thrust = thrust.';
     Difference = zeros(100,2);
 
@@ -147,6 +147,12 @@ plane.data.aero.CDi = CDi;
 plane.data.aero.CD0 = CD0;
 
 plane.data.aero.D = D;
+
+[minD, minDind] = min(D);
+plane.data.aero.v_cruise = v_ref(minDind);
+plane.data.aero.LD = L(minDind)/minD;
+
+    plane.data.aero.D = D;
 
 end
 
