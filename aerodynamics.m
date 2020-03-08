@@ -47,9 +47,7 @@ function plane = aerodynamics(plane)
 
                 %% CD0 (parasite) estimation (from slide 93, drag lecture, MAE 154s material)
                 % only calculated once rather than twice
-
                 % computing Cf
-
                 Re = air_density*v_ref(i)*wing.c/viscosity;
 
                 Mach = v_ref(i)/1125;                      %v_ref MUST BE IN FT/S
@@ -98,21 +96,26 @@ function plane = aerodynamics(plane)
             Difference(i,j) = thrust(i) - D(i,j);
 
         end
-        
-        
-        [maxDiff, maxDiff_index] = max(Difference(:,j));
-        D_cruise = D(maxDiff_index,j);                     %minimum drag value and index in drag array
-        plane.data.aero.v_cruise(j) = v_ref(maxDiff_index);   %v_cruise is now defined as max diff between drag and available thrust
-        plane.data.aero.LD(j) = L(maxDiff_index,j)/D_cruise;        %no idea what purpose this serves, but L/D at cruise Drag
-
     end                                                     
     
     %Calculate fuel used for first leg of flight
-    LD = plane.data.aero.LD;
     weightFuel = plane.prop.fuel_mass;
     weightPayload = plane.data.weight.retardent;
     weightFinal2 = plane.data.weight.empty;
     weightInitial = weightFinal2 + weightPayload + weightFuel;
+
+    plane.data.aero.CL = CL;
+    plane.data.aero.CD = CD;
+    %plane.data.CL_alpha = CL_alpha;
+    plane.data.aero.CDi = CDi;
+    plane.data.aero.CD0 = CD0;
+    plane.data.aero.D = D;
+
+    [minD, minDind] = min(D);
+    plane.data.aero.v_cruise = v_ref(minDind);
+    LD = [L(minDind(1),1)/minD(1), L(minDind(2),2)/minD(2)];
+    plane.data.aero.LD = LD;
+    plane.data.aero.D = D;
     
     r = LD(1)/LD(2);
     f = @(x,r,Wp,Wf,Wi) (x.^(r+1) - Wp*x.^r - Wf*Wi^r); %rearranged Bregeut eq whose zero gives weightFinal1
@@ -140,19 +143,7 @@ else
     plane.data.aero.isreal = false;
 end
 
-plane.data.aero.CL = CL;
-plane.data.aero.CD = CD;
-%plane.data.CL_alpha = CL_alpha;
-plane.data.aero.CDi = CDi;
-plane.data.aero.CD0 = CD0;
 
-plane.data.aero.D = D;
-
-[minD, minDind] = min(D);
-plane.data.aero.v_cruise = v_ref(minDind);
-plane.data.aero.LD = L(minDind)/minD;
-
-    plane.data.aero.D = D;
 
 end
 

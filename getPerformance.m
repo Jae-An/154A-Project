@@ -3,8 +3,7 @@ function plane = getPerformance(plane) %,RC,SC
 Dry_weight = plane.data.weight.wet - plane.data.weight.retardent;
 
 %% ROC = (Pav - Preq) / W
-Pav = plane.prop.hp * 550;
-
+Pav = plane.prop.numengines * plane.prop.hp * 550;
 S = plane.geo.wing.S;
 AR = plane.geo.wing.AR;
 e = 0.35; % approx oswald efficiency for an eliptical wing
@@ -30,7 +29,7 @@ weightFinal2 = weight.empty;
 
 eta_p = max(prop.eta_p); %assuming flying at cruise speed with maximum propellar efficiency
 R1 = (eta_p / prop.c_p) * LD(1) * log(weightInitial1/weightFinal1);
-R2 = (eta_p / prop.c_p) * LD(2) * log(weightInitial2/weightFinal2);
+R2 = (eta_p / prop.c_p) * LD(1) * log(weightInitial2/weightFinal2);
 
 plane.data.performance.R = R1 + R2;
  
