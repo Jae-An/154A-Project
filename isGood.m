@@ -36,6 +36,13 @@ if wing.S > h_tail.S %checking if wing area is greater than tail area
     GeoIsGood = true;
 end
 
+
+%% Real
+real = false;
+if isreal(plane.data.aero.CD) && isreal(plane.data.aero.CL)
+    real = true;
+end
+
 %% Overall Good
 planeGood = false;
 if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal

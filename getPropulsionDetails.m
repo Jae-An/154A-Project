@@ -8,14 +8,14 @@ plane.prop.numengines = 2; % 2 engines
 plane.prop.W = plane.prop.numengines*600; %lb
 plane.prop.hp = plane.prop.numengines*1600; %hp
 %plane.prop.eta_p = 0.65; % This needs to be updated as a function of velocity or a look up table of some sort
-% plane.prop.c_p = 0.5; % lb / hp-h
+% plane.prop.c_p = 0.4272; % lb / hp-h
 plane.prop.c_p = 0.4272 /(550*60*60); % (ft^-1) Fixes units for range calculation
 plane.prop.fuel_mass = 5000; %lb - guess based off of sfc*1300hp*5hrs
 
 
 %% Propeller calcs
 
-%airspeedd
+%airspeed
 v_stall = plane.data.requirements.v_stall; %v_ref set to stall velocity, ft/s
 v_max = plane.data.requirements.v_max;
 V = linspace(v_stall, v_max);
@@ -41,4 +41,3 @@ plane.prop.eta_p = interp1(J_table, eta_table, J); %this works, need to integrat
 
 
 end
-

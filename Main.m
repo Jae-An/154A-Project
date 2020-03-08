@@ -5,7 +5,7 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0;
 b = 0;
-numGoodPlanes = 100;
+numGoodPlanes = 50;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
@@ -25,8 +25,7 @@ while  g < numGoodPlanes
     newPlane = getPerformance(newPlane); 
     % check if plane performance and stability is good
     newPlane = stability(newPlane);
-    
-    
+       
     % check for imagnary lift or drag values
     if isGood(newPlane)
        resultPlanes(g+1).Good = newPlane; %   store plane if above is good
@@ -34,18 +33,7 @@ while  g < numGoodPlanes
     else
        resultPlanes(b+1).Bad = newPlane;
        b = b+1;
-    end
-    
-    
-    
-    if isreal(newPlane.data.aero.CD) && isreal(newPlane.data.aero.CL)
-        CD = newPlane.data.aero.CD;
-        v_stall = newPlane.data.requirements.v_stall;
-        v_max = newPlane.data.requirements.v_max;
-        v = linspace(v_stall,v_max);
-        
-    end
-        
+    end    
 end
 %%
 fprintf('\n\n%d good planes found \n',g)
@@ -61,6 +49,7 @@ v_cruise = zeros(g,2);
 L = zeros(g,1);
 b = zeros(g,1);
 W = zeros(g,1);
+S = zeros(g,1);
 CL = zeros(100,g);
 CD = zeros(100,g);
 D = zeros(100,g);
@@ -68,18 +57,19 @@ LD = zeros(g,1);
 
 % extract data for n planes
 for n = 1:g
-   R(n) =  resultPlanes(n).Good.data.performance.R./5280; % miles
+   R(n) =  resultPlanes(n).Good.data.performance.R; % ft
    ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
    v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
    v_max(n) =  resultPlanes(n).Good.data.performance.v_max;
    L(n) =  resultPlanes(n).Good.geo.body.L;
+   S(n) =  resultPlanes(n).Good.geo.wing.S;
    b(n) =  resultPlanes(n).Good.geo.wing.b;
    W(n) =  resultPlanes(n).Good.data.weight.W;
    CL(:,n) = resultPlanes(n).Good.data.aero.CL(:,2);
    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,2);
    D(:,n:n+1) = resultPlanes(n).Good.data.aero.D;
    v_cruise(n,:) = resultPlanes(n).Good.data.aero.v_cruise;
-   LD(n) = resultPlanes(n).Good.data.aero.LD;
+   LD(n) = resultPlanes(n).Good.data.aero.LD(1);
 end
 v_ref = linspace(v_stall(1), v_max(1),100);
 %%
@@ -124,7 +114,22 @@ xlabel('Lift-to-Weight')
 ylabel('Range, Miles')
 %%
 figure
-bar(1:g,R)
+bar(1:g,R/5280)
+ylabel('Range (miles)')
+%%
+figure
+bar(1:g,ROC.*60)
+ylabel('Rate of Climb, fpm')
+
+%%
+figure
+bar(1:g,v_cruise)
+ylabel('Cruise Velocity, ft/s')
+
+%%
+figure
+bar(1:g,S)
+ylabel('Wing Area, ft^2')
 
 %%
 figure

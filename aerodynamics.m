@@ -16,7 +16,7 @@ function plane = aerodynamics(plane)
     air_density = 0.002;      %slug/ft3, 20,000 ft.
     viscosity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
     e_tail = 0.3;
-    e_wing = 1;
+    e_wing = 0.85;
 
     CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent)
     CD = zeros(100,2);
@@ -47,7 +47,6 @@ function plane = aerodynamics(plane)
 
                 %% CD0 (parasite) estimation (from slide 93, drag lecture, MAE 154s material)
                 % only calculated once rather than twice
-
                 % computing Cf
 
                 Re = air_density*v_ref(i)*wing.c/viscosity;
@@ -108,15 +107,26 @@ function plane = aerodynamics(plane)
     end                                                     
     
     %Calculate fuel used for first leg of flight
-    LD = plane.data.aero.LD;
     weightFuel = plane.prop.fuel_mass;
     weightPayload = plane.data.weight.retardent;
     weightFinal2 = plane.data.weight.empty;
     weightInitial = weightFinal2 + weightPayload + weightFuel;
+
+    plane.data.aero.CL = CL;
+    plane.data.aero.CD = CD;
+    %plane.data.CL_alpha = CL_alpha;
+    plane.data.aero.CDi = CDi;
+    plane.data.aero.CD0 = CD0;
+    plane.data.aero.D = D;
+
+    [minD, minDind] = min(D);
+    plane.data.aero.v_cruise = v_ref(minDind);
+    LD = [L(minDind(1),1)/minD(1), L(minDind(2),2)/minD(2)];
+    plane.data.aero.LD = LD;
+    plane.data.aero.D = D;
     
-    r = LD(1)/LD(2);
-    f = @(x,r,Wp,Wf,Wi) (x.^(r+1) - Wp*x.^r - Wf*Wi^r); %rearranged Bregeut eq whose zero gives weightFinal1
-    fun = @(x) f(x,r,weightPayload,weightFinal2,weightInitial);
+    f = @(Wi1,Wf1,Wp,Wf2) (log(Wi1/Wf1)-log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
+    fun = @(Wf1) f(weightInitial,Wf1,weightPayload,weightFinal2);
     if isreal(weightInitial)
         weightFinal1 = fzero(fun,weightInitial-(weightFuel/2));
     else
@@ -124,6 +134,7 @@ function plane = aerodynamics(plane)
         weightFinal1 = real(weightInitial);
     end
     plane.data.weight.fuel_1 = weightInitial - weightFinal1;
+    plane.data.weight.fuel_2 = (weightFinal1-weightPayload)-weightFinal2;
 
     if isreal(CD) && isreal(CL)
         plane.data.aero.isreal = true;
@@ -136,17 +147,11 @@ function plane = aerodynamics(plane)
 if isreal(CD) && isreal(CL)
     plane.data.aero.isreal = true;
 else
-    fprintf('imaginary CD or CL for plane \n')
+    %fprintf('imaginary CD or CL for plane \n')
     plane.data.aero.isreal = false;
 end
 
-plane.data.aero.CL = CL;
-plane.data.aero.CD = CD;
-%plane.data.CL_alpha = CL_alpha;
-plane.data.aero.CDi = CDi;
-plane.data.aero.CD0 = CD0;
 
-plane.data.aero.D = D;
 
 end
 
