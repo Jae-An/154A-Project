@@ -111,7 +111,7 @@ v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %E
 
     %% Payload Weight
 
-    W_payload = 16000;    %lbs, weight retardent
+    W_payload = 10000;    %lbs, weight retardent
 
     %% TOTAL WEIGHT
 
