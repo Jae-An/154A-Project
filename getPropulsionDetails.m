@@ -47,7 +47,7 @@ function [plane] = getPropulsionDetails(plane)
 % we could have a bunch of different engines and have this function pick
 % one of them at random
 
-%% GE catalyst Turboprop engine
+%% GE catalyst Turboprop engine 
 plane.prop.W = 600; %lb
 plane.prop.hp = 1600; %hp
 %plane.prop.eta_p = 0.65; % This needs to be updated as a function of velocity or a look up table of some sort
@@ -58,7 +58,7 @@ plane.prop.numengines = 2; % 2 engines
 
 %% Propeller calcs
 
-%airspeed
+%airspeedd
 v_stall = plane.data.requirements.v_stall; %v_ref set to stall velocity, ft/s
 v_max = plane.data.requirements.v_max;
 V = linspace(v_stall, v_max);
