@@ -79,7 +79,7 @@ for n = 1:g
    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,2);
    D(:,n:n+1) = resultPlanes(n).Good.data.aero.D;
    v_cruise(n,:) = resultPlanes(n).Good.data.aero.v_cruise;
-   LD(n) = resultPlanes(n).Good.data.aero.LD;
+   LD(n) = resultPlanes(n).Good.data.aero.LD(1);
 end
 v_ref = linspace(v_stall(1), v_max(1),100);
 %%
