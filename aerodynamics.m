@@ -16,7 +16,7 @@ function plane = aerodynamics(plane)
     air_density = 0.002;      %slug/ft3, 20,000 ft.
     viscosity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
     e_tail = 0.3;
-    e_wing = 0.85;
+    e_wing = 1;
 
     CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent)
     CD = zeros(100,2);
@@ -136,7 +136,7 @@ function plane = aerodynamics(plane)
 if isreal(CD) && isreal(CL)
     plane.data.aero.isreal = true;
 else
-    %fprintf('imaginary CD or CL for plane \n')
+    fprintf('imaginary CD or CL for plane \n')
     plane.data.aero.isreal = false;
 end
 
@@ -147,12 +147,6 @@ plane.data.aero.CDi = CDi;
 plane.data.aero.CD0 = CD0;
 
 plane.data.aero.D = D;
-
-[minD, minDind] = min(D);
-plane.data.aero.v_cruise = v_ref(minDind);
-plane.data.aero.LD = L(minDind)/minD;
-
-    plane.data.aero.D = D;
 
 end
 
