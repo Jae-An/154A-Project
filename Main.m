@@ -25,8 +25,7 @@ while  g < numGoodPlanes
     newPlane = getPerformance(newPlane); 
     % check if plane performance and stability is good
     newPlane = stability(newPlane);
-    
-    
+       
     % check for imagnary lift or drag values
     if isGood(newPlane)
        resultPlanes(g+1).Good = newPlane; %   store plane if above is good
@@ -34,18 +33,7 @@ while  g < numGoodPlanes
     else
        resultPlanes(b+1).Bad = newPlane;
        b = b+1;
-    end
-    
-    
-    
-    if isreal(newPlane.data.aero.CD) && isreal(newPlane.data.aero.CL)
-        CD = newPlane.data.aero.CD;
-        v_stall = newPlane.data.requirements.v_stall;
-        v_max = newPlane.data.requirements.v_max;
-        v = linspace(v_stall,v_max);
-        
-    end
-        
+    end    
 end
 %%
 fprintf('\n\n%d good planes found \n',g)
@@ -125,6 +113,11 @@ ylabel('Range, Miles')
 %%
 figure
 bar(1:g,R)
+ylabel('Range')
+%%
+figure
+bar(1:g,ROC*60)
+ylabel('Rate of Climb, fpm')
 
 %%
 figure
