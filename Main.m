@@ -68,7 +68,7 @@ LD = zeros(g,1);
 
 % extract data for n planes
 for n = 1:g
-   R(n) =  resultPlanes(n).Good.data.performance.R;
+   R(n) =  resultPlanes(n).Good.data.performance.R./5280; % miles
    ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
    v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
    v_max(n) =  resultPlanes(n).Good.data.performance.v_max;
@@ -117,6 +117,14 @@ xlabel('Span, ft')
 ylabel('Length, ft')
 shading interp
 set(gca, 'FontSize', 17, 'FontWeight', 'bold')
+%%
+figure
+plot(LD,R,'*')
+xlabel('Lift-to-Weight')
+ylabel('Range, Miles')
+%%
+figure
+bar(1:g,R)
 
 %%
 figure

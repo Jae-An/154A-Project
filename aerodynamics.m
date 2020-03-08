@@ -29,7 +29,7 @@ function plane = aerodynamics(plane)
     %prop stuff
     eta = plane.prop.eta_p; % eta and hp same for all planes so I just used the first one
     hp = plane.prop.hp;
-    thrust = (hp * 550 * eta) ./ v_ref;
+    thrust = plane.prop.numengines*(hp * 550 * eta) ./ v_ref;
     thrust = thrust.';
     Difference = zeros(100,2);
 
