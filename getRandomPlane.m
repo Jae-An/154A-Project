@@ -69,6 +69,10 @@ plane.geo.v_tail.LE = v_tail_minLE + rand(1)*(v_tail_maxLE - v_tail_minLE); %Dis
 plane.geo.v_tail.ac = (plane.geo.v_tail.LE - plane.geo.wing.LE) + 0.25*plane.geo.v_tail.c/plane.geo.wing.c; %ft, distance from wing leading edge to vtail AC, set to quarter chord
 plane.geo.v_tail.h_ac = plane.geo.v_tail.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to vtail AC
 
+%% nacelle
+plane.geo.nacelle.L = 6; % Length of each nacelle from engine
+plane.geo.nacelle.D = 1.585; % Diameter of nacelle from engine
+plane.geo.nacelle.S_wet = 3.4*plane.geo.nacelle.L*plane.geo.nacelle.D;
 
 
 
