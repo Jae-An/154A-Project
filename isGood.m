@@ -1,4 +1,4 @@
-function [planeGood, rocGood, VcGood, GeoIsGood, real] = isGood(plane)
+function [planeGood] = isGood(plane)
 %% identifying good RoC
 if plane.data.performance.ROC >= 33
     rocGood = true;
@@ -30,6 +30,8 @@ wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
 body = plane.geo.body;
 GeoIsGood = false;
+
+
 if wing.S > h_tail.S %checking if wing area is greater than tail area
     GeoIsGood = true;
 end
@@ -43,9 +45,10 @@ end
 
 %% Overall Good
 planeGood = false;
-if GeoIsGood && rocGood && VcGood && plane.data.stability.is_stable && plane.data.aero.isreal && real
+if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal
     planeGood = true;
 end
+
 
 end
 
