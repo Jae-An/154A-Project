@@ -2,6 +2,9 @@ function [] = displayPlaneProperties(plane)
 fprintf('Rate of Climb: %.2f fpm',plane.data.performance.ROC*60)
 fprintf('\nRange: %.2f miles',plane.data.performance.R/5280)
 
+fprintf('\nWeights:')
+fprintf('\n\t Total: %.2f lbs',plane.data.weight.W)
+fprintf('\n\t fuel: %.2f lbs',plane.data.weight.fuel)
 
 fprintf('\nGeometry:')
 fprintf('\n\t Wing:')
