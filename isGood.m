@@ -15,14 +15,14 @@ else
 end
 
 %% Range
-if plane.data.performance.R >= 500*5280
+if plane.data.performance.R >= 500*5280 && plane.data.performance.R <= 600*5280
     rangeGood = true;
 else
     rangeGood = false;
 end
 
 %% Need to be able to fly at at least stall speed
-if plane.data.aero.D(1,1) < 5000
+if plane.prop.thrust(1) - plane.data.aero.D(1,1) >= 0
     minSpeedGood = true;
 else
     minSpeedGood = false;
@@ -44,7 +44,8 @@ if wing.S > h_tail.S %checking if wing area is greater than tail area
 end
 
 %fits retardent
-if (body.L * body.W * body.D > 256 * 4) %fuselage volume at least 4x water volume
+fitsRetardent = false;
+if (body.L * 0.25*pi*body.D^2 > 256 * 2) %fuselage volume at least 4x water volume
     fitsRetardent = true;
 end
 
@@ -59,7 +60,7 @@ end
 %% Overall Good
 planeGood = false;
 
-if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal && fitsRetardent && minSpeedGood
+if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.stability.yaw_is_stable && plane.data.aero.isreal && fitsRetardent && minSpeedGood
     planeGood = true;
 end
 
