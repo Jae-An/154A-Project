@@ -13,11 +13,13 @@ function [plane] = weight_function(plane)
     S = plane.geo.wing.S;                           %wing area, ft^2   % 
     AR = plane.geo.wing.AR;                         %aspect ratio
 
-    N = 5;%plane.data.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
-    sweep_angle = plane.geo.wing.sweep * (3.14/180);            %Deg %Wing 1/4 chord sweep angle
-    taper_ratio = plane.geo.wing.TR;     %Taper Ratio
-    thickness_ratio_wing = plane.geo.wing.ThR;                  %Maximum Thickness Ratio (GIVEN)
-    v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %Equivalent Vmax at SL
+
+
+N = 5;%plane.data.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
+sweep_angle = plane.geo.wing.sweep * (3.14/180);            %Deg %Wing 1/4 chord sweep angle
+taper_ratio = plane.geo.wing.TR;     %Taper Ratio
+thickness_ratio_wing = plane.geo.wing.ThR;                  %Maximum Thickness Ratio (GIVEN)
+v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %Equivalent Vmax at SL
 
 
     W_wing = 96.948 * ((Weight * N/10^5)^0.65*(AR/cos(sweep_angle))^0.57*(S/100)^0.61*((1 + taper_ratio)/(2*thickness_ratio_wing))^0.36*(1+v_max/500)^0.5)^0.993;
@@ -95,7 +97,7 @@ function [plane] = weight_function(plane)
     %Nt=2;                         %Number of Separate Fuel Tanks
     %Wfs=2.49*((Fg)^0.6*(1/(1+tankint))^0.3*Nt^0.2*Neng^0.13)^1.21
 
-    % specific fuel system weights (fuel tanks, lines) likely can be found for your ai rcraft, if so, use those actual values instead of the niccolai equations.
+    % specific fuel system weights (fuel tanks, lines) likely can be found for your aircraft, if so, use those actual values instead of the niccolai equations.
     Wfs = 100;  %lbs 
 
     %% Surface Controls Weight

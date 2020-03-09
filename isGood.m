@@ -1,4 +1,4 @@
-function [planeGood] = isGood(plane)
+function [planeGood, rocGood, VcGood, GeoIsGood] = isGood(plane)
 %% identifying good RoC
 if plane.data.performance.ROC >= 33
     rocGood = true;
@@ -51,6 +51,7 @@ end
 
 %% Overall Good
 planeGood = false;
+
 if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal && fitsRetardent
     planeGood = true;
 end
