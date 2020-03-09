@@ -35,8 +35,7 @@ function [plane] = weight_function(plane)
     chord_wing = plane.geo.wing.c;       %chord length, ft
     chord_horizontal_tail = plane.geo.h_tail.c;      %chord length, horizontal tail, ft
     chord_vertical_tail = plane.geo.v_tail.c;       %chord length, vertical tail, ft
-    h_ac_horizontal =  plane.geo.h_tail.h_ac;    %nondimensional distance from AC to horizontal tail AC
-    h_ac_vertical = plane.geo.v_tail.h_ac;    %nondimensional distance from AC to vertical tail AC 
+    h_ac_horizontal =  plane.geo.h_tail.h_ac;    %nondimensional distance from wing leading edge to horizontal tail AC
 
 
     %% Horizontal Tail Weight
@@ -115,7 +114,6 @@ function [plane] = weight_function(plane)
 
 
     W_total(i) = W_struct + W_prop + Wfs + Wsc + W_payload + plane.prop.fuel_mass + W_avionics;
-    plane.data.weight.W = W_total(i);
     Weight = W_total(i);
 
 
@@ -136,43 +134,16 @@ Weight(5,1) = Weight_landing_gear;
 Weight(6,1) = W_prop;
 Weight(7,1) = Wfs;
 Weight(8,1) = Wsc;
-Weight(9,1) = W_payload;
+Weight(9,1) = W_avionics;
 Weight(10,1) = W_fuel;
-Weight(11,1) = W_avionics;
+Weight(11,1) = W_payload;
 Weight(12,1) = empty_weight;
 Weight(13,1) = Weight_total;
 
+plane.data.weight.W = Weight;
 plane.data.weight.dry = Weight_total - W_payload;
 plane.data.weight.wet = Weight_total;
 plane.data.weight.empty = Weight_total - (W_fuel+W_payload);
 plane.data.weight.fuel = W_fuel;
 plane.data.weight.retardent = W_payload;
-
-
-
-%% cg locator
-body = plane.geo.body;
-wing = plane.geo.wing;
-h_tail = plane.geo.h_tail;
-
-x = zeros(11,1);
-
-x(1,1) = wing.LE + wing.c/2;   %ft, wing lcg location
-x(2,1) = body.L/2;              %fuselage cg location  
-x(3,1) = body.L - h_tail.c/2;   %tail cg location
-x(4,1) = body.L - h_tail.c/2;   %tail cg location
-x(5,1) = wing.LE + wing.c/2;   %landing gear cg location
-x(6,1) = wing.LE - 2;          %engine cg location
-x(7,1) = wing.LE + wing.c/2;   %fuel systems cg location
-x(8,1) = wing.LE + wing.c/2;   %surface controls cg location
-x(10,1) = wing.LE + wing.c/2;  %fuel cg location
-x(11,1) = 50;                   %avionics cg location
-
-sum_mx_else = 0;
-for i = 1:8
-    sum_mx_else = sum_mx_else + Weight(i,1)*x(i,1);
-end
-
-x_payload = (1/W_payload)*[Weight_total*(wing.LE + wing.h_cg*wing.c) - sum_mx_else];
-x(9,1) = x_payload;
 end

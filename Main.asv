@@ -22,6 +22,7 @@ while  g < numGoodPlanes
     % TODO: need to randomize fuel mass
     newPlane = weight_function(newPlane);
     newPlane = aerodynamics(newPlane);
+    newPlane = getCG(newPlane);
     newPlane = getPerformance(newPlane); 
     % check if plane performance and stability is good
     newPlane = stability(newPlane);
@@ -42,6 +43,7 @@ fprintf('%d bad planes discarded \n',b)
 %%
 % initialize data variables
 R = zeros(g,1);
+RE = zeros(g,1);
 ROC = zeros(g,1);
 v_stall = zeros(g,1);
 v_max = zeros(g,1);
@@ -49,6 +51,7 @@ v_cruise = zeros(g,2);
 L = zeros(g,1);
 b = zeros(g,1);
 W = zeros(g,1);
+S = zeros(g,1);
 CL = zeros(100,g);
 CD = zeros(100,g);
 D = zeros(100,g);
@@ -56,12 +59,13 @@ LD = zeros(g,1);
 
 % extract data for n planes
 for n = 1:g
-   R(n) =  resultPlanes(n).Good.data.performance.R % ft
+   R(n) =  resultPlanes(n).Good.data.performance.R; % ft
    ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
+   RE(n) =  resultPlanes(n).Good.data.aero.Re_cruise(1);
    v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
    v_max(n) =  resultPlanes(n).Good.data.performance.v_max;
    L(n) =  resultPlanes(n).Good.geo.body.L;
-   S(n) =  resultPlanes(n).Good.geo.body.S;
+   S(n) =  resultPlanes(n).Good.geo.wing.S;
    b(n) =  resultPlanes(n).Good.geo.wing.b;
    W(n) =  resultPlanes(n).Good.data.weight.W;
    CL(:,n) = resultPlanes(n).Good.data.aero.CL(:,2);
@@ -124,6 +128,24 @@ ylabel('Rate of Climb, fpm')
 figure
 bar(1:g,v_cruise)
 ylabel('Cruise Velocity, ft/s')
+
+%%
+figure
+bar(1:g,S)
+ylabel('Wing Area, ft^2')
+%%
+N=g;
+hf=figure('units','normalized','outerposition',[0 0 1 1]);
+hf.ToolBar='none';
+nS   = sqrt(N);
+nCol = ceil(nS);
+nRow = nCol - (nCol * nCol - N > nCol - 1);
+for k = 1:N-2
+  subplot(nRow, nCol, k);
+  plotPlaneGeo(resultPlanes(k).Good);
+  set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
+  title(k)
+end
 
 %%
 figure

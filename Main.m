@@ -22,6 +22,7 @@ while  g < numGoodPlanes
     % TODO: need to randomize fuel mass
     newPlane = weight_function(newPlane);
     newPlane = aerodynamics(newPlane);
+    newPlane = getCG(newPlane);
     newPlane = getPerformance(newPlane); 
     % check if plane performance and stability is good
     newPlane = stability(newPlane);
