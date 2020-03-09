@@ -15,7 +15,7 @@ else
 end
 
 %% Range
-if plane.data.performance.R >= 500*5280
+if plane.data.performance.R >= 500*5280 && plane.data.performance.R <= 600*5280
     rangeGood = true;
 else
     rangeGood = false;

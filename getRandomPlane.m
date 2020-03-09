@@ -13,7 +13,7 @@ tank_length = [(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo
 plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.wing.TR = 0.57; % taper ratio
-plane.geo.wing.S = 350 + rand(1)*(800 - 100); %ft^2, wing area
+plane.geo.wing.S = 100 + rand(1)*(500 - 100); %ft^2, wing area
 plane.geo.wing.AR = 5 + rand(1)*(25 - 5); %wing aspect ratio
 plane.geo.wing.b = (plane.geo.wing.S * plane.geo.wing.AR )^0.5; %ft, wing span length
 plane.geo.wing.c = plane.geo.wing.S/plane.geo.wing.b*4/(1+plane.geo.wing.TR); %ft, wing chord length
@@ -70,6 +70,10 @@ plane.geo.v_tail.ac = (plane.geo.v_tail.LE - plane.geo.wing.LE) + 0.25*plane.geo
 plane.geo.v_tail.h_ac = plane.geo.v_tail.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to vtail AC
 plane.geo.v_tail.cl_a = 0.1*180/3.1415; %vertical tail lift curve slope
 
+%% nacelle
+plane.geo.nacelle.L = 6; % Length of each nacelle from engine
+plane.geo.nacelle.D = 1.585; % Diameter of nacelle from engine
+plane.geo.nacelle.S_wet = 3.4*plane.geo.nacelle.L*plane.geo.nacelle.D;
 
 
 

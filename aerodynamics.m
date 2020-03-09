@@ -63,9 +63,10 @@ function plane = aerodynamics(plane)
                         (1.34*(Mach^0.18)*cos(h_tail.sweep*pi/180)^0.28);
                 K_vertical_tail = (1 + (0.6/v_tail.h_t)*(v_tail.ThR) + 100*(v_tail.ThR)^4)*...
                         (1.34*(Mach^0.18)*cos(v_tail.sweep*pi/180)^0.28);
-                f = body.L/body.W;
-                K_fuselage = (1 + (60/f^3) + (f/400));
-
+                f_fuselage = body.L/body.W;
+                K_fuselage = (1 + (60/f_fuselage^3) + (f_fuselage/400));
+                f_nacelle = plane.geo.nacelle.L/plane.geo.nacelle.D;
+                K_nacelle = 1 + 0.35/f_nacelle;
             %    Cf(i) = 0.455/(((log10(Re))^2.58));
             %     K_wing = 1+2*(wing.ThR)+60*(wing.ThR)^4;
             %     K_horizontal_tail = 1+2*(h_tail.ThR)+60*(h_tail.ThR)^4;
@@ -76,14 +77,16 @@ function plane = aerodynamics(plane)
                 %Q's
                 Q_wing = 1;
                 Q_tail = 1.08;
-
-
+                Q_fuselage = 1;
+                Q_nacelle = 1.5; %if mounted less than 1 diameter away, then 1.3
+                
                 CD0_wing = K_wing*Q_wing*Cf*wing.S_wet/wing.S;
                 CD0_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S_wet/wing.S;
                 CD0_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S_wet/wing.S;
-                CD0_fuselage = K_fuselage*Cf*(pi*body.L*body.D)/wing.S;
-
-                CD0(i) = CD0_wing + CD0_h_tail + CD0_v_tail + CD0_fuselage;
+                CD0_fuselage = K_fuselage*Q_fuselage*Cf*(pi*body.L*body.D)/wing.S;
+                CD0_nacelle = K_nacelle*Q_nacelle*Cf*plane.geo.nacelle.S_wet/wing.S;
+                
+                CD0(i) = CD0_wing + CD0_h_tail + CD0_v_tail + CD0_fuselage + 2*CD0_nacelle;
                % CDi(i) = ((CL_wing^2)/(3.1415*wing.AR*e_wing)) +
                % ((CL_tail^2)/(3.1415*tail.AR*e_tail)); %need to figure out how to
                % solve for CL_wing and CL_tail
