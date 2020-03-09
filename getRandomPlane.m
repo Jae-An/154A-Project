@@ -54,8 +54,8 @@ plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, d
 %% vertical tail
 plane.geo.v_tail.ThR = 0.12;
 plane.geo.v_tail.TR = 0.57;
-plane.geo.v_tail.S = 10 + rand(1)*(300 - 30); %ft^2, v_tail area
-plane.geo.v_tail.AR = 3 + rand(1)*(10 - 3); %v_tail aspect ratio
+plane.geo.v_tail.S = 50 + rand(1)*(300 - 50); %ft^2, v_tail area
+plane.geo.v_tail.AR = 2 + rand(1)*(7 - 2); %v_tail aspect ratio
 plane.geo.v_tail.b = ((plane.geo.v_tail.S*plane.geo.v_tail.AR)^0.5)/2; %ft, v_tail span length
 plane.geo.v_tail.c = plane.geo.v_tail.S/plane.geo.v_tail.b*4/(1+plane.geo.v_tail.TR); %ft, v_tail chord length
 plane.geo.v_tail.sweep = 0 + rand(1)*(15-0); %degrees, sweep length
