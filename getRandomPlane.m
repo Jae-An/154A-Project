@@ -75,3 +75,4 @@ plane.geo.v_tail.cl_a = 0.1*180/3.1415; %vertical tail lift curve slope
 
 
 
+
