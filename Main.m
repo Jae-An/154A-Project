@@ -19,7 +19,6 @@ while  g < numGoodPlanes
     newPlane = plane();
     newPlane = getRandomPlane(newPlane);
     newPlane = getPropulsionDetails(newPlane);
-    % TODO: need to randomize fuel mass
     newPlane = weight_function(newPlane);
     newPlane = aerodynamics(newPlane);
     newPlane = getCG(newPlane);
@@ -49,13 +48,18 @@ v_stall = zeros(g,1);
 v_max = zeros(g,1);
 v_cruise = zeros(g,2);
 L = zeros(g,1);
+d = zeros(g,1);
 b = zeros(g,1);
+c = zeros(g,1);
 W = zeros(g,1);
 S = zeros(g,1);
+AR = zeros(g,1);
 CL = zeros(100,g);
 CD = zeros(100,g);
 D = zeros(100,g);
 LD = zeros(g,1);
+sweep = zeros(g,1);
+LE = zeros(g,1);
 
 % extract data for n planes
 for n = 1:g
@@ -67,7 +71,11 @@ for n = 1:g
    L(n) =  resultPlanes(n).Good.geo.body.L;
    d(n) = resultPlanes(n).Good.geo.body.W;
    S(n) =  resultPlanes(n).Good.geo.wing.S;
+   AR(n) = resultPlanes(n).Good.geo.wing.AR;
    b(n) =  resultPlanes(n).Good.geo.wing.b;
+   c(n) =  resultPlanes(n).Good.geo.wing.c;
+   LE(n) =  resultPlanes(n).Good.geo.wing.LE;
+   sweep(n) =  resultPlanes(n).Good.geo.wing.sweep;
    W(n) =  resultPlanes(n).Good.data.weight.wet;
    CL(:,n) = resultPlanes(n).Good.data.aero.CL(:,2);
    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,2);

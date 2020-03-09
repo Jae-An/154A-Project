@@ -44,7 +44,6 @@ if wing.S > h_tail.S %checking if wing area is greater than tail area
 end
 
 %fits retardent
-fitsRetardent = false;
 if (body.L * 0.25*pi*body.D^2 > 256 * 2) %fuselage volume at least 4x water volume
     fitsRetardent = true;
 end

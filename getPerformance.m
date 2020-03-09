@@ -9,14 +9,14 @@ S = plane.geo.wing.S;
 AR = plane.geo.wing.AR;
 e = 0.85; % approx oswald efficiency for an eliptical wing
 
-CD0_min = min(plane.data.aero.CD0);
-CL_maxRC = (3*CD0_min*pi*AR*e)^0.5;
-CD_max_RC = CD0_min + (CL_maxRC^2)/(pi*AR*e);
-rho = 0.001267;
-V_ref = (Dry_weight/(0.5*rho*CL_maxRC*S))^0.5;
+CD0_climb = plane.data.aero.CD0(1,2);
+CL_climb = (3*CD0_climb*pi*AR*e)^0.5;
+CD_climb = CD0_climb + (CL_climb^2)/(pi*AR*e);
+rho = 0.00238; % Sea level climb rates
+V_ref = (Dry_weight/(0.5*rho*CL_climb*S))^0.5;
 
 %Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
-Preq = 0.5 * CD_max_RC * rho * (V_ref^2) * S * V_ref;
+Preq = 0.5 * CD_climb * rho * (V_ref^2) * S * V_ref;
 
 plane.data.performance.ROC = (Pav - Preq) / Dry_weight;
 

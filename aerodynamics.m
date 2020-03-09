@@ -16,12 +16,16 @@ function plane = aerodynamics(plane)
 
     air_density = 0.001267;      %slug/ft3, 20,000 ft.
     viscosity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
+    
+    air_density_ground = 0.00238; %quantities at sea
+    viscosity_ground = 3.737*10^-7;
+    
     e_tail = 0.3;
     e_wing = 0.85;
 
-    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent)
+    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent), 3rd is sea level dry
     CD = zeros(100,2);
-    CD0 = zeros(100,1);
+    CD0 = zeros(100,2);
     CDi = zeros(100,2);
     D = zeros(100,2);
     L = zeros(100,2);
@@ -43,7 +47,6 @@ function plane = aerodynamics(plane)
                 CL(i,j) = weight.dry / ((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry (~leg 2) CL total for reference speed
             elseif j == 1
                 CL(i,j) = weight.wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet(leg 1) CL total for reference speed
-
                 %%
                 %**** NEED TO DETERMINE WING AND TAIL CL'S INDEPENDENTLY ****
 
@@ -52,10 +55,9 @@ function plane = aerodynamics(plane)
                 % only calculated once rather than twice
                 % computing Cf
                 Re = air_density*v_ref(i)*wing.c/viscosity;
-
                 Mach = v_ref(i)/968;                      %v_ref MUST BE IN FT/S
                 Cf = 0.455/((log10(Re)^2.58)*(1+0.144*Mach^2)^0.65);
-
+                
                 %compute K's
                 K_wing = (1 + (0.6/wing.h_t)*(wing.ThR) + 100*(wing.ThR)^4)*...
                         (1.34*(Mach^0.18)*cos(wing.sweep*pi/180)^0.28);
@@ -86,17 +88,38 @@ function plane = aerodynamics(plane)
                 CD0_fuselage = K_fuselage*Q_fuselage*Cf*(pi*body.L*body.D)/wing.S;
                 CD0_nacelle = K_nacelle*Q_nacelle*Cf*plane.geo.nacelle.S_wet/wing.S;
                 
-                CD0(i) = CD0_wing + CD0_h_tail + CD0_v_tail + CD0_fuselage + 2*CD0_nacelle;
+                CD0(i,1) = CD0_wing + CD0_h_tail + CD0_v_tail + CD0_fuselage + 2*CD0_nacelle;
                % CDi(i) = ((CL_wing^2)/(3.1415*wing.AR*e_wing)) +
                % ((CL_tail^2)/(3.1415*tail.AR*e_tail)); %need to figure out how to
                % solve for CL_wing and CL_tail
+               
+                %% Ground CD0
+                Re_ground = air_density_ground*v_ref(i)*wing.c/viscosity_ground;
+                Mach_ground = v_ref(i)/1125;                      %v_ref MUST BE IN FT/S
+                Cf_ground = 0.455/((log10(Re_ground)^2.58)*(1+0.144*Mach_ground^2)^0.65);
+                
+                %compute K's
+                K_wing_ground = (1 + (0.6/wing.h_t)*(wing.ThR) + 100*(wing.ThR)^4)*...
+                        (1.34*(Mach^0.18)*cos(wing.sweep*pi/180)^0.28);
+                K_horizontal_tail_ground = (1 + (0.6/h_tail.h_t)*(h_tail.ThR) + 100*(h_tail.ThR)^4)*...
+                        (1.34*(Mach^0.18)*cos(h_tail.sweep*pi/180)^0.28);
+                K_vertical_tail_ground = (1 + (0.6/v_tail.h_t)*(v_tail.ThR) + 100*(v_tail.ThR)^4)*...
+                        (1.34*(Mach^0.18)*cos(v_tail.sweep*pi/180)^0.28);
+                K_fuselage_ground = (1 + (60/f_fuselage^3) + (f_fuselage/400));
+                K_nacelle_ground = 1 + 0.35/f_nacelle;
+                
+                CD0_wing_ground = K_wing_ground*Q_wing*Cf_ground*wing.S_wet/wing.S;
+                CD0_h_tail_ground = K_horizontal_tail_ground*Q_tail*Cf_ground*h_tail.S_wet/wing.S;
+                CD0_v_tail_ground = K_vertical_tail_ground*Q_tail*Cf_ground*v_tail.S_wet/wing.S;
+                CD0_fuselage_ground = K_fuselage_ground*Q_fuselage*Cf_ground*(pi*body.L*body.D)/wing.S;
+                CD0_nacelle_ground = K_nacelle_ground*Q_nacelle*Cf_ground*plane.geo.nacelle.S_wet/wing.S;
+                CD0(i,2) = CD0_wing_ground + CD0_h_tail_ground + CD0_v_tail_ground + CD0_fuselage_ground + 2*CD0_nacelle_ground;
             end
 
            %% induced drag
             CDi(i,j) = ((CL(i,j)^2)/(pi*wing.AR*e_wing));    %induced drag
-
-            CD(i,j) = CDi(i,j) + CD0(i);                        %total drag
-            CD(i,j) = CD(i,j);                              % compensation basrd on Datacom results
+            CD(i,j) = CDi(i,j) + CD0(i,1);                   %total drag
+            %CD(i,j) = CD(i,j);                              % compensation basrd on Datacom results
             D(i,j) = 0.5*air_density*v_ref(i)^2*CD(i,j)*wing.S;   %drag force values for dry mass 
             L(i,j) = 0.5*air_density*v_ref(i)^2*CL(i,j)*wing.S;   %dry mass lift force values
             RE(i,j) = Re;
