@@ -18,18 +18,13 @@ plane.geo.wing.AR = 5 + rand(1)*(25 - 5); %wing aspect ratio
 plane.geo.wing.b = (plane.geo.wing.S * plane.geo.wing.AR )^0.5; %ft, wing span length
 plane.geo.wing.c = plane.geo.wing.S/plane.geo.wing.b*4/(1+plane.geo.wing.TR); %ft, wing chord length
 plane.geo.wing.ThR = 0.12; % thickness ratio
+plane.geo.wing.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
+plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 
 plane.geo.wing.LE = (0.1*plane.geo.body.L) + rand(1)*(plane.geo.body.L*(0.5-0.1));
 % need to define distance from nosetip to wing edge
-
-plane.geo.wing.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
-plane.geo.wing.cg = 4 + rand(1)*(12-0); %ft, distance from wing leading edge to CG
-plane.geo.wing.h_cg = plane.geo.wing.cg/plane.geo.wing.c; %nondimensional, distance from wing leading edge to CG
 plane.geo.wing.h_ac = 0.25; %nondimensional, distance from wing leading edge to AC
 plane.geo.wing.ac = plane.geo.wing.h_ac*plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord
-plane.geo.wing.h_t = 0.301; %Nondimensional distance to maximum thickness
-plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
-
 
 %% horizontal tail
 %%%%%% We're using the same airfoil for the tail? %%%%%%%%%%%
@@ -42,42 +37,36 @@ plane.geo.h_tail.AR = 4 + rand(1)*(8 - 4); %h_tail aspect ratio
 plane.geo.h_tail.b = (plane.geo.h_tail.S * plane.geo.h_tail.AR)^0.5; %ft, h_tail span length
 plane.geo.h_tail.c = plane.geo.h_tail.S/plane.geo.h_tail.b*4/(1+plane.geo.h_tail.TR); %ft, h_tail chord length
 plane.geo.h_tail.ThR = 0.12;
-
 plane.geo.h_tail.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
 plane.geo.h_tail.S_wet = plane.geo.h_tail.S*(1.977 + 0.52*plane.geo.h_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
-%%
+plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
 wing = plane.geo.wing;
 h_tail_minLE = (wing.LE+wing.c) + 0.5*(plane.geo.body.L-(wing.LE+wing.c)); % min location is halfway between end of wing and end of body
 h_tail_maxLE = plane.geo.body.L - plane.geo.h_tail.c; % max location has end of tail = end of body
-plane.geo.h_tail.LE = h_tail_minLE + rand(1)*(h_tail_maxLE - h_tail_minLE);
+plane.geo.h_tail.LE = h_tail_minLE + rand(1)*(h_tail_maxLE - h_tail_minLE); %Dist from nose to LE of htail
 
-plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.LE - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
-plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
-plane.geo.h_tail.ac = plane.geo.wing.cg + plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c/plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord
-plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to AC
-plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%maybe fixed rn
+plane.geo.h_tail.ac = (plane.geo.h_tail.LE - plane.geo.wing.LE) + 0.25*plane.geo.h_tail.c/plane.geo.wing.c; %ft, distance from wing leading edge to htail AC, set to quarter chord
+plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to htail AC
 
 
 %% vertical tail
 plane.geo.v_tail.ThR = 0.12;
 plane.geo.v_tail.TR = 0.57;
 plane.geo.v_tail.S = 10 + rand(1)*(300 - 30); %ft^2, v_tail area
-plane.geo.v_tail.AR = 1 + rand(1)*(10 - 3); %v_tail aspect ratio
+plane.geo.v_tail.AR = 3 + rand(1)*(10 - 3); %v_tail aspect ratio
 plane.geo.v_tail.b = (plane.geo.v_tail.S*plane.geo.v_tail.AR)^0.5; %ft, v_tail span length
 plane.geo.v_tail.c = plane.geo.v_tail.S/plane.geo.v_tail.b*4/(1+plane.geo.v_tail.TR); %ft, v_tail chord length
 plane.geo.v_tail.sweep = 0 + rand(1)*(15-0); %degrees, sweep length
-
-plane.geo.v_tail.cg = plane.geo.h_tail.cg; %ft, distance from v_tail leading edge to CG, set to h_tail value
-plane.geo.v_tail.h_cg = plane.geo.h_tail.h_cg; %nondimensional, distance from v_tail leading edge to CG, set to h_tail value
-plane.geo.v_tail.ac = plane.geo.h_tail.ac; %ft, distance from v_tail leading edge to AC, set to quarter chord, set to h_tail value
-plane.geo.v_tail.h_ac = plane.geo.h_tail.h_ac; %nondimensional, distance from v_tail leading edge to AC, set to h_tail value
-plane.geo.v_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 plane.geo.v_tail.S_wet = plane.geo.v_tail.S*(1.977 + 0.52*plane.geo.v_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
-%aero
+plane.geo.v_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
+v_tail_minLE = (wing.LE+wing.c) + 0.5*(plane.geo.body.L-(wing.LE+wing.c)); % min location is halfway between end of wing and end of body
+v_tail_maxLE = plane.geo.body.L - plane.geo.v_tail.c; % max location has end of tail = end of body
+plane.geo.v_tail.LE = v_tail_minLE + rand(1)*(v_tail_maxLE - v_tail_minLE); %Dist from nose to LE of vtail
 
+plane.geo.v_tail.ac = (plane.geo.v_tail.LE - plane.geo.wing.LE) + 0.25*plane.geo.v_tail.c/plane.geo.wing.c; %ft, distance from wing leading edge to vtail AC, set to quarter chord
+plane.geo.v_tail.h_ac = plane.geo.v_tail.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to vtail AC
 
 
 
