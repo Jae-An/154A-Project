@@ -20,6 +20,7 @@ plane.geo.wing.c = plane.geo.wing.S/plane.geo.wing.b*4/(1+plane.geo.wing.TR); %f
 plane.geo.wing.ThR = 0.12; % thickness ratio
 plane.geo.wing.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
 plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
+plane.geo.wing.h_t = 0.301; %nondimensional distance to maximum thickness
 
 plane.geo.wing.LE = (0.1*plane.geo.body.L) + rand(1)*(plane.geo.body.L*(0.5-0.1));
 % need to define distance from nosetip to wing edge

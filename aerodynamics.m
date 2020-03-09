@@ -33,6 +33,7 @@ function plane = aerodynamics(plane)
     hp = plane.prop.hp;
     thrust = plane.prop.numengines*(hp * 550 * eta) ./ v_ref;
     thrust = thrust.';
+    plane.prop.thrust = thrust;
     Difference = zeros(100,2);
 
     for j = 1:2
@@ -92,9 +93,13 @@ function plane = aerodynamics(plane)
             CDi(i,j) = ((CL(i,j)^2)/(pi*wing.AR*e_wing));    %induced drag
 
             CD(i,j) = CDi(i,j) + CD0(i);                        %total drag
+            CD(i,j) = CD(i,j) * 2;                              % compensation basrd on Datacom results
             D(i,j) = 0.5*air_density*v_ref(i)^2*CD(i,j)*wing.S;   %drag force values for dry mass 
             L(i,j) = 0.5*air_density*v_ref(i)^2*CL(i,j)*wing.S;   %dry mass lift force values
             RE(i,j) = Re;
+            
+           %% Difference between thrust and drag
+            Difference(i,j) = thrust(i) - D(i,j);
         
         end
     end                                                     
@@ -112,9 +117,11 @@ function plane = aerodynamics(plane)
     plane.data.aero.CD0 = CD0;
     plane.data.aero.D = D;
 
-
+    
     [minD, minDind] = min(D);
-    plane.data.aero.v_cruise = v_ref(minDind);
+    [maxDiff, maxDiff_index] = max(Difference);
+    CruiseDrag = D(maxDiff_index);
+    plane.data.aero.v_cruise = v_ref(maxDiff_index);
     LD = [L(minDind(1),1)/minD(1), L(minDind(2),2)/minD(2)];
     plane.data.aero.LD = LD;
     plane.data.aero.D = D;
@@ -151,7 +158,7 @@ end
 
 end
 
-=======
+
 %aerodynamics solver function
 
 %function [CL_dry, CL_wet, CD_dry, CD_wet, CD0,CDi_dry,CDi_wet CL_alpha] = aerodynamics(plane)
