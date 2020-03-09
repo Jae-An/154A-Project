@@ -1,11 +1,11 @@
 function [] = writeDatcomInput(plane)
-aoa = 0:1:15;
+aoa = 0;
 Re = plane.data.aero.Re_cruise;
 M = plane.data.aero.v_cruise(1)/1125;
 
-
 fid = fopen('154A_DATCOM_INPUT.inp','w');
 % Flight Configuration
+
 fprintf(fid,' $FLTCON NMACH=1.0, MACH(1)=%.3f,\n',M*1.0);
 fprintf(fid,'  NALPHA=%.1f, ALSCHD(1)=',length(aoa));
 fprintf(fid,'%.1f,',aoa);
@@ -51,12 +51,12 @@ fprintf(fid,'CHRDTP=%.2f, ',plane.geo.wing.c* plane.geo.wing.TR); % tip chord
 fprintf(fid,'SSPNE=%.2f, ', plane.geo.wing.b/2); % semispan of exposed panel
 fprintf(fid,'SSPN=%.2f, ', plane.geo.wing.b/2); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.wing.c); % root chord
-fprintf(fid,'   SAVSI=%.2f, ', plane.geo.wing.sweep); % inboard pael sweep angle
+fprintf(fid,'   SAVSI=%.2f, ', plane.geo.wing.sweep*0); % inboard pael sweep angle
 fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
 fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
-fprintf(fid,'SSPNDD=0.0,\n'); % semispan of outboard panel w/ dihedral
-fprintf(fid,'   DHDADI=0.0, '); % dihedral angle of inboard panel
+fprintf(fid,'SSPNDD=0.0,'); % semispan of outboard panel w/ dihedral
+fprintf(fid,'\n   DHDADI=0.0, '); % dihedral angle of inboard panel
 fprintf(fid,'DHDADO=0.0, '); % dihedral angle of outboard panel
 fprintf(fid,'TYPE=1.0$'); % 1: STRAIGHT TAPERED PLANFORM, 2: double delta planform AR<3, 3: cranked planform AR>3
 
@@ -74,14 +74,14 @@ fprintf(fid,'CHRDTP=%.2f, ',plane.geo.v_tail.c* plane.geo.v_tail.TR); % tip chor
 fprintf(fid,'SSPNE=%.2f, ', plane.geo.v_tail.b/2); % semispan of exposed panel
 fprintf(fid,'SSPN=%.2f, ', plane.geo.v_tail.b/2); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.v_tail.c); % root chord
-fprintf(fid,'   SAVSI=%.2f, ', plane.geo.v_tail.sweep); % inboard pael sweep angle
+fprintf(fid,'   SAVSI=%.2f, ', plane.geo.v_tail.sweep*0); % inboard pael sweep angle
 fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
-%fprintf(fid,'SWAFP=0.0, '); % ???
+fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
-%fprintf(fid,'SSPNDD=0.0,\n'); % semispan of outboard panel w/ dihedral
-%fprintf(fid,'   DHDADI=0.0, '); % dihedral angle of inboard panel
-%fprintf(fid,'DHDADO=0.0, '); % dihedral angle of outboard panel
-fprintf(fid,'TYPE=0.0$'); % 1: STRAIGHT TAPERED PLANFORM, 2: double delta planform AR<3, 3: cranked planform AR>3
+fprintf(fid,'SSPNDD=0.0,\n'); % semispan of outboard panel w/ dihedral
+fprintf(fid,'   DHDADI=0.0, '); % dihedral angle of inboard panel
+fprintf(fid,'DHDADO=0.0, '); % dihedral angle of outboard panel
+fprintf(fid,'TYPE=1.0$'); % 1: STRAIGHT TAPERED PLANFORM, 2: double delta planform AR<3, 3: cranked planform AR>3
 % Vertical Tail Characteristics
 fprintf(fid,'\nNACA-V-4-0009');
 
@@ -91,7 +91,7 @@ fprintf(fid,'CHRDTP=%.2f, ',plane.geo.h_tail.c* plane.geo.h_tail.TR); % tip chor
 fprintf(fid,'SSPNE=%.2f, ', plane.geo.h_tail.b/2); % semispan of exposed panel
 fprintf(fid,'SSPN=%.2f, ', plane.geo.h_tail.b/2); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.h_tail.c); % root chord
-fprintf(fid,'   SAVSI=%.2f, ', plane.geo.h_tail.sweep); % inboard pael sweep angle
+fprintf(fid,'   SAVSI=%.2f, ', plane.geo.h_tail.sweep*0); % inboard pael sweep angle
 fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
 fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
@@ -103,11 +103,16 @@ fprintf(fid,'TYPE=1.0$'); % 1: STRAIGHT TAPERED PLANFORM, 2: double delta planfo
 fprintf(fid,'\nNACA-H-4-6412');
 
 fprintf(fid,'\nDIM FT'); % specify feet and english units
-fprintf(fid,'\nBUILD\n');
-fprintf(fid,'\nCASEID 154A PLANE, CASE 1\n');
-%fprintf(fid,'\nSAVE');
-%fprintf(fid,'\nNEXT CASE');
+fprintf(fid,'\nDAMP'); % Output Dynamic Stability Derivatives
 
+% fprintf(fid,'\nBUILD');
+fprintf(fid,'\nCASEID 154A PLANE, CASE 1');
+% fprintf(fid,'\nSAVE');
+fprintf(fid,'\nDUMP DYN');
+fprintf(fid,'\nNEXT CASE');
+% fprintf(fid,'\nCASEID 154A PLANE DAMP, CASE 2');
+% fprintf(fid,'\nDUMP FCM');
+% fprintf(fid,'\nNEXT CASE');
 
 fclose(fid);
 end
