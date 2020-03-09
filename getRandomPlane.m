@@ -54,9 +54,9 @@ plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, d
 %% vertical tail
 plane.geo.v_tail.ThR = 0.12;
 plane.geo.v_tail.TR = 0.57;
-plane.geo.v_tail.S = 10 + rand(1)*(300 - 30); %ft^2, v_tail area
-plane.geo.v_tail.AR = 3 + rand(1)*(10 - 3); %v_tail aspect ratio
-plane.geo.v_tail.b = (plane.geo.v_tail.S*plane.geo.v_tail.AR)^0.5; %ft, v_tail span length
+plane.geo.v_tail.S = 50 + rand(1)*(300 - 50); %ft^2, v_tail area
+plane.geo.v_tail.AR = 2 + rand(1)*(7 - 2); %v_tail aspect ratio
+plane.geo.v_tail.b = ((plane.geo.v_tail.S*plane.geo.v_tail.AR)^0.5)/2; %ft, v_tail span length
 plane.geo.v_tail.c = plane.geo.v_tail.S/plane.geo.v_tail.b*4/(1+plane.geo.v_tail.TR); %ft, v_tail chord length
 plane.geo.v_tail.sweep = 0 + rand(1)*(15-0); %degrees, sweep length
 plane.geo.v_tail.S_wet = plane.geo.v_tail.S*(1.977 + 0.52*plane.geo.v_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
@@ -68,6 +68,7 @@ plane.geo.v_tail.LE = v_tail_minLE + rand(1)*(v_tail_maxLE - v_tail_minLE); %Dis
 
 plane.geo.v_tail.ac = (plane.geo.v_tail.LE - plane.geo.wing.LE) + 0.25*plane.geo.v_tail.c/plane.geo.wing.c; %ft, distance from wing leading edge to vtail AC, set to quarter chord
 plane.geo.v_tail.h_ac = plane.geo.v_tail.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to vtail AC
+plane.geo.v_tail.cl_a = 0.1*180/3.1415; %vertical tail lift curve slope
 
 %% nacelle
 plane.geo.nacelle.L = 6; % Length of each nacelle from engine

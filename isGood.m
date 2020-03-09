@@ -59,7 +59,7 @@ end
 %% Overall Good
 planeGood = false;
 
-if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal && fitsRetardent && minSpeedGood
+if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.stability.yaw_is_stable && plane.data.aero.isreal && fitsRetardent && minSpeedGood
     planeGood = true;
 end
 
