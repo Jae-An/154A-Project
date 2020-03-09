@@ -21,6 +21,13 @@ else
     rangeGood = false;
 end
 
+%% Need to be able to fly at at least stall speed
+if plane.data.aero.D(1,1) < 5000
+    minSpeedGood = true;
+else
+    minSpeedGood = false;
+end
+
 %% isStable
 
 
@@ -45,7 +52,7 @@ end
 
 %% Overall Good
 planeGood = false;
-if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal
+if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal && minSpeedGood
     planeGood = true;
 end
 
