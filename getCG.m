@@ -3,6 +3,7 @@ function [plane] = getCG(plane)
 body = plane.geo.body;
 wing = plane.geo.wing;
 h_tail = plane.geo.h_tail;
+v_tail = plane.geo.v_tail;
 weight = plane.data.weight;
 
 x = zeros(11,1);
@@ -29,9 +30,9 @@ x(10) = wing.LE + wing.c/2;  %fuel cg location
 
 %% Calculate wet and dry cg
 cg = zeros(2,1); %wet and dry cg
-cg(1) = weight.W(1:10).*x(1:10)/weight.wet;
+cg(1) = sum(weight.W(1:10).*x(1:10))/weight.wet;
 weight.W(10) = weight.W(10) - weight.fuel_1;
-cg(2) = weight.W(1:10).*x(1:10)/(weight.dry-weight.fuel_1);
+cg(2) = sum(weight.W(1:10).*x(1:10))/(weight.dry-weight.fuel_1);
 
 x(11) = cg(2); %payload cg location (before and after drop should be exact same)
 
