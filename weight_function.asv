@@ -35,7 +35,7 @@ function [plane] = weight_function(plane)
     chord_wing = plane.geo.wing.c;       %chord length, ft
     chord_horizontal_tail = plane.geo.h_tail.c;      %chord length, horizontal tail, ft
     chord_vertical_tail = plane.geo.v_tail.c;       %chord length, vertical tail, ft
-    h_ac_horizontal =  plane.geo.h_tail.h_ac;    %nondimensional distance from wing leading edge to horizontal tail AC
+    h_ac_horizontal =  plane.geo.h_tail.h_ac;    %nondimensional distance from AC to horizontal tail AC
 
 
     %% Horizontal Tail Weight
