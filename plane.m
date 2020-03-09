@@ -6,13 +6,14 @@ plane = struct('geo',[],'prop',[],'data',[]);
 %% Aircraft Geometry
 plane.geo = struct('body',[],'wing',[],'h_tail',[],'v_tail',[],'nacelle',[]);
     plane.geo.body = struct('L',[],'W',[],'D',[]);
-    plane.geo.wing = struct('S',[],'S_wet',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'LE',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'h_t',[],'cl_a',[],'cl_0',[]);
-    plane.geo.h_tail = struct('S',[],'S_wet',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'LE',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'h_t',[],'cl_a',[],'cl_0',[],'i',[]);
-    plane.geo.v_tail = struct('S',[],'S_wet',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'LE',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'h_t',[],'cl_a',[]);
+    plane.geo.wing = struct('S',[],'S_wet',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'h_t',[],'cl_a',[],'cl_0',[]);
+    plane.geo.h_tail = struct('S',[],'S_wet',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'h_t',[],'cl_a',[],'cl_0',[],'i',[]);
+    plane.geo.v_tail = struct('S',[],'S_wet',[],'AR',[],'c',[],'b',[],'ThR',[],'TR',[],'sweep',[],'cg',[],'ac',[],'h_cg',[],'h_ac',[],'h_t',[],'cl_a',[]);
     plane.geo.nacelle = struct(); % *fill out later*
 
 %% Propulsion
 plane.prop = struct('W',[],'hp',[],'eta_p',[],'c_p',[],'fuel_mass',[]);
+
 
 %% Performance, Aerodynamics, Stability
 plane.data = struct('requirements',[],'performance',[],'aero',[],'stability',[]);
