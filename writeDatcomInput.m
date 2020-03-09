@@ -1,22 +1,21 @@
 function [] = writeDatcomInput(plane)
-aoa = 1:1:20;
+aoa = 1:1:15;
 Re = plane.data.aero.Re_cruise;
 M = plane.data.aero.v_cruise(1)/1125;
 
 
 fid = fopen('154A_DATCOM_INPUT.inp','w');
-fprintf(fid,'CASEID 154A PLANE\n');
-fprintf(fid,'BUILD\n');
+fprintf(fid,'\nCASEID 154A PLANE, CASE 1\n');
 % Flight Configuration
 fprintf(fid,' $FLTCON  NMACH=1.0, MACH(1)=%.3f,\n',M*1.0);
 fprintf(fid,'  NALPHA=%.0d, ALSCHD(1)=',length(aoa));
 fprintf(fid,'%.1f,',aoa);
-fprintf(fid,'\n  RNNUB(1)=%.4d$',Re(1));
+fprintf(fid,'\n  RNNUB(1)=3.539E7$');
 % Options
 fprintf(fid,'\n $OPTINS ');
 fprintf(fid,'SREF=%.2f, ',plane.geo.wing.S);
 fprintf(fid,'CBARR=%.2f, ',plane.geo.wing.c);
-fprintf(fid,'CBARR=%.2f$',plane.geo.wing.b);
+fprintf(fid,'BLREF=%.2f$',plane.geo.wing.b);
 % Synthesis TODO
 fprintf(fid,'\n $SYNTHS '); %
 fprintf(fid,'XCG=%.2f, ',0.5*plane.geo.body.L); % longitudinal location of CG, (moment reference center)
@@ -104,8 +103,9 @@ fprintf(fid,'TYPE=1.0$'); % 1: STRAIGHT TAPERED PLANFORM, 2: double delta planfo
 % Horizontal Tail Characteristics
 fprintf(fid,'\nNACA-H-4-6412');
 
-
 fprintf(fid,'\nDIM FT'); % specify feet and english units
+fprintf(fid,'\nBUILD\n');
+
 fprintf(fid,'\nSAVE');
 fprintf(fid,'\nNEXT CASE');
 

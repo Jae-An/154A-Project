@@ -6,8 +6,7 @@ V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 %fuselage
 plane.geo.body.W = 5 + rand(1)*(10 - 5); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
-plane.geo.body.L = 35 + rand(1)*(50 - 20); %ft, fuselage L
-
+plane.geo.body.L = 35 + rand(1)*(75 - 35); %ft, fuselage L
 tank_length = [(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 %% wing
@@ -18,6 +17,8 @@ plane.geo.wing.b = (plane.geo.wing.S * plane.geo.wing.AR )^0.5; %ft, wing span l
 plane.geo.wing.c = plane.geo.wing.S/plane.geo.wing.b*4/(1+plane.geo.wing.TR); %ft, wing chord length
 plane.geo.wing.ThR = 0.12; % thickness ratio
 
+plane.geo.wing.LE = (0.1*plane.geo.body.L) + rand(1)*(plane.geo.body.L*(0.5-0.1));
+% need to define distance from nosetip to wing edge
 
 plane.geo.wing.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
 plane.geo.wing.cg = 4 + rand(1)*(12-0); %ft, distance from wing leading edge to CG
