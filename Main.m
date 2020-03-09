@@ -42,6 +42,7 @@ fprintf('%d bad planes discarded \n',b)
 %%
 % initialize data variables
 R = zeros(g,1);
+RE = zeros(g,1);
 ROC = zeros(g,1);
 v_stall = zeros(g,1);
 v_max = zeros(g,1);
@@ -59,6 +60,7 @@ LD = zeros(g,1);
 for n = 1:g
    R(n) =  resultPlanes(n).Good.data.performance.R; % ft
    ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
+   RE(n) =  resultPlanes(n).Good.data.aero.Re_cruise(1);
    v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
    v_max(n) =  resultPlanes(n).Good.data.performance.v_max;
    L(n) =  resultPlanes(n).Good.geo.body.L;
@@ -130,6 +132,19 @@ ylabel('Cruise Velocity, ft/s')
 figure
 bar(1:g,S)
 ylabel('Wing Area, ft^2')
+%%
+N=g;
+hf=figure('units','normalized','outerposition',[0 0 1 1]);
+hf.ToolBar='none';
+nS   = sqrt(N);
+nCol = ceil(nS);
+nRow = nCol - (nCol * nCol - N > nCol - 1);
+for k = 1:N-2
+  subplot(nRow, nCol, k);
+  plotPlaneGeo(resultPlanes(k).Good);
+  set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
+  title(k)
+end
 
 %%
 figure

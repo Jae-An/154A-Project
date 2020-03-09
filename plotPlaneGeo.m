@@ -37,6 +37,7 @@ edgeColor     = 'k';
 linestyle     = '-'; 
 scale         = 1; 
 zscale        = 1;
+plotprop = false;
 
 x = 0; 
 y = 0; 
@@ -45,11 +46,12 @@ z = 0;
 w_b = w_b*scale; 
 w_c = w_c*scale; % changing wingWidth will affect several dimensions
 h_b = h_b*scale; 
-h_c = h_b*scale; 
-f_L = f_L*scale-h_c;
-f_r = f_r*scale;  
+h_c = h_c*scale;
+f_n = f_L*0.15; % length of fuselage nose
+f_L = f_L-f_n-v_c;
+f_r = f_r*scale;
 % Center the dimensions: 
-y = y+w_c; 
+y = y+w_c*9/5; 
 z = z+f_r; 
 %% Determine if a figure is already open: 
 initialHoldState = 0; 
@@ -65,61 +67,83 @@ if ~SetView
 end
 %% Draw surfaces: 
 % Fuselage: 
-[xcf,zcf,ycf] = cylinder(f_r); 
-h(1) = surface(xcf+x,y-ycf*f_L,z+zcf*zscale,...
+[xcf,zcf,ycf] = cylinder(f_r);
+x_f = xcf+x;
+y_f = y-ycf*f_L;
+z_f = z+zcf;
+
+h(1) = surface(x_f,y_f,z_f,...
     'facecolor',fusColor,'linestyle',linestyle,...
     'edgecolor',edgeColor);
 if ~initialHoldState
     hold on
 end
 % Nose: 
-[xcn,zcn,ycn] = cylinder(f_r.*([1 .95 .9 .8 .7 .5 .5 .5 .5]).*(cos(linspace(0,pi/2,9)).^.2)); 
-zcn(6:end,:) = zcn(6:end,:)-f_r/5; 
-ycn = -ycn.*.7*w_c; 
-h(2) = surface(x+xcn,y-ycn,z+zcn*zscale,...
+[xcn,zcn,ycn] = cylinder(f_r.*([1 .95 .9 .8 .7 .5 .1]).*(cos(linspace(0,pi/2,7)).^.2)); 
+zcn(6:end,:) = zcn(6:end,:)-f_r/7; 
+ycn = -ycn.*f_n;
+
+x_n = x+xcn;
+y_n = y-ycn;
+z_n = z+zcn;
+
+h(2) = surface(x_n,y_n,z_n*zscale,...
     'facecolor',fusColor,'linestyle',linestyle,...
     'edgecolor',edgeColor);
+
+
 % Tail
 x1 = xcf(1,:); 
 x2 = .8*x1;% zeros(size(x1)); 
 y1 = f_L*ones(size(x1)); 
-y2 = y1+h_c;
+y2 = y1+v_c;
 z1 = zcf(1,:); 
-z2 = f_r*ones(size(z1)); 
-h(3) = surface(x+[x1;x2],y-[y1;y2],z+[z1;z2]*zscale,...
+z2 = f_r*ones(size(z1));
+
+x_ft = x+[x1;x2];
+y_ft = y-[y1;y2];
+z_ft = z+[z1;z2];
+
+h(3) = surface(x_ft,y_ft,z_ft,...
     'facecolor',fusColor,'linestyle',linestyle,...
     'edgecolor',edgeColor);
 % Wings: 
 xw1 = -linspace(-w_b/2,w_b/2,10); 
-yw1 = 1.4*w_c + abs(xw1)/100; 
-yw2 = zeros(size(xw1))+1.4*w_c + w_c/3; 
+yw1 = f_n/2+abs(xw1)/100;
+yw2 = zeros(size(xw1))+f_n/2+w_c/3; 
 yw3 = yw1 + w_c-abs(xw1)/20; 
-zw1 = .85*f_r*ones(size(xw1)); 
-h(4) = surface(x+[.99*xw1;xw1;.97*xw1],y-[yw1;yw2;yw3],...
-    z+[zw1;zw1+.15*f_r;zw1]*zscale,'facecolor',wingColor,...
+zw1 = .6*f_r*ones(size(xw1));
+
+x_w1 = x+[.99*xw1;xw1;.97*xw1];
+y_w1 = y-[yw1;yw2;yw3];
+z_w1 = z+[zw1;zw1+.15*f_r;zw1];
+x_w2 = x+[.99*xw1;xw1;.97*xw1];
+y_w2 = y-[yw1;yw2;yw3];
+z_w2 = z+[zw1;zw1;zw1];
+
+h(4) = surface(x_w1,y_w1,z_w1*zscale,'facecolor',wingColor,...
     'linestyle',linestyle,'edgecolor',edgeColor);
-h(5) = surface(x+[.99*xw1;xw1;.97*xw1],y-[yw1;yw2;yw3],...
-    z+[zw1;zw1;zw1]*zscale,'facecolor',wingColor,...
+h(5) = surface(x_w2,y_w2,z_w2,'facecolor',wingColor,...
     'linestyle',linestyle,'edgecolor',edgeColor);
-% tail wing: 
+% tail wing:
 xtw1 = -linspace(-h_b/2,h_b/2,5); 
 xtw = [xtw1;xtw1;xtw1];
-ytw1 = f_L+.7*h_c+ abs(xtw1)/10;
-ytw2 = zeros(size(xtw1))+ f_L+.88*h_c;
+ytw1 = v_c+f_L+ abs(xtw1)/10-h_c;
+ytw2 = zeros(size(xtw1))+v_c+ f_L+.88*h_c-h_c;
 ytw3 = ytw2+.12*h_c-abs(xtw1)/10;
 ytw = [ytw1; ytw2;ytw3]; 
-ztw1 = .9*f_r*ones(size(xtw1)); 
+ztw1 = f_r*ones(size(xtw1)); 
 h(6) = surface(x+xtw,y-ytw,z+[ztw1;ztw1+.05*f_r;ztw1]*zscale,...
     'facecolor',tailWingColor,'linestyle',linestyle,...
     'edgecolor',edgeColor); 
 h(7) = surface(x+xtw,y-ytw,z+[ztw1;ztw1;ztw1]*zscale,...
     'facecolor',tailWingColor,'linestyle',linestyle,...
     'edgecolor',edgeColor);
-% Fin: 
-yts = f_L+h_c*[1 .88 .6]; 
+% Vertical Fin: 
+yts = f_L+v_c*[1 .8 0]; 
 yts = [yts;yts]; 
 zts = f_r*[1 1 1]; 
-zts(2,:)= zts+1.1*w_c*[1 1 0]; 
+zts(2,:)= zts+1.1*v_b*[1 1 0]; 
 xts = [0 f_r/20 0;0 f_r/40 0]; 
 h(8) = surface(x+xts,y-yts,z+zts*zscale,...
     'facecolor',finColor,'linestyle',linestyle,...
@@ -127,37 +151,31 @@ h(8) = surface(x+xts,y-yts,z+zts*zscale,...
 h(9) = surface(x-xts,y-yts,z+zts*zscale,...
     'facecolor',finColor,'linestyle',linestyle,...
     'edgecolor',edgeColor);
-% Propellers: 
-xp = .4*w_c*sin(0:.2:2*pi); 
-zp = .4*w_c*cos(0:.2:2*pi)+.4*w_c; 
-yp = zeros(size(xp))-1.2*w_c; 
-h(10) = patch(x+xp-w_c,y+yp,z+zp*zscale,propColor); 
-h(11) = patch(x+xp+w_c,y+yp,z+zp*zscale,propColor); 
-h(12) = patch(x+xp-w_c,y+yp,z+zp*zscale,propColor); 
-h(13) = patch(x+xp+w_c,y+yp,z+zp*zscale,propColor); 
-set(h(10:13),'facealpha',.2,'edgealpha',.5)
+% Propellers:
+if plotprop == true
+    xp = .4*w_c*sin(0:.2:2*pi); 
+    zp = .4*w_c*cos(0:.2:2*pi)+.4*w_c; 
+    yp = zeros(size(xp))-1.2*w_c; 
+    h(10) = patch(x+xp-w_c,y+yp,z+zp*zscale,propColor); 
+    h(11) = patch(x+xp+w_c,y+yp,z+zp*zscale,propColor); 
+    h(12) = patch(x+xp-w_c,y+yp,z+zp*zscale,propColor); 
+    h(13) = patch(x+xp+w_c,y+yp,z+zp*zscale,propColor); 
+    set(h(10:13),'facealpha',.2,'edgealpha',.5)
+end
 
 %% Set view
-if SetView
-    view([140 30]); 
-    axis tight equal
-    lighting gouraud
-    camlight
-else
-    axis auto
-end
+view([140 30]); 
+axis tight equal
+lighting gouraud
+camlight
 %% Clean up: 
 % Return axes to initial hold state
 if ~initialHoldState
     hold off
 end
-    
-% Discard surface handles if they're unwanted: 
-if nargout==0
-    clear h
-end
 
-xlabel('x')
-ylabel('y')
-zlabel('z')
+% 
+% xlabel('x')
+% ylabel('y')
+% zlabel('z')
 end

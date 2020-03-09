@@ -24,6 +24,7 @@ function plane = aerodynamics(plane)
     CDi = zeros(100,2);
     D = zeros(100,2);
     L = zeros(100,2);
+    RE = zeros(100,2);
     
     
     %prop stuff
@@ -92,7 +93,7 @@ function plane = aerodynamics(plane)
             CD(i,j) = CDi(i,j) + CD0(i);                        %total drag
             D(i,j) = 0.5*air_density*v_ref(i)^2*CD(i,j)*wing.S;   %drag force values for dry mass 
             L(i,j) = 0.5*air_density*v_ref(i)^2*CL(i,j)*wing.S;   %dry mass lift force values
-        
+            RE(i,j) = Re;
         
         end
     end                                                     
@@ -110,11 +111,13 @@ function plane = aerodynamics(plane)
     plane.data.aero.CD0 = CD0;
     plane.data.aero.D = D;
 
+
     [minD, minDind] = min(D);
     plane.data.aero.v_cruise = v_ref(minDind);
     LD = [L(minDind(1),1)/minD(1), L(minDind(2),2)/minD(2)];
     plane.data.aero.LD = LD;
     plane.data.aero.D = D;
+    plane.data.aero.Re_cruise = RE(minDind,1);
     
     f = @(Wi1,Wf1,Wp,Wf2) (log(Wi1/Wf1)-log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
     fun = @(Wf1) f(weightInitial,Wf1,weightPayload,weightFinal2);
