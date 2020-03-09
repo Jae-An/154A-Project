@@ -1,4 +1,4 @@
-function [planeGood] = isGood(plane)
+function [planeGood, rocGood, VcGood, GeoIsGood] = isGood(plane)
 %% identifying good RoC
 if plane.data.performance.ROC >= 33
     rocGood = true;
@@ -36,6 +36,12 @@ if wing.S > h_tail.S %checking if wing area is greater than tail area
     GeoIsGood = true;
 end
 
+%fits retardent
+if (body.L * body.W * body.D > 256 * 4) %fuselage volume at least 4x water volume
+    fitsRetardent = true;
+end
+
+
 
 %% Real
 real = false;
@@ -45,7 +51,8 @@ end
 
 %% Overall Good
 planeGood = false;
-if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal
+
+if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.aero.isreal && fitsRetardent
     planeGood = true;
 end
 
