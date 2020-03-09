@@ -10,6 +10,8 @@ plane.geo.body.L = 35 + rand(1)*(75 - 35); %ft, fuselage L
 tank_length = [(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 %% wing
+plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
+plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.wing.TR = 0.57; % taper ratio
 plane.geo.wing.S = 350 + rand(1)*(800 - 100); %ft^2, wing area
 plane.geo.wing.AR = 5 + rand(1)*(25 - 5); %wing aspect ratio
@@ -26,6 +28,7 @@ plane.geo.wing.h_cg = plane.geo.wing.cg/plane.geo.wing.c; %nondimensional, dista
 plane.geo.wing.h_ac = 0.25; %nondimensional, distance from wing leading edge to AC
 plane.geo.wing.ac = plane.geo.wing.h_ac*plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord
 plane.geo.wing.h_t = 0.301; %Nondimensional distance to maximum thickness
+plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 
 
 %% horizontal tail
@@ -49,7 +52,7 @@ h_tail_minLE = (wing.LE+wing.c) + 0.5*(plane.geo.body.L-(wing.LE+wing.c)); % min
 h_tail_maxLE = plane.geo.body.L - plane.geo.h_tail.c; % max location has end of tail = end of body
 plane.geo.h_tail.LE = h_tail_minLE + rand(1)*(h_tail_maxLE - h_tail_minLE);
 
-plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.lnw - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
+plane.geo.h_tail.cg = plane.geo.body.L - plane.geo.wing.LE - plane.geo.wing.cg - 8; %ft, distance from h_tail leading edge to CG
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
 plane.geo.h_tail.ac = plane.geo.wing.cg + plane.geo.h_tail.cg + 0.25*plane.geo.h_tail.c/plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord
 plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, distance from wing leading edge to AC
