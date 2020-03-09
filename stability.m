@@ -22,5 +22,9 @@ function plane = stability(plane)
         plane.data.stability.is_stable = false;
     end
     
+    %yaw stability
+   
+    
+    
 end
 
