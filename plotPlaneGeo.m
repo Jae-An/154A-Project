@@ -168,6 +168,7 @@ view([140 30]);
 axis tight equal
 lighting gouraud
 camlight
+
 %% Clean up: 
 % Return axes to initial hold state
 if ~initialHoldState
