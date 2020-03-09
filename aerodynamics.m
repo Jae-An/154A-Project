@@ -14,7 +14,7 @@ function plane = aerodynamics(plane)
 
     v_ref = linspace(v_stall, v_max);
 
-    air_density = 0.002;      %slug/ft3, 20,000 ft.
+    air_density = 0.001267;      %slug/ft3, 20,000 ft.
     viscosity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
     e_tail = 0.3;
     e_wing = 0.85;
@@ -31,7 +31,7 @@ function plane = aerodynamics(plane)
     %prop stuff
     eta = plane.prop.eta_p; % eta and hp same for all planes so I just used the first one
     hp = plane.prop.hp;
-    thrust = plane.prop.numengines*(hp * 550 * eta) ./ v_ref;
+    thrust = (hp * 550 * eta) ./ v_ref;
     thrust = thrust.';
     plane.prop.thrust = thrust;
     Difference = zeros(100,2);
@@ -53,7 +53,7 @@ function plane = aerodynamics(plane)
                 % computing Cf
                 Re = air_density*v_ref(i)*wing.c/viscosity;
 
-                Mach = v_ref(i)/1125;                      %v_ref MUST BE IN FT/S
+                Mach = v_ref(i)/968;                      %v_ref MUST BE IN FT/S
                 Cf = 0.455/((log10(Re)^2.58)*(1+0.144*Mach^2)^0.65);
 
                 %compute K's
@@ -66,7 +66,7 @@ function plane = aerodynamics(plane)
                 f = body.L/body.W;
                 K_fuselage = (1 + (60/f^3) + (f/400));
 
-                Cf(i) = 0.455/(((log10(Re))^2.58));
+            %    Cf(i) = 0.455/(((log10(Re))^2.58));
             %     K_wing = 1+2*(wing.ThR)+60*(wing.ThR)^4;
             %     K_horizontal_tail = 1+2*(h_tail.ThR)+60*(h_tail.ThR)^4;
             %     K_vertical_tail = 1+2*(v_tail.ThR)+60*(v_tail.ThR)^4;
@@ -78,10 +78,10 @@ function plane = aerodynamics(plane)
                 Q_tail = 1.08;
 
 
-                CD0_wing = K_wing*Q_wing*Cf(i)*wing.S_wet/wing.S;
-                CD0_h_tail = K_horizontal_tail*Q_tail*Cf(i)*h_tail.S_wet/wing.S;
-                CD0_v_tail = K_vertical_tail*Q_tail*Cf(i)*v_tail.S_wet/wing.S;
-                CD0_fuselage = K_fuselage*Cf(i)*(pi*body.L*body.D)/wing.S;
+                CD0_wing = K_wing*Q_wing*Cf*wing.S_wet/wing.S;
+                CD0_h_tail = K_horizontal_tail*Q_tail*Cf*h_tail.S_wet/wing.S;
+                CD0_v_tail = K_vertical_tail*Q_tail*Cf*v_tail.S_wet/wing.S;
+                CD0_fuselage = K_fuselage*Cf*(pi*body.L*body.D)/wing.S;
 
                 CD0(i) = CD0_wing + CD0_h_tail + CD0_v_tail + CD0_fuselage;
                % CDi(i) = ((CL_wing^2)/(3.1415*wing.AR*e_wing)) +
@@ -93,7 +93,7 @@ function plane = aerodynamics(plane)
             CDi(i,j) = ((CL(i,j)^2)/(pi*wing.AR*e_wing));    %induced drag
 
             CD(i,j) = CDi(i,j) + CD0(i);                        %total drag
-            CD(i,j) = CD(i,j) * 2;                              % compensation basrd on Datacom results
+            CD(i,j) = CD(i,j);                              % compensation basrd on Datacom results
             D(i,j) = 0.5*air_density*v_ref(i)^2*CD(i,j)*wing.S;   %drag force values for dry mass 
             L(i,j) = 0.5*air_density*v_ref(i)^2*CL(i,j)*wing.S;   %dry mass lift force values
             RE(i,j) = Re;
@@ -144,16 +144,6 @@ function plane = aerodynamics(plane)
         % fprintf('imaginary CD or CL for plane \n')
         plane.data.aero.isreal = false;
     end
-
-
-if isreal(CD) && isreal(CL)
-    plane.data.aero.isreal = true;
-else
-    %fprintf('imaginary CD or CL for plane \n')
-    plane.data.aero.isreal = false;
-end
-
-
 
 end
 

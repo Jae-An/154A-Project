@@ -12,7 +12,7 @@ e = 0.85; % approx oswald efficiency for an eliptical wing
 CD0_min = min(plane.data.aero.CD0);
 CL_maxRC = (3*CD0_min*pi*AR*e)^0.5;
 CD_max_RC = CD0_min + (CL_maxRC^2)/(pi*AR*e);
-rho = 0.00238;
+rho = 0.001267;
 V_ref = (Dry_weight/(0.5*rho*CL_maxRC*S))^0.5;
 
 %Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
