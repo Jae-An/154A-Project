@@ -3,8 +3,8 @@ clc; clear variables;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
 stable = 0;
-g = 0;
-b = 0;
+g = 0; % good planes
+b = 0; % bad planes
 numGoodPlanes = 50;
 resultPlanes = struct(['Good','Bad'],{});
 
@@ -67,7 +67,7 @@ for n = 1:g
    L(n) =  resultPlanes(n).Good.geo.body.L;
    S(n) =  resultPlanes(n).Good.geo.wing.S;
    b(n) =  resultPlanes(n).Good.geo.wing.b;
-   W(n) =  resultPlanes(n).Good.data.weight.W;
+   W(n) =  resultPlanes(n).Good.data.weight.W(1);
    CL(:,n) = resultPlanes(n).Good.data.aero.CL(:,2);
    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,2);
    D(:,n:n+1) = resultPlanes(n).Good.data.aero.D;
@@ -78,10 +78,10 @@ v_ref = linspace(v_stall(1), v_max(1),100);
 %%
 figure
 x = v_cruise;
-y = ROC;
-z = LD;
-qx = linspace(min(x(:,1)),max(y),50); %picked the first column but this should be fixed more properly
-qy = linspace(min(x(:,1)),max(y),50);
+y = R./5280;
+z = ROC.*60;
+qx = linspace(min(x(:,1)),max(x(:,1)),100); %picked the first column but this should be fixed more properly
+qy = linspace(min(y),max(y),100);
 
 F = scatteredInterpolant(x(:,1),y,z);
 [Xq,Yq] = meshgrid(qx, qy);
@@ -89,8 +89,8 @@ F.Method = 'natural';
 Z = F(Xq,Yq);
 meshc(Xq,Yq,Z)
 xlabel('Cruise Speed ft/s')
-ylabel('Rate of Climb fpm')
-zlabel('Lift Over Drag')
+zlabel('Rate of Climb, fpm')
+ylabel('Range, miles')
 shading interp
 set(gca, 'FontSize', 17, 'FontWeight', 'bold')
 %%
@@ -112,7 +112,7 @@ shading interp
 set(gca, 'FontSize', 17, 'FontWeight', 'bold')
 %%
 figure
-plot(LD,R,'*')
+plot(LD,R/5280,'*')
 xlabel('Lift-to-Weight')
 ylabel('Range, Miles')
 %%

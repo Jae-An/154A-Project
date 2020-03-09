@@ -6,7 +6,7 @@ function [plane] = getPropulsionDetails(plane)
 %% GE catalyst Turboprop engine
 plane.prop.numengines = 2;
 plane.prop.W = plane.prop.numengines*600; %lb
-plane.prop.hp = plane.prop.numengines*1300; %hp
+plane.prop.hp = plane.prop.numengines*1600; %hp
 %plane.prop.eta_p = 0.65; % This needs to be updated as a function of velocity or a look up table of some sort
 plane.prop.c_p = 0.4272; % lb / hp-h
 plane.prop.c_p = plane.prop.c_p /(550*60*60); % (ft^-1) Fixes units for range calculation
