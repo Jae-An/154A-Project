@@ -153,5 +153,11 @@ plane.data.aero.LD = L(minDind)/minD;
 
     plane.data.aero.D = D;
 
+[minD, minDind] = min(D);
+plane.data.aero.v_cruise = v_ref(minDind);
+plane.data.aero.LD = L(minDind)/minD;
+
+    plane.data.aero.D = D;
+
 end
 
