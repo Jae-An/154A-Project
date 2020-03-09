@@ -22,7 +22,7 @@ else
 end
 
 %% Need to be able to fly at at least stall speed
-if plane.data.aero.D(1,1) < 5000
+if plane.prop.thrust(1) - plane.data.aero.D(1,1) >= 0
     minSpeedGood = true;
 else
     minSpeedGood = false;

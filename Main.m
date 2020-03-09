@@ -1,5 +1,5 @@
 tic
-clc; clear variables;
+clc; clear variables; close all;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
 stable = 0;
@@ -67,7 +67,7 @@ for n = 1:g
    L(n) =  resultPlanes(n).Good.geo.body.L;
    S(n) =  resultPlanes(n).Good.geo.wing.S;
    b(n) =  resultPlanes(n).Good.geo.wing.b;
-   W(n) =  resultPlanes(n).Good.data.weight.W;
+   W(n) =  resultPlanes(n).Good.data.weight.wet;
    CL(:,n) = resultPlanes(n).Good.data.aero.CL(:,2);
    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,2);
    D(:,n:n+1) = resultPlanes(n).Good.data.aero.D;
@@ -112,7 +112,7 @@ shading interp
 set(gca, 'FontSize', 17, 'FontWeight', 'bold')
 %%
 figure
-plot(LD,R,'*')
+plot(LD,R/5280,'*')
 xlabel('Lift-to-Weight')
 ylabel('Range, Miles')
 %%
