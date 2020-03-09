@@ -157,12 +157,12 @@ h_tail = plane.geo.h_tail;
 
 x = zeros(11,1);
 
-x(1,1) = wing.LE + wing.c/2;   %ft, wing lcg location
+x(1,1) = wing.LE + wing.c*0.52;   %ft, wing lcg location
 x(2,1) = body.L/2;              %fuselage cg location  
-x(3,1) = body.L - h_tail.c/2;   %tail cg location
-x(4,1) = body.L - h_tail.c/2;   %tail cg location
+x(3,1) = h_tail.LE + h_tail.c*0.52;   %tail cg location
+x(4,1) = v_tail.LE + v_tail.c*0.52;   %tail cg location
 x(5,1) = wing.LE + wing.c/2;   %landing gear cg location
-x(6,1) = wing.LE - 2;          %engine cg location
+x(6,1) = wing.LE + wing.c/2;          %engine cg location
 x(7,1) = wing.LE + wing.c/2;   %fuel systems cg location
 x(8,1) = wing.LE + wing.c/2;   %surface controls cg location
 x(10,1) = wing.LE + wing.c/2;  %fuel cg location
