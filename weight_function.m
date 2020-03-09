@@ -13,13 +13,11 @@ function [plane] = weight_function(plane)
     S = plane.geo.wing.S;                           %wing area, ft^2   % 
     AR = plane.geo.wing.AR;                         %aspect ratio
 
-
-
-N = 5;%plane.data.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
-sweep_angle = plane.geo.wing.sweep * (3.14/180);            %Deg %Wing 1/4 chord sweep angle
-taper_ratio = plane.geo.wing.TR;     %Taper Ratio
-thickness_ratio_wing = plane.geo.wing.ThR;                  %Maximum Thickness Ratio (GIVEN)
-v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %Equivalent Vmax at SL
+    N = 5;%plane.data.N;                      %Ultimate Load Factor (1.5 times limit load factor)(GIVEN)
+    sweep_angle = plane.geo.wing.sweep * (3.14/180);            %Deg %Wing 1/4 chord sweep angle
+    taper_ratio = plane.geo.wing.TR;     %Taper Ratio
+    thickness_ratio_wing = plane.geo.wing.ThR;                  %Maximum Thickness Ratio (GIVEN)
+    v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %Equivalent Vmax at SL
 
 
     W_wing = 96.948 * ((Weight * N/10^5)^0.65*(AR/cos(sweep_angle))^0.57*(S/100)^0.61*((1 + taper_ratio)/(2*thickness_ratio_wing))^0.36*(1+v_max/500)^0.5)^0.993;
@@ -97,7 +95,7 @@ v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %E
     %Nt=2;                         %Number of Separate Fuel Tanks
     %Wfs=2.49*((Fg)^0.6*(1/(1+tankint))^0.3*Nt^0.2*Neng^0.13)^1.21
 
-    % specific fuel system weights (fuel tanks, lines) likely can be found for your aircraft, if so, use those actual values instead of the niccolai equations.
+    % specific fuel system weights (fuel tanks, lines) likely can be found for your ai rcraft, if so, use those actual values instead of the niccolai equations.
     Wfs = 100;  %lbs 
 
     %% Surface Controls Weight
@@ -121,7 +119,7 @@ v_max = plane.data.requirements.v_max*0.593;        %FIX UNITS         %kts   %E
     Weight = W_total(i);
 
 
-end
+    end
 
 
 Weight_total = Weight;
@@ -159,15 +157,15 @@ h_tail = plane.geo.h_tail;
 
 x = zeros(11,1);
 
-x(1,1) = wing.lnw + wing.c/2;   %ft, wing lcg location
+x(1,1) = wing.LE + wing.c/2;   %ft, wing lcg location
 x(2,1) = body.L/2;              %fuselage cg location  
 x(3,1) = body.L - h_tail.c/2;   %tail cg location
 x(4,1) = body.L - h_tail.c/2;   %tail cg location
-x(5,1) = wing.lnw + wing.c/2;   %landing gear cg location
-x(6,1) = wing.lnw - 2;          %engine cg location
-x(7,1) = wing.lnw + wing.c/2;   %fuel systems cg location
-x(8,1) = wing.lnw + wing.c/2;   %surface controls cg location
-x(10,1) = wing.lnw + wing.c/2;  %fuel cg location
+x(5,1) = wing.LE + wing.c/2;   %landing gear cg location
+x(6,1) = wing.LE - 2;          %engine cg location
+x(7,1) = wing.LE + wing.c/2;   %fuel systems cg location
+x(8,1) = wing.LE + wing.c/2;   %surface controls cg location
+x(10,1) = wing.LE + wing.c/2;  %fuel cg location
 x(11,1) = 50;                   %avionics cg location
 
 sum_mx_else = 0;
@@ -175,6 +173,6 @@ for i = 1:8
     sum_mx_else = sum_mx_else + Weight(i,1)*x(i,1);
 end
 
-x_payload = (1/W_payload)*[Weight_total*(wing.lnw + wing.h_cg*wing.c) - sum_mx_else];
+x_payload = (1/W_payload)*[Weight_total*(wing.LE + wing.h_cg*wing.c) - sum_mx_else];
 x(9,1) = x_payload;
 end
