@@ -1,5 +1,5 @@
 function [] = writeDatcomInput(plane)
-aoa = 0;
+aoa = 0:10;
 Re = plane.data.aero.Re_cruise;
 M = plane.data.aero.v_cruise(1)/1125;
 
@@ -17,15 +17,15 @@ fprintf(fid,'CBARR=%.2f, ',plane.geo.wing.c);
 fprintf(fid,'BLREF=%.2f$',plane.geo.wing.b);
 % Synthesis TODO
 fprintf(fid,'\n $SYNTHS '); %
-fprintf(fid,'XCG=%.2f, ',0.5*plane.geo.body.L); % longitudinal location of CG, (moment reference center)
+fprintf(fid,'XCG=%.2f, ',0.5*plane.data.weight.CG(1)); % longitudinal location of CG, (moment reference center)
 fprintf(fid,'ZCG=%.1f, ',0.0); % vertical location of CG relative to reference plane
-fprintf(fid,'XW=%.2f, ',0.24*plane.geo.body.L); % longitudinal location of theoretical wing apex
-fprintf(fid,'ZW=%.2f, ',0.75*plane.geo.body.D); % vertical location of theoretical wing apex relative to reference plane
+fprintf(fid,'XW=%.2f, ',plane.geo.wing.LE); % longitudinal location of theoretical wing apex
+fprintf(fid,'ZW=%.2f, ',0.9*plane.geo.body.D); % vertical location of theoretical wing apex relative to reference plane
 fprintf(fid,'ALIW=%.1f, ',0.0); % wing root chord incidence angle measured from reference plane
-fprintf(fid,'XH=%.2f,',0.9*plane.geo.body.L); % longitudinal location of theoretical horizontal tail apex
-fprintf(fid,'\n   ZH=%.1f, ',0.0); % vertical location of theoretical horizontal tail apex relative to reference plane
+fprintf(fid,'XH=%.2f,',plane.geo.h_tail.LE); % longitudinal location of theoretical horizontal tail apex
+fprintf(fid,'\n   ZH=%.1f, ',0.9*plane.geo.body.D); % vertical location of theoretical horizontal tail apex relative to reference plane
 fprintf(fid,'ALIH=%.1f, ',0.0); % horizontal tail root chord incidence angle measured from reference plane
-fprintf(fid,'XV=%.2f, ',0.9*plane.geo.body.L); % longitudinal location of theoretical vertical tail apex
+fprintf(fid,'XV=%.2f, ',plane.geo.v_tail.LE); % longitudinal location of theoretical vertical tail apex
 fprintf(fid,'VERTUP=.TRUE.$'); %  =TRUE if vertical panel is above reference plane, =FALSE if vertical panel is below reference plane
 
 
@@ -51,7 +51,7 @@ fprintf(fid,'CHRDTP=%.2f, ',plane.geo.wing.c* plane.geo.wing.TR); % tip chord
 fprintf(fid,'SSPNE=%.2f, ', plane.geo.wing.b/2); % semispan of exposed panel
 fprintf(fid,'SSPN=%.2f, ', plane.geo.wing.b/2); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.wing.c); % root chord
-fprintf(fid,'   SAVSI=%.2f, ', plane.geo.wing.sweep*0); % inboard pael sweep angle
+fprintf(fid,'   SAVSI=%.2f, ', plane.geo.wing.sweep); % inboard pael sweep angle
 fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
 fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
@@ -74,7 +74,7 @@ fprintf(fid,'CHRDTP=%.2f, ',plane.geo.v_tail.c* plane.geo.v_tail.TR); % tip chor
 fprintf(fid,'SSPNE=%.2f, ', plane.geo.v_tail.b/2); % semispan of exposed panel
 fprintf(fid,'SSPN=%.2f, ', plane.geo.v_tail.b/2); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.v_tail.c); % root chord
-fprintf(fid,'   SAVSI=%.2f, ', plane.geo.v_tail.sweep*0); % inboard pael sweep angle
+fprintf(fid,'   SAVSI=%.2f, ', plane.geo.v_tail.sweep); % inboard pael sweep angle
 fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
 fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
@@ -91,7 +91,7 @@ fprintf(fid,'CHRDTP=%.2f, ',plane.geo.h_tail.c* plane.geo.h_tail.TR); % tip chor
 fprintf(fid,'SSPNE=%.2f, ', plane.geo.h_tail.b/2); % semispan of exposed panel
 fprintf(fid,'SSPN=%.2f, ', plane.geo.h_tail.b/2); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.h_tail.c); % root chord
-fprintf(fid,'   SAVSI=%.2f, ', plane.geo.h_tail.sweep*0); % inboard pael sweep angle
+fprintf(fid,'   SAVSI=%.2f, ', plane.geo.h_tail.sweep); % inboard pael sweep angle
 fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
 fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
@@ -104,7 +104,7 @@ fprintf(fid,'\nNACA-H-4-6412');
 
 fprintf(fid,'\nDIM FT'); % specify feet and english units
 fprintf(fid,'\nDAMP'); % Output Dynamic Stability Derivatives
-
+fprintf(fid,'\nDERIV RAD');
 % fprintf(fid,'\nBUILD');
 fprintf(fid,'\nCASEID 154A PLANE, CASE 1');
 % fprintf(fid,'\nSAVE');

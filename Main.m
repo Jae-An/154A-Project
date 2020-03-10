@@ -3,8 +3,8 @@ clc; clear variables; close all;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
 stable = 0;
-g = 0;
-b = 0;
+g = 0; % good planes
+b = 0; % bad planes
 numGoodPlanes = 50;
 resultPlanes = struct(['Good','Bad'],{});
 
@@ -85,45 +85,45 @@ for n = 1:g
 end
 v_ref = linspace(v_stall(1), v_max(1),100);
 %%
-% figure
-% x = v_cruise;
-% y = ROC;
-% z = LD;
-% qx = linspace(min(x(:,1)),max(y),50); %picked the first column but this should be fixed more properly
-% qy = linspace(min(x(:,1)),max(y),50);
-% 
-% F = scatteredInterpolant(x(:,1),y,z);
-% [Xq,Yq] = meshgrid(qx, qy);
-% F.Method = 'natural';
-% Z = F(Xq,Yq);
-% meshc(Xq,Yq,Z)
-% xlabel('Cruise Speed ft/s')
-% ylabel('Rate of Climb fpm')
-% zlabel('Lift Over Drag')
-% shading interp
-% set(gca, 'FontSize', 17, 'FontWeight', 'bold')
+figure
+x = v_cruise;
+y = R./5280;
+z = ROC.*60;
+qx = linspace(min(x(:,1)),max(x(:,1)),100); %picked the first column but this should be fixed more properly
+qy = linspace(min(y),max(y),100);
+
+F = scatteredInterpolant(x(:,1),y,z);
+[Xq,Yq] = meshgrid(qx, qy);
+F.Method = 'natural';
+Z = F(Xq,Yq);
+meshc(Xq,Yq,Z)
+xlabel('Cruise Speed ft/s')
+zlabel('Rate of Climb, fpm')
+ylabel('Range, miles')
+shading interp
+set(gca, 'FontSize', 17, 'FontWeight', 'bold')
 %%
-% figure
-% x = b;
-% y = L;
-% z = v_cruise;
-% qx = linspace(min(x(:,1)),max(y),50);
-% qy = linspace(min(x(:,1)),max(y),50);
-% F = scatteredInterpolant(x(:,1),y,z(:,1));
-% [Xq,Yq] = meshgrid(qx, qy);
-% F.Method = 'natural';
-% Z = F(Xq,Yq);
-% meshc(Xq,Yq,Z)
-% zlabel('Cruise Speed ft/s')
-% xlabel('Span, ft')
-% ylabel('Length, ft')
-% shading interp
-% set(gca, 'FontSize', 17, 'FontWeight', 'bold')
+figure
+x = b;
+y = L;
+z = v_cruise;
+qx = linspace(min(x(:,1)),max(y),50);
+qy = linspace(min(x(:,1)),max(y),50);
+F = scatteredInterpolant(x(:,1),y,z(:,1));
+[Xq,Yq] = meshgrid(qx, qy);
+F.Method = 'natural';
+Z = F(Xq,Yq);
+meshc(Xq,Yq,Z)
+zlabel('Cruise Speed ft/s')
+xlabel('Span, ft')
+ylabel('Length, ft')
+shading interp
+set(gca, 'FontSize', 17, 'FontWeight', 'bold')
 %%
-% figure
-% plot(LD,R/5280,'*')
-% xlabel('Lift-to-Weight')
-% ylabel('Range, Miles')
+figure
+plot(LD,R/5280,'*')
+xlabel('Lift-to-Weight')
+ylabel('Range, Miles')
 %%
 figure
 bar(1:g,R/5280)
@@ -157,15 +157,17 @@ for k = 1:N-2
 end
 
 %%
-% figure
-% hold on
-% for n = 1:g
-%     plot(v_ref,D(:,n))
-% end
-% eta = resultPlanes(1).Good.prop.eta_p; % eta and hp same for all planes so I just used the first one
-% hp = resultPlanes(1).Good.prop.hp;
-% thrust = (hp * 550 * eta) ./ v_ref;
-% plot(v_ref,thrust);
-% hold off
+figure
+hold on
+for n = 1:g
+    plot(v_ref,D(:,n))
+end
+eta = resultPlanes(1).Good.prop.eta_p; % eta and hp same for all planes so I just used the first one
+hp = resultPlanes(1).Good.prop.hp;
+thrust = (hp * 550 * eta) ./ v_ref;
+plot(v_ref,thrust);
+hold off
 toc
 %%
+
+%% 
