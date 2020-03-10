@@ -46,9 +46,9 @@ plane.geo.wing.cg = plane.data.weight.CG - plane.geo.wing.LE; %ft, distance from
 plane.geo.wing.h_cg = plane.geo.wing.cg/plane.geo.wing.c; %nondimensional, distance from wing leading edge to CG
 
 % Horizontal Tail
-plane.geo.h_tail.cg = plane.data.weight.CG - plane.geo.h_tail.LE; %ft, distance from h_tail leading edge to CG
+plane.geo.h_tail.cg = plane.geo.h_tail.LE - plane.data.weight.CG; %ft, distance from h_tail leading edge to CG
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
 
 % Vertical Tail
 plane.geo.v_tail.cg = plane.data.weight.CG - plane.geo.v_tail.LE; %ft, distance from v_tail leading edge to CG
-plane.geo.v_tail.h_cg = plane.geo.h_tail.h_cg; %nondimensional, distance from v_tail leading edge to CG
+plane.geo.v_tail.h_cg = plane.geo.v_tail.cg/plane.geo.wing.c; %nondimensional, distance from v_tail leading edge to CG
