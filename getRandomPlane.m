@@ -12,7 +12,7 @@ tank_length = [(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo
 %% wing
 plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
-plane.geo.wing.TR = 0.57; % taper ratio
+plane.geo.wing.TR = 0.1 + rand(1)*(1 - 0.1); % taper ratio
 plane.geo.wing.S = 100 + rand(1)*(400 - 100); %ft^2, wing area
 plane.geo.wing.AR = 5 + rand(1)*(25 - 5); %wing aspect ratio
 plane.geo.wing.b = (plane.geo.wing.S * plane.geo.wing.AR )^0.5; %ft, wing span length
@@ -31,7 +31,7 @@ plane.geo.wing.ac = plane.geo.wing.h_ac*plane.geo.wing.c; %ft, distance from win
 %%%%%% We're using the same airfoil for the tail? %%%%%%%%%%%
 plane.geo.h_tail.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
-plane.geo.h_tail.TR = 0.57;
+plane.geo.h_tail.TR = 0.1 + rand(1)*(1 - 0.1);
 St_Sw = 0.05 + rand(1)*(0.5 - 0.05);
 plane.geo.h_tail.S = St_Sw*plane.geo.wing.S; %ft^2, h_tail area
 plane.geo.h_tail.AR = 4 + rand(1)*(8 - 4); %h_tail aspect ratio
@@ -53,7 +53,7 @@ plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, d
 
 %% vertical tail
 plane.geo.v_tail.ThR = 0.12;
-plane.geo.v_tail.TR = 0.57;
+plane.geo.v_tail.TR =  0.1 + rand(1)*(1 - 0.1);
 plane.geo.v_tail.S = 50 + rand(1)*(300 - 50); %ft^2, v_tail area
 plane.geo.v_tail.AR = 2 + rand(1)*(7 - 2); %v_tail aspect ratio
 plane.geo.v_tail.b = ((plane.geo.v_tail.S*plane.geo.v_tail.AR)^0.5)/2; %ft, v_tail span length

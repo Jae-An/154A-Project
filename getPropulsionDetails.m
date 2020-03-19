@@ -11,6 +11,7 @@ plane.prop.hp = plane.prop.numengines*1300; %hp
 plane.prop.c_p = 0.5; % lb / hp-h
 plane.prop.c_p = plane.prop.c_p /(550*60*60); % (ft^-1) Fixes units for range calculation
 plane.prop.fuel_mass = 500 + rand(1)*(1000-500); %lb - guess based off of sfc*1300hp*5hrs
+plane.prop.fuel_volume = plane.prop.fuel_mass/48.381874; % (ft^3) - density from jet fuel, which has 775 g/L minimum density for max volume
 
 %% Propeller calcs
 
