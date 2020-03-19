@@ -23,10 +23,10 @@ function plane = aerodynamics(plane)
     e_tail = 0.3;
     e_wing = 0.85;
 
-    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent), 3rd is sea level dry
+    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent)
     CD = zeros(100,2);
-    CD0 = zeros(100,2);
-    CDi = zeros(100,2);
+    CD0 = zeros(100,2); % 2nd Column is ground conditions
+    CDi = zeros(100,2); 
     D = zeros(100,2);
     L = zeros(100,2);
     RE = zeros(100,2);

@@ -7,7 +7,7 @@ Pav = plane.prop.hp * 550;
 
 S = plane.geo.wing.S;
 AR = plane.geo.wing.AR;
-e = 0.85; % approx oswald efficiency for an eliptical wing
+e = 0.85; % approx oswald efficiency
 
 CD0_climb = plane.data.aero.CD0(1,2);
 CL_climb = (3*CD0_climb*pi*AR*e)^0.5;

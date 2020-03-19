@@ -6,7 +6,7 @@ V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 %fuselage
 plane.geo.body.W = 2 + rand(1)*(6 - 2); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
-plane.geo.body.L = 50 + rand(1)*(120 - 50); %ft, fuselage L
+plane.geo.body.L = 50 + rand(1)*(100 - 50); %ft, fuselage L
 tank_length = [(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 %% wing
@@ -14,8 +14,8 @@ plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.wing.TR = 0.1 + rand(1)*(1 - 0.1); % taper ratio
 plane.geo.wing.S = 100 + rand(1)*(400 - 100); %ft^2, wing area
-plane.geo.wing.b = 60 + rand(1)*(100 - 60); %ft, wingspan
-plane.geo.wing.AR = plane.geo.wing.b^2 / plane.geo.wing.S; %wing aspect ratio
+plane.geo.wing.AR = 5 + rand(1)*(25 - 5); %wing aspect ratio
+plane.geo.wing.b = (plane.geo.wing.S * plane.geo.wing.AR )^0.5; %ft, wing span length
 plane.geo.wing.c = plane.geo.wing.S/plane.geo.wing.b*4/(1+plane.geo.wing.TR); %ft, wing chord length
 plane.geo.wing.ThR = 0.12; % thickness ratio
 plane.geo.wing.sweep = 0 + rand(1)*(5-0); %degrees, sweep length

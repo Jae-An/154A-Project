@@ -35,23 +35,28 @@ end
 %% geometry good
 geo = plane.geo;
 GeoIsGood = false;
-    % check wing area ratios
     AreaRatioGood = false;
+    fitsRetardent = false;    
+    fitsFuel = false;
+    % check wing area ratios
     if geo.wing.S > geo.h_tail.S && geo.wing.S > geo.v_tail.S
         AreaRatioGood = true;
     end
     % fits retardent
-    fitsRetardent = false;
-    if (body.L * 0.25*pi*body.D^2 > 256 * 2) %fuselage volume at least 4x water volume
+    if (geo.body.L * 0.25*pi*geo.body.D^2 > 256 * 2) %fuselage volume at least 2x water volume
         fitsRetardent = true;
     end
+    % 
     % fits fuel in wing
-    fitsFuel = false;
     wingVolume = 0.5*geo.wing.c*geo.wing.b*(geo.wing.TR+1) * 0.0815662901; % number from area of airfoil per chord length
     if plane.prop.fuel_volume < 0.5*wingVolume % Allow half volume margin for wing "fuel box"
         fitsFuel = true;
     end
-
+% Overall geo check
+if all([AreaRatioGood, fitsRetardent, fitsFuel])
+    GeoIsGood = true;
+end
+    
 %% Real
 real = false;
 if isreal(plane.data.aero.CD) && isreal(plane.data.aero.CL)

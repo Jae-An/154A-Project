@@ -15,7 +15,7 @@ else
 end
 
 %% Range
-if plane.data.performance.R >= 500*5280 && plane.data.performance.R <= 600*5280
+if plane.data.performance.R >= 500*5280%% && plane.data.performance.R <= 600*5280
     rangeGood = true;
 else
     rangeGood = false;
@@ -29,8 +29,10 @@ else
 end
 
 %% isStable
-
-
+stabilityGood = false;
+if plane.data.stability.is_stable && plane.data.stability.yaw_is_stable
+    stabilityGood = true;
+end
 
 %% geometry good
 geo = plane.geo;
@@ -43,7 +45,7 @@ GeoIsGood = false;
         AreaRatioGood = true;
     end
     % fits retardent
-    if (geo.body.L * 0.25*pi*geo.body.D^2 > 256 * 2) %fuselage volume at least 4x water volume
+    if (geo.body.L * 0.25*pi*geo.body.D^2 > 256 * 2) %fuselage volume at least 2x water volume
         fitsRetardent = true;
     end
     % fits fuel in wing
@@ -65,7 +67,7 @@ end
 %% Overall Good
 planeGood = false;
 
-if GeoIsGood && rocGood && VcGood && rangeGood && plane.data.stability.is_stable && plane.data.stability.yaw_is_stable && plane.data.aero.isreal && fitsRetardent && minSpeedGood
+if GeoIsGood && rocGood && VcGood && rangeGood && stabilityGood && plane.data.aero.isreal && minSpeedGood
     planeGood = true;
 end
 

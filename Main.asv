@@ -5,13 +5,13 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
-numGoodPlanes = 10000;
+numGoodPlanes = 50;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
 fprintf('Finding good planes... \n')
 while  g < numGoodPlanes
-    %fprintf('.')
+    fprintf('.')
     if mod(g+b,100) == 0
         fprintf('\n')
     end
@@ -152,15 +152,14 @@ h_tail_b = h_tail_b(wI);
 h_tail_c = h_tail_c(wI);
 h_tail_LE = h_tail_LE(wI);
 h_tail_sweep = h_tail_sweep(wI);
-h_tail_TR = h_tail_TR(wI);
-
+h_tail_TR =
 v_tail_S = v_tail_S(wI);
 v_tail_AR = v_tail_AR(wI);
 v_tail_b = v_tail_b(wI);
 v_tail_c = v_tail_c(wI);
 v_tail_LE = v_tail_LE(wI);
 v_tail_sweep = v_tail_sweep(wI);
-v_tail_TR = v_tail_TR(wI);
+
 % CL = CL(:,wI);
 % CD = CD(:,wI);
 
@@ -224,18 +223,18 @@ figure
 bar(1:g,W)
 ylabel('Wet Weight, lb')
 %%
-% N=g;
-% hf=figure('units','normalized','outerposition',[0 0 1 1]);
-% hf.ToolBar='none';
-% nS   = sqrt(N);
-% nCol = ceil(nS);
-% nRow = nCol - (nCol * nCol - N > nCol - 1);
-% for k = 1:N-2
-%   subplot(nRow, nCol, k);
-%   plotPlaneGeo(resultPlanes(k).Good);
-%   set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
-%   title(k)
-% end
+N=g;
+hf=figure('units','normalized','outerposition',[0 0 1 1]);
+hf.ToolBar='none';
+nS   = sqrt(N);
+nCol = ceil(nS);
+nRow = nCol - (nCol * nCol - N > nCol - 1);
+for k = 1:N-2
+  subplot(nRow, nCol, k);
+  plotPlaneGeo(resultPlanes(k).Good);
+  set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
+  title(k)
+end
 
 %%
 % figure
