@@ -43,7 +43,7 @@ plane.geo.h_tail.S_wet = plane.geo.h_tail.S*(1.977 + 0.52*plane.geo.h_tail.ThR);
 plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
 wing = plane.geo.wing;
-h_tail_minLE = wing.LE + plane.geo.body.L/3; % min location is at least 1/3 bodyL away from wing LE from observation
+h_tail_minLE = wing.LE + wing.c; % min location is at least 1/3 bodyL away from wing LE from observation
 h_tail_maxLE = plane.geo.body.L - plane.geo.h_tail.c; % max location has end of tail = end of body
 plane.geo.h_tail.LE = h_tail_minLE + rand(1)*(h_tail_maxLE - h_tail_minLE); %Dist from nose to LE of htail
 

@@ -143,17 +143,16 @@ function plane = aerodynamics(plane)
     plane.data.aero.CD0 = CD0;
     plane.data.aero.D = D;
 
-    
-    [minD, minDind] = min(D);
-    [maxDiff, maxDiff_index] = max(Difference);
+    [maxDiff, maxDiff_index] = max(Difference,[],1);
     CruiseDrag = D(maxDiff_index);
     plane.data.aero.v_cruise = v_ref(maxDiff_index);
-    LD = [L(minDind(1),1)/minD(1), L(minDind(2),2)/minD(2)];
+    LD = [L(maxDiff_index(1),1)/CruiseDrag(1), L(maxDiff_index(2),2)/CruiseDrag(2)];
+    eta_cruise = eta(maxDiff_index);
     plane.data.aero.LD = LD;
     plane.data.aero.D = D;
-    plane.data.aero.Re_cruise = RE(minDind,1);
+    plane.data.aero.Re_cruise = RE(maxDiff_index,:);
     
-    f = @(Wi1,Wf1,Wp,Wf2) (log(Wi1/Wf1)-log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
+    f = @(Wi1,Wf1,Wp,Wf2) (eta_cruise(1)*LD(1)*log(Wi1/Wf1) - eta_cruise(2)*LD(2)*log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
     fun = @(Wf1) f(weightInitial,Wf1,weightPayload,weightFinal2);
     if isreal(weightInitial)
         weightFinal1 = fzero(fun,weightInitial-(weightFuel/2));
