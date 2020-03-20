@@ -5,7 +5,7 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
-numGoodPlanes = 10000;
+numGoodPlanes = 1000;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
@@ -131,7 +131,7 @@ end
 
 fuel_weight = fuel_weight(wI);
 R = R(wI);
-ROC = R(wI);
+ROC = ROC(wI);
 RE = RE(wI);
 v_stall = v_stall(wI);
 v_max = v_max(wI);

@@ -3,17 +3,14 @@ function plane = getPerformance(plane) %,RC,SC
 Dry_weight = plane.data.weight.wet - plane.data.weight.retardent;
 
 %% ROC = (Pav - Preq) / W
-Pav = plane.prop.hp * 550;
+Pe = plane.prop.hp * 550;
+eta_p = plane.prop.eta_p(1);
+Pav = Pe*eta_p;
 
 S = plane.geo.wing.S;
-AR = plane.geo.wing.AR;
-e = 0.85; % approx oswald efficiency
-
-CD0_climb = plane.data.aero.CD0(1,2);
-CL_climb = (3*CD0_climb*pi*AR*e)^0.5;
-CD_climb = CD0_climb + (CL_climb^2)/(pi*AR*e);
+CD_climb = plane.data.aero.CD(1,2);
 rho = 0.00238; % Sea level climb rates
-V_ref = (Dry_weight/(0.5*rho*CL_climb*S))^0.5;
+V_ref = plane.data.requirements.v_stall;
 
 %Preq = ( (2*(S^2)*(CD^2)*(W^3)) / (rho*(CL^3)) )^0.5;
 Preq = 0.5 * CD_climb * rho * (V_ref^2) * S * V_ref;
