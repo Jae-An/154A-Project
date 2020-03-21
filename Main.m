@@ -5,7 +5,7 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
-numGoodPlanes = 1000;
+numGoodPlanes = 2000;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:

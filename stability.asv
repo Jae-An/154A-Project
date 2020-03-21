@@ -60,7 +60,7 @@ function plane = stability(plane)
         [CL, CM_ac, rho, v] = getAero(plane,W,alt,v_ref);
         l_t = wing_c*(plane.geo.wing.c*plane.geo.h_tail.h_ac  - h_cg(cg_index));
         CL_alpha = (alpha_w + alpha_t*(S_t/S_w)*(1 - epsilon_alpha));
-        CM_alpha = -CL_alpha*(h_n - h_cg(cg_index));
+        CM_alpha = -CL_alpha*(h_n - h_cg(i,1));
         CM_i = alpha_t*(l_t*S_t/(wing_c*S_w));
         CL_i = -alpha_t*S_t/S_w;
 
@@ -68,14 +68,22 @@ function plane = stability(plane)
 
         % computing alphas
         q = 0.5*rho*v^2;
-        alpha(i) = ((W/(q*S_w)) + (alpha_t*i_t(i)*S_t/S_w)) / (alpha_w + (alpha_t*(S_t/S_w)*(1-epsilon_alpha)));
-        % I'm pretty sure alpha is measured from zero-lift line rather than
-        % chord so including cl_0 should be unnecessary
+        alpha(i) = ((W/(q*S_w)) + (alpha_t*i_t(i)*S_t/S_w) - plane.geo.wing.cl_0) / (alpha_w + (alpha_t*S_t*(1-epsilon_alpha)/S_w));
     end
     
     stall = false;
-    if any(abs(alpha) > 15) || any(abs(alpha - i_t) > 15)
-        stall = true;
+    for i = 1:2
+        for j = 1:2
+            if alpha(i,j) > 15
+                stall = true;
+                break;
+            end
+            
+            if abs(alpha(i,j) - i_t(i,j)) > 15
+                stall = true;
+                break;
+            end
+        end
     end
    plane.data.stability.stall = stall;
    plane.data.stability.alpha  = alpha; 

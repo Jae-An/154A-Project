@@ -29,20 +29,16 @@ x(10) = wing.LE + wing.c/2;  %fuel cg location
 %11th element is payload, at cg 2 location
 
 %% Calculate wet and dry cg
-cg = zeros(3,1); %wet, dry, wet (predrop) cg: this order is so that nothing gets messed up (3rd element added later)
-
+cg = zeros(3,1); %wet, dry, wet (predrop) cg
 % Must calculate payload (postdrop) cg first
 weight.W(10) = weight.W(10) - weight.fuel_1;
 cg(2) = sum(weight.W(1:10).*x(1:10))/(weight.dry-weight.fuel_1);
 x(11) = cg(2); %payload cg location (before and after drop should be exact same)
-
-% Then for stability/stall calcs we can find predrop cg
-cg(3) = sum(weight.W(1:11).*x(1:11))/(weight.wet-weight.fuel_1); 
-
-% Finally go back and calculate wet (takeoff) cg
+% Then go back and calculate wet (takeoff) cg
 weight.W(10) = weight.W(10) + weight.fuel_1;
-cg(1) = sum(weight.W(1:11).*x(1:11))/weight.wet;
-
+cg(1) = sum(weight.W(1:11).*x(1:10))/weight.wet;
+% Finally for stability/stall calcs we can find predrop cg
+cg(3) = 
 
 %% Return
 plane.data.weight.CG = cg;

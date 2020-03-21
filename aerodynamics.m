@@ -145,9 +145,9 @@ function plane = aerodynamics(plane)
     plane.data.aero.CD0 = CD0;
     plane.data.aero.D = D;
 
-    [maxDiff, maxDiff_index] = max(Difference,[],1);
+    [~, maxDiff_index] = max(Difference,[],1);
     CruiseDrag = D(maxDiff_index);
-    plane.data.aero.CL_cruise = CL(maxDiff_index,:);
+    plane.data.aero.CL_cruise = [CL(maxDiff_index(1),1) CL(maxDiff_index(2),2)];
     plane.data.aero.v_cruise = v_ref(maxDiff_index);
     LD = [L(maxDiff_index(1),1)/CruiseDrag(1), L(maxDiff_index(2),2)/CruiseDrag(2)];
     eta_cruise = eta(maxDiff_index);
