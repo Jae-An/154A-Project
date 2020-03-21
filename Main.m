@@ -5,6 +5,7 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
+
 numGoodPlanes = 2000;
 resultPlanes = struct(['Good','Bad'],{});
 
@@ -12,9 +13,7 @@ resultPlanes = struct(['Good','Bad'],{});
 fprintf('Finding good planes... \n')
 while  g < numGoodPlanes
     %fprintf('.')
-    if mod(g+b,100) == 0
-        fprintf('\n')
-    end
+
     
     newPlane = plane();
     newPlane = getRandomPlane(newPlane);
