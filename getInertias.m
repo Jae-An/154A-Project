@@ -65,5 +65,8 @@ I(1,2) = Iyy_dry; I(2,2) = Iyy_wet;
 I(1,3) = Izz_dry; I(2,3) = Izz_wet;
 I = I/32.2;
 
+%% Ixz
+
+
 end
 

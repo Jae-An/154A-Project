@@ -33,7 +33,7 @@ yyaxis right;
 plot(vref,CDi(:,1),'LineWidth',3);plot(vref,CDi(:,2),'LineWidth',3)
 title('CD0 and CDi vs Velocity'); xlabel('Velocity (ft/s)'); ylabel('Coefficient of Drag');
 plot(CL(:,2),CD(:,2),'LineWidth',3);
-legend('Wet - CD0','Dry - CD0','Wet - CDi', 'Dry - C);
+legend('Wet - CD0','Dry - CD0','Wet - CDi', 'Dry - CDi');
 
 
 figure(5);
