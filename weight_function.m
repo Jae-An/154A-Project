@@ -31,16 +31,16 @@ function [plane] = weight_function(plane)
     b_vertical_tail = plane.geo.v_tail.b;  %vertical tail span in, ft
 
 
-    h_ac_wing = plane.geo.wing.h_ac;    %nondimensional distance from wing AC to CG
-    chord_wing = plane.geo.wing.c;       %chord length, ft
+    ac_wing = plane.geo.wing.ac;    %ft, distance from wing LE to AC
     chord_horizontal_tail = plane.geo.h_tail.c;      %chord length, horizontal tail, ft
     chord_vertical_tail = plane.geo.v_tail.c;       %chord length, vertical tail, ft
-    h_ac_horizontal =  plane.geo.h_tail.h_ac;    %nondimensional distance from wing leading edge to horizontal tail AC
+    ac_htail =  plane.geo.h_tail.ac;    %ft, distance from wing leading edge to horizontal tail AC
 
 
     %% Horizontal Tail Weight
 
-    lh = 35 / 12 + (.5 - h_ac_wing) * chord_wing - (.5 - h_ac_horizontal) * chord_horizontal_tail; %ft       %Distance from Wing MAC to Tail MAC
+    %lh = 35 / 12 + (.5 - h_ac_wing) * chord_wing - (.5 - h_ac_htail) * chord_horizontal_tail; %ft       %Distance from Wing MAC to Tail MAC
+    lh = ac_htail - ac_wing;
     thr = chord_horizontal_tail*.12*12; %ft      %horizontal tail max root thickness (chord * thick/chord)
 
     Weight_horizontal_tail = 127*((Weight * N/10^5)^0.87*(S_horizontal_tail/100)^1.2*(lh/10)^0.483*(b_horizontal_tail/thr)^0.5)^0.458; %horizontal tail weight
