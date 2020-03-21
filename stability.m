@@ -68,10 +68,11 @@ function plane = stability(plane)
 
         % computing alphas
         q = 0.5*rho*v^2;
-        alpha(i) = (180/3.1415)*((W/(q*S_w)) + (alpha_t*i_t(i)*S_t/S_w)) / (alpha_w + (alpha_t*(S_t/S_w)*(1-epsilon_alpha)));
-        % I'm pretty sure alpha is measured from zero-lift line rather than
-        % chord so including cl_0 should be unnecessary
+        alpha(i) = ((W/(q*S_w)) + (alpha_t*i_t(i)*S_t/S_w)) / (alpha_w + (alpha_t*(S_t/S_w)*(1-epsilon_alpha)));
     end
+    
+    alpha = rad2deg(alpha);
+    i_t = rad2deg(i_t);
     
     stall = false;
     if any(abs(alpha) > 15) || any(abs(alpha - i_t) > 15)
@@ -79,7 +80,8 @@ function plane = stability(plane)
     end
    plane.data.stability.stall = stall;
    plane.data.stability.alpha  = alpha; 
-    
+   plane.data.stability.i_t = i_t;
+   
    %% yaw stability
     
     plane.data.stability.yaw_is_stable = true;
