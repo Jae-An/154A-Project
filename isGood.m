@@ -30,9 +30,14 @@ end
 
 %% isStable
 stabilityGood = false;
-if plane.data.stability.is_stable && plane.data.stability.yaw_is_stable
+if plane.data.stability.is_stable && plane.data.stability.yaw_is_stable 
     stabilityGood = true;
+    if plane.data.stability.stall
+        stabilityGood = false;
+    end
 end
+
+
 
 %% geometry good
 geo = plane.geo;

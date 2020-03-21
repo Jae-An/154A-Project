@@ -47,6 +47,8 @@ function plane = aerodynamics(plane)
                 CL(i,j) = weight.dry / ((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry (~leg 2) CL total for reference speed
             elseif j == 1
                 CL(i,j) = weight.wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet(leg 1) CL total for reference speed
+            
+            
                 %%
                 %**** NEED TO DETERMINE WING AND TAIL CL'S INDEPENDENTLY ****
 
@@ -147,6 +149,7 @@ function plane = aerodynamics(plane)
     [minD, minDind] = min(D);
     [maxDiff, maxDiff_index] = max(Difference);
     CruiseDrag = D(maxDiff_index);
+    plane.data.aero.CL_cruise = CL(maxDiff_index,:);
     plane.data.aero.v_cruise = v_ref(maxDiff_index);
     LD = [L(minDind(1),1)/minD(1), L(minDind(2),2)/minD(2)];
     plane.data.aero.LD = LD;
