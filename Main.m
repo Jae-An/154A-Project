@@ -5,16 +5,14 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
-numGoodPlanes = 1000;
+numGoodPlanes = 50;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
 fprintf('Finding good planes... \n')
 while  g < numGoodPlanes
     %fprintf('.')
-    if mod(g+b,100) == 0
-        fprintf('\n')
-    end
+
     
     newPlane = plane();
     newPlane = getRandomPlane(newPlane);
@@ -29,7 +27,7 @@ while  g < numGoodPlanes
     % check for imagnary lift or drag values
     if isGood(newPlane)
        resultPlanes(g+1).Good = newPlane; %   store plane if above is good
-       g = g+1;
+       g = g+1
     else
        resultPlanes(b+1).Bad = newPlane;
        b = b+1;
