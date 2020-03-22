@@ -33,7 +33,7 @@ while  g < numGoodPlanes
        g = g + 1;
        resultPlanes(g).plane = newPlane; %   store plane if above is good
     else
-       n = n + 1; 
+       n = n + 1;
        %resultPlanes(numPlanes-b).plane = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
        b = b + 1;
     end    
