@@ -1,4 +1,4 @@
-function [plane] = getPropulsionDetails(plane)
+function [plane] = getPropulsionDetails(plane,bestPlane,i)
 
 % we could have a bunch of different engines and have this function pick
 % one of them at random
@@ -10,7 +10,7 @@ plane.prop.hp = plane.prop.numengines*1300; %hp
 %plane.prop.eta_p = 0.65; % This needs to be updated as a function of velocity or a look up table of some sort
 plane.prop.c_p = 0.5; % lb / hp-h
 plane.prop.c_p = plane.prop.c_p /(550*60*60); % (ft^-1) Fixes units for range calculation
-plane.prop.fuel_mass = 1125.9 + randn(1)*1125.9/30; %lb - guess based off of bessieMk3
+plane.prop.fuel_mass = bestPlane.prop.fuel_mass + randn(1)*bestPlane.prop.fuel_mass/(3*10^(i/3)); %lb - guess based off of bessieMk3
 plane.prop.fuel_volume = plane.prop.fuel_mass/48.381874; % (ft^3) - density from jet fuel, which has 775 g/L minimum density for max volume
 
 %% Propeller calcs

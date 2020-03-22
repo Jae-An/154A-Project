@@ -2,6 +2,8 @@ tic
 clc; clear variables; close all;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
+load('bessieMk4')
+bestPlane = bessieMk4;
 for i = 1:10
 g = 0; % good planes
 b = 0; % bad planes
@@ -16,8 +18,8 @@ while  g < numGoodPlanes
     %fprintf('.')
     
     newPlane = plane();
-    newPlane = getRandomPlane(newPlane);
-    newPlane = getPropulsionDetails(newPlane);
+    newPlane = getRandomPlane(newPlane,bestPlane,i);
+    newPlane = getPropulsionDetails(newPlane,bestPlane,i);
     newPlane = weight_function(newPlane);
     newPlane = aerodynamics(newPlane);
     newPlane = getCG(newPlane);
@@ -129,7 +131,8 @@ dummy = resultPlanes;
 for n = 1:g
     resultPlanes(n).plane = dummy(wI(n)).plane;
 end
-
+bestPlane = resultPlanes(1).plane;
+end
 fuel_weight = fuel_weight(wI);
 R = R(wI);
 ROC = ROC(wI);
