@@ -5,6 +5,7 @@ fprintf('Optimization Started \n')
 stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
+n = 0;
 numGoodPlanes = 10;
 resultPlanes = struct(['Good','Bad'],{});
 
@@ -14,10 +15,13 @@ checkVeryGoodPlanes = 1;
 
 
 while  g < numGoodPlanes
-    %fprintf('.')
+    fprintf('.')
+    if mod(g+b,100) == 0
+        fprintf('\n')
+    end
     
     newPlane = plane();
-    newPlane = getRandomPlane(newPlane);
+    newPlane = getRandomPlaneOld(newPlane);
     newPlane = getPropulsionDetails(newPlane);
     newPlane = weight_function(newPlane);
     newPlane = aerodynamics(newPlane);
@@ -26,16 +30,18 @@ while  g < numGoodPlanes
     % check if plane performance and stability is good
     newPlane = stability(newPlane);
 
-       
+   
     % check for imagnary lift or drag values
     if isGood(newPlane)
        if checkVeryGoodPlanes
            newPlane = runDatcom(newPlane);
            newPlane = getInertias(newPlane);
+           fprintf('o')
            if dynamicStability(newPlane)
                resultPlanes(g+1).Good = newPlane;
                g = g+1;
                fprintf('GOOD')
+               beep
            end
        else
            resultPlanes(g+1).Good = newPlane; %   store plane if above is good
