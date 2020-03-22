@@ -1,6 +1,6 @@
 function plane = stability(plane)
 
-    % static stability with neutral point
+    %% static stability with neutral point
     h_acw = plane.geo.wing.h_ac;
     h_act = plane.geo.h_tail.h_ac;
     
@@ -10,22 +10,79 @@ function plane = stability(plane)
     alpha_w = plane.geo.wing.cl_a;
     alpha_t = plane.geo.h_tail.cl_a;
     
-    eps_alpha = 0.3; % random guess, need to refine
+    epsilon_alpha = 0.3; % random guess, need to refine
     
-    h_n = (h_acw + h_act*(S_t/S_w)*(alpha_t/alpha_w) * (1-eps_alpha)) / (1 + ((S_t/S_w)*(alpha_t/alpha_w)*(1-eps_alpha)));
+    h_n = (h_acw + h_act*(S_t/S_w)*(alpha_t/alpha_w) * (1-epsilon_alpha)) / (1 + ((S_t/S_w)*(alpha_t/alpha_w)*(1-epsilon_alpha)));
     
     plane.data.stability.h_n = h_n;
+    h_cg = plane.geo.wing.h_cg; %h_cg(1) = takeoff cg, h_cg(2) = postdrop cg, h_cg(3) = predrop cg
     
-    if (h_n > plane.geo.wing.h_cg)
+    if all(h_n > h_cg)
         plane.data.stability.is_stable = true;
     else
         plane.data.stability.is_stable = false;
     end
     
+    %% tail incidence and alpha to trim check
+    i_t = zeros(1,5);
+    alpha = zeros(1,5);
+    wing_c = plane.geo.wing.c;
+    weight = plane.data.weight;
     
+    v_stall = plane.data.requirements.v_stall;
+    v_max = plane.data.requirements.v_max;
+    v_ref = linspace(v_stall, v_max);
     
+    alt = 2;
+    for i = 1:5 %loops for fueled and unfueled CG's(1st loop is fueled, 2nd loop is unfueled)
+        switch i
+            case 1
+                W = weight.wet;
+                cg_index = 1;
+            case 2
+                W = weight.wet - weight.fuel_1;
+                cg_index = 3;
+            case 3
+                W = weight.dry - weight.fuel_1;
+                cg_index = 2;
+            case 4
+                W = weight.wet;
+                cg_index = 1;
+                v_ref = v_stall;
+                alt = 1;
+            case 5
+                W = weight.dry - weight.fuel_1;
+                cg_index = 2;
+                v_ref = v_stall;
+                alt = 1;
+        end
+        
+        [CL, CM_ac, rho, v] = getAero(plane,W,alt,v_ref);
+        l_t = wing_c*(plane.geo.wing.c*plane.geo.h_tail.h_ac  - h_cg(cg_index));
+        CL_alpha = (alpha_w + alpha_t*(S_t/S_w)*(1 - epsilon_alpha));
+        CM_alpha = -CL_alpha*(h_n - h_cg(cg_index));
+        CM_i = alpha_t*(l_t*S_t/(wing_c*S_w));
+        CL_i = -alpha_t*S_t/S_w;
+
+        i_t(i) = -(CM_ac*CL_alpha + CM_alpha*CL) / (CL_alpha*CM_i - CM_alpha*CL_i); %incidence angle
+
+        % computing alphas
+        q = 0.5*rho*v^2;
+        alpha(i) = ((W/(q*S_w)) + (alpha_t*i_t(i)*S_t/S_w)) / (alpha_w + (alpha_t*(S_t/S_w)*(1-epsilon_alpha)));
+    end
     
-    %yaw stability
+    alpha = rad2deg(alpha);
+    i_t = rad2deg(i_t);
+    
+    stall = false;
+    if any(abs(alpha) > 15) || any(abs(alpha - i_t) > 15)
+        stall = true;
+    end
+   plane.data.stability.stall = stall;
+   plane.data.stability.alpha  = alpha; 
+   plane.data.stability.i_t = i_t;
+   
+   %% yaw stability
     
     plane.data.stability.yaw_is_stable = true;
     
@@ -59,7 +116,7 @@ function plane = stability(plane)
         
     end
 
-    
+   
     
 end
 

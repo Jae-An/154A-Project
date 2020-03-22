@@ -2,46 +2,36 @@ tic
 clc; clear variables; close all;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
-stable = 0;
+load('bessieMk4')
+bestPlane = bessieMk4;
+for i = 1:10
 g = 0; % good planes
 b = 0; % bad planes
-numGoodPlanes = 10;
-resultPlanes = struct(['Good','Bad'],{});
+n = 0; % num planes
+
+numGoodPlanes = 1000;
+resultPlanes(numGoodPlanes) = struct('plane',[]);
 
 % while we have less than (n) good planes:
 fprintf('Finding good planes... \n')
-checkVeryGoodPlanes = 1;
-
-
 while  g < numGoodPlanes
     %fprintf('.')
     
     newPlane = plane();
-    newPlane = getRandomPlane(newPlane);
-    newPlane = getPropulsionDetails(newPlane);
+    newPlane = getRandomPlane(newPlane,bestPlane,i);
+    newPlane = getPropulsionDetails(newPlane,bestPlane,i);
     newPlane = weight_function(newPlane);
     newPlane = aerodynamics(newPlane);
     newPlane = getCG(newPlane);
     newPlane = getPerformance(newPlane); 
     % check if plane performance and stability is good
     newPlane = stability(newPlane);
-
        
     % check for imagnary lift or drag values
     if isGood(newPlane)
-       if checkVeryGoodPlanes
-           newPlane = runDatcom(newPlane);
-           newPlane = getInertias(newPlane);
-           if dynamicStability(newPlane)
-               resultPlanes(g+1).Good = newPlane;
-               g = g+1;
-               fprintf('GOOD')
-           end
-       else
-           resultPlanes(g+1).Good = newPlane; %   store plane if above is good
-           g = g+1;
-           fprintf('GOOD')
-       end
+       n = n + 1;
+       g = g + 1;
+       resultPlanes(g).plane = newPlane; %   store plane if above is good
     else
        n = n + 1; 
        %resultPlanes(numPlanes-b).plane = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
@@ -141,7 +131,8 @@ dummy = resultPlanes;
 for n = 1:g
     resultPlanes(n).plane = dummy(wI(n)).plane;
 end
-
+bestPlane = resultPlanes(1).plane;
+end
 fuel_weight = fuel_weight(wI);
 R = R(wI);
 ROC = ROC(wI);

@@ -1,16 +1,17 @@
-function [plane] = getPropulsionDetails(plane)
+function [plane] = getPropulsionDetails(plane,bestPlane,i)
 
 % we could have a bunch of different engines and have this function pick
 % one of them at random
 
 %% GE catalyst Turboprop engine
 plane.prop.numengines = 2;
-plane.prop.W = plane.prop.numengines*600; %lb
+plane.prop.W = 600; %lb % Niccolai equations take numengines into account later!!!
 plane.prop.hp = plane.prop.numengines*1300; %hp
 %plane.prop.eta_p = 0.65; % This needs to be updated as a function of velocity or a look up table of some sort
 plane.prop.c_p = 0.5; % lb / hp-h
 plane.prop.c_p = plane.prop.c_p /(550*60*60); % (ft^-1) Fixes units for range calculation
-plane.prop.fuel_mass = 500 + rand(1)*(1000-500); %lb - guess based off of sfc*1300hp*5hrs
+plane.prop.fuel_mass = bestPlane.prop.fuel_mass + randn(1)*bestPlane.prop.fuel_mass/(3*10^(i/3)); %lb - guess based off of bessieMk3
+plane.prop.fuel_volume = plane.prop.fuel_mass/48.381874; % (ft^3) - density from jet fuel, which has 775 g/L minimum density for max volume
 
 %% Propeller calcs
 
@@ -19,14 +20,14 @@ v_stall = plane.data.requirements.v_stall; %v_ref set to stall velocity, ft/s
 v_max = plane.data.requirements.v_max;
 V = linspace(v_stall, v_max);
 
-%propellar speed
-n = 1200/60; % [rotation/sec]
+%propeller speed
+plane.prop.n = 1200/60; % [rotation/sec]
 
-%propellar diameter
-D = 12; %[ft]
+%propeller diameter
+plane.prop.D = 12; %[ft]
 
 %advance ratio
-J = V ./ (n*D);
+J = V ./ (plane.prop.n*plane.prop.D);
 
 %efficiency - look up table 30 deg (NACA report 640 figure 5)
 % - used WebPlotDigitizer

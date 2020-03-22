@@ -23,10 +23,10 @@ function plane = aerodynamics(plane)
     e_tail = 0.3;
     e_wing = 0.85;
 
-    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent), 3rd is sea level dry
+    CL = zeros(100,2); % 1st column is wet(retardent), 2nd is dry(no retardent)
     CD = zeros(100,2);
-    CD0 = zeros(100,2);
-    CDi = zeros(100,2);
+    CD0 = zeros(100,2); % 2nd Column is ground conditions
+    CDi = zeros(100,2); 
     D = zeros(100,2);
     L = zeros(100,2);
     RE = zeros(100,2);
@@ -47,6 +47,8 @@ function plane = aerodynamics(plane)
                 CL(i,j) = weight.dry / ((0.5*air_density*v_ref(i)^2)*wing.S);    %determines dry (~leg 2) CL total for reference speed
             elseif j == 1
                 CL(i,j) = weight.wet/((0.5*air_density*v_ref(i)^2)*wing.S);    %determines wet(leg 1) CL total for reference speed
+            
+            
                 %%
                 %**** NEED TO DETERMINE WING AND TAIL CL'S INDEPENDENTLY ****
 
@@ -143,17 +145,17 @@ function plane = aerodynamics(plane)
     plane.data.aero.CD0 = CD0;
     plane.data.aero.D = D;
 
-    
-    [minD, minDind] = min(D);
-    [maxDiff, maxDiff_index] = max(Difference);
+    [~, maxDiff_index] = max(Difference,[],1);
     CruiseDrag = D(maxDiff_index);
+    plane.data.aero.CL_cruise = [CL(maxDiff_index(1),1) CL(maxDiff_index(2),2)];
     plane.data.aero.v_cruise = v_ref(maxDiff_index);
-    LD = [L(minDind(1),1)/minD(1), L(minDind(2),2)/minD(2)];
+    LD = [L(maxDiff_index(1),1)/CruiseDrag(1), L(maxDiff_index(2),2)/CruiseDrag(2)];
+    eta_cruise = eta(maxDiff_index);
     plane.data.aero.LD = LD;
     plane.data.aero.D = D;
-    plane.data.aero.Re_cruise = RE(minDind,1);
+    plane.data.aero.Re_cruise = RE(maxDiff_index,:);
     
-    f = @(Wi1,Wf1,Wp,Wf2) (log(Wi1/Wf1)-log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
+    f = @(Wi1,Wf1,Wp,Wf2) (eta_cruise(1)*LD(1)*log(Wi1/Wf1) - eta_cruise(2)*LD(2)*log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
     fun = @(Wf1) f(weightInitial,Wf1,weightPayload,weightFinal2);
     if isreal(weightInitial)
         weightFinal1 = fzero(fun,weightInitial-(weightFuel/2));

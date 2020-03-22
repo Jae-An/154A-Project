@@ -26,15 +26,23 @@ x(7) = wing.LE + wing.c/2;   %fuel systems cg location
 x(8) = wing.LE + wing.c/2;   %surface controls cg location
 x(9) = 50;                   %avionics cg location
 x(10) = wing.LE + wing.c/2;  %fuel cg location
-%11th element is payload, at cg location
+%11th element is payload, at cg 2 location
 
 %% Calculate wet and dry cg
-cg = zeros(2,1); %wet and dry cg
-cg(1) = sum(weight.W(1:10).*x(1:10))/weight.wet;
+cg = zeros(3,1); %wet, dry, wet (predrop) cg: this order is so that nothing gets messed up (3rd element added later)
+
+% Must calculate payload (postdrop) cg first
 weight.W(10) = weight.W(10) - weight.fuel_1;
 cg(2) = sum(weight.W(1:10).*x(1:10))/(weight.dry-weight.fuel_1);
-
 x(11) = cg(2); %payload cg location (before and after drop should be exact same)
+
+% Then for stability/stall calcs we can find predrop cg
+cg(3) = sum(weight.W(1:11).*x(1:11))/(weight.wet-weight.fuel_1); 
+
+% Finally go back and calculate wet (takeoff) cg
+weight.W(10) = weight.W(10) + weight.fuel_1;
+cg(1) = sum(weight.W(1:11).*x(1:11))/weight.wet;
+
 
 %% Return
 plane.data.weight.CG = cg;
@@ -46,9 +54,9 @@ plane.geo.wing.cg = plane.data.weight.CG - plane.geo.wing.LE; %ft, distance from
 plane.geo.wing.h_cg = plane.geo.wing.cg/plane.geo.wing.c; %nondimensional, distance from wing leading edge to CG
 
 % Horizontal Tail
-plane.geo.h_tail.cg = plane.data.weight.CG - plane.geo.h_tail.LE; %ft, distance from h_tail leading edge to CG
+plane.geo.h_tail.cg = plane.geo.h_tail.LE - plane.data.weight.CG; %ft, distance from h_tail leading edge to CG
 plane.geo.h_tail.h_cg = plane.geo.h_tail.cg/plane.geo.wing.c; %nondimensional, distance from h_tail leading edge to CG
 
 % Vertical Tail
 plane.geo.v_tail.cg = plane.data.weight.CG - plane.geo.v_tail.LE; %ft, distance from v_tail leading edge to CG
-plane.geo.v_tail.h_cg = plane.geo.h_tail.h_cg; %nondimensional, distance from v_tail leading edge to CG
+plane.geo.v_tail.h_cg = plane.geo.v_tail.cg/plane.geo.wing.c; %nondimensional, distance from v_tail leading edge to CG
