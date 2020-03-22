@@ -14,7 +14,7 @@ plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.wing.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.wing.TR = 0.1 + rand(1)*(1 - 0.1); % taper ratio
 plane.geo.wing.S = 500 + rand(1)*(1200 - 500); %ft^2, wing area
-plane.geo.wing.b = 60 + rand(1)*(150 - 60); %ft, wingspan
+plane.geo.wing.b = 50 + rand(1)*(150 - 50); %ft, wingspan
 plane.geo.wing.AR = plane.geo.wing.b^2 / plane.geo.wing.S; %wing aspect ratio
 plane.geo.wing.c = 2*plane.geo.wing.S / (plane.geo.wing.b*(1+plane.geo.wing.TR)); %ft, wing chord length
 plane.geo.wing.ThR = 0.12; % thickness ratio
@@ -22,7 +22,7 @@ plane.geo.wing.sweep = 0 + rand(1)*(5-0); %degrees, sweep length
 plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 plane.geo.wing.h_t = 0.301; %nondimensional distance to maximum thickness
 
-plane.geo.wing.LE = (0.1*plane.geo.body.L) + rand(1)*(plane.geo.body.L*(0.9-0.1));
+plane.geo.wing.LE = (0.1*plane.geo.body.L) + rand(1)*(plane.geo.body.L*(0.75-0.05));
 % need to define distance from nosetip to wing edge
 plane.geo.wing.h_ac = 0.25; %nondimensional, distance from wing leading edge to AC
 plane.geo.wing.ac = plane.geo.wing.h_ac*plane.geo.wing.c; %ft, distance from wing leading edge to AC, set to quarter chord

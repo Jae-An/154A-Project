@@ -27,14 +27,15 @@ function [CL, CM_ac, rho, v] = getAero(plane, W, alt, v_ref)
     body = plane.geo.body;
     
     e_wing = 0.85;
-
-    CL_ref = zeros(100,1); % 1st column is wet(retardent), 2nd is dry(no retardent)
-    CD_ref = zeros(100,1);
-    CD0_ref = zeros(100,1); % 2nd Column is ground conditions
-    CDi_ref = zeros(100,1); 
-    D_ref = zeros(100,1);
-    L_ref = zeros(100,1);
-    RE_ref = zeros(100,1);
+    
+    v_l = length(v_ref);
+    CL_ref = zeros(v_l,1); % 1st column is wet(retardent), 2nd is dry(no retardent)
+    CD_ref = zeros(v_l,1);
+    CD0_ref = zeros(v_l,1); % 2nd Column is ground conditions
+    CDi_ref = zeros(v_l,1); 
+    D_ref = zeros(v_l,1);
+    L_ref = zeros(v_l,1);
+    RE_ref = zeros(v_l,1);
     
     %prop stuff
     eta = plane.prop.eta_p; % eta and hp same for all planes so I just used the first one
@@ -42,7 +43,7 @@ function [CL, CM_ac, rho, v] = getAero(plane, W, alt, v_ref)
     thrust = (hp * 550 * eta) ./ v_ref;
     thrust = thrust.';
     plane.prop.thrust = thrust;
-    Difference = zeros(100,1);
+    Difference = zeros(v_l,1);
 
     for i = 1:length(v_ref)
         %% Overall CLs
