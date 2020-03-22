@@ -11,7 +11,7 @@ V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 plane.geo.body.W = body.W + randn(1)*body.W/(3*10^(i/3)); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
 plane.geo.body.L = body.L + randn(1)*body.L/(3*10^(i/3)); %ft, fuselage L
-plane.geo.body.tank_length = V_tank / (pi*(plane.geo.body.D/4)^2);%[(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
+plane.geo.body.tank_length = V_tank / (pi*plane.geo.body.D/4);%[(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 %% wing
 plane.geo.wing.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil

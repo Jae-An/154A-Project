@@ -15,7 +15,7 @@ function plane = stability(plane)
     h_n = (h_acw + h_act*(S_t/S_w)*(alpha_t/alpha_w) * (1-epsilon_alpha)) / (1 + ((S_t/S_w)*(alpha_t/alpha_w)*(1-epsilon_alpha)));
     
     plane.data.stability.h_n = h_n;
-    h_cg = plane.geo.wing.h_cg; %h_cg(1) = takeoff cg, h_cg(2) = postdrop cg, h_cg(3) = predrop cg
+    h_cg = plane.geo.wing.h_cg; %h_cg(1) = takeoff cg, h_cg(2) = predrop cg, h_cg(3) = postdrop cg
     
     if all(h_n > h_cg)
         plane.data.stability.is_stable = true;
@@ -34,17 +34,17 @@ function plane = stability(plane)
     v_ref = linspace(v_stall, v_max);
     
     alt = 2;
-    for i = 1:5 %loops for fueled and unfueled CG's(1st loop is fueled, 2nd loop is unfueled)
+    for i = 1:5
         switch i
             case 1
                 W = weight.wet;
                 cg_index = 1;
             case 2
                 W = weight.wet - weight.fuel_1;
-                cg_index = 3;
+                cg_index = 2;
             case 3
                 W = weight.dry - weight.fuel_1;
-                cg_index = 2;
+                cg_index = 3;
             case 4
                 W = weight.wet;
                 cg_index = 1;
@@ -52,7 +52,7 @@ function plane = stability(plane)
                 alt = 1;
             case 5
                 W = weight.dry - weight.fuel_1;
-                cg_index = 2;
+                cg_index = 3;
                 v_ref = v_stall;
                 alt = 1;
         end
