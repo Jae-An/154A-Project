@@ -1,11 +1,11 @@
 function [] = writeDatcomInput(plane)
-aoa = 0:10;
+aoa = 0;
 Re = plane.data.aero.Re_cruise;
 M = plane.data.aero.v_cruise(1)/1125;
 
 fid = fopen('154A_DATCOM_INPUT.inp','w');
 % Flight Configuration
-
+fprintf(fid,'BUILD\n');
 fprintf(fid,' $FLTCON NMACH=1.0, MACH(1)=%.3f,\n',M*1.0);
 fprintf(fid,'  NALPHA=%.1f, ALSCHD(1)=',length(aoa));
 fprintf(fid,'%.1f,',aoa);
@@ -15,9 +15,9 @@ fprintf(fid,'\n $OPTINS ');
 fprintf(fid,'SREF=%.2f, ',plane.geo.wing.S);
 fprintf(fid,'CBARR=%.2f, ',plane.geo.wing.c);
 fprintf(fid,'BLREF=%.2f$',plane.geo.wing.b);
-% Synthesis TODO
+% Synthesis
 fprintf(fid,'\n $SYNTHS '); %
-fprintf(fid,'XCG=%.2f, ',0.5*plane.data.weight.CG(1)); % longitudinal location of CG, (moment reference center)
+fprintf(fid,'XCG=%.2f, ',plane.data.weight.CG(1)); % longitudinal location of CG, (moment reference center)
 fprintf(fid,'ZCG=%.1f, ',0.0); % vertical location of CG relative to reference plane
 fprintf(fid,'XW=%.2f, ',plane.geo.wing.LE); % longitudinal location of theoretical wing apex
 fprintf(fid,'ZW=%.2f, ',0.9*plane.geo.body.D); % vertical location of theoretical wing apex relative to reference plane
@@ -31,19 +31,20 @@ fprintf(fid,'VERTUP=.TRUE.$'); %  =TRUE if vertical panel is above reference pla
 
 % Body
 body_length = plane.geo.body.L;
-body_r = plane.geo.body.W;
+body_r = plane.geo.body.D;
 nose_length = body_length*0.15;
 nose_x = linspace(0,nose_length,8);
 nose_r = body_r.*([0 .2 .4 .65 .8 .9 .95, 1]).*(sin(linspace(0,pi/2,8)).^.2);
 tail_length = body_length*0.15;
-
+x = [nose_x, nose_length+0.7*body_length, nose_length+0.7*body_length+tail_length];
+r = [nose_r, body_r,body_r];
 fprintf(fid,'\n $BODY NX=10.0, BNOSE=2.0, ');
 fprintf(fid,'BLN=%.2f, BLA=%.2f,\n',nose_length,tail_length);
 fprintf(fid,'   X(1)=');
-fprintf(fid,'%.1f, ',[nose_x, nose_length+0.7*body_length, nose_length+0.7*body_length+tail_length]);
+fprintf(fid,'%.1f, ',x);
 fprintf(fid,'\n   R(1)=');
-fprintf(fid,'%.1f,',[nose_r, body_r]);
-fprintf(fid,'%.1f$',body_r*0.8);
+fprintf(fid,'%.1f,',r(1:9));
+fprintf(fid,'%.1f$',r(10));
 
 % Wing Planform
 fprintf(fid,'\n $WGPLNF ');
@@ -100,12 +101,12 @@ fprintf(fid,'   DHDADI=0.0, '); % dihedral angle of inboard panel
 fprintf(fid,'DHDADO=0.0, '); % dihedral angle of outboard panel
 fprintf(fid,'TYPE=1.0$'); % 1: STRAIGHT TAPERED PLANFORM, 2: double delta planform AR<3, 3: cranked planform AR>3
 % Horizontal Tail Characteristics
-fprintf(fid,'\nNACA-H-4-6412');
+fprintf(fid,'\nNACA-H-4-0009');
 
 fprintf(fid,'\nDIM FT'); % specify feet and english units
 fprintf(fid,'\nDAMP'); % Output Dynamic Stability Derivatives
 fprintf(fid,'\nDERIV RAD');
-% fprintf(fid,'\nBUILD');
+
 fprintf(fid,'\nCASEID 154A PLANE, CASE 1');
 % fprintf(fid,'\nSAVE');
 fprintf(fid,'\nDUMP DYN');

@@ -1,14 +1,11 @@
+% All inputs for the Pioneer UAV dynamics should be done here. AKA all
+% constant block values need to be declared here.
 
-% All constant block values need to be declared here.
-
-% We should change this to take our final plane object
-
-%just estimates for now
-weight = 30000;     % [lbsf]        Bray pg 33
-I_xx = 15000;    % [slug-ft^2] IAI, MSS notes
-I_yy = 11000;     % [slug-ft^2] IAI, MSS notes
-I_zz = 25000;     % [slug-ft^2] IAI, MSS notes
-I_xz = 800;    % [slug-ft^2] IAI, MSS notes
+weight = 420;     % [lbsf]        Bray pg 33
+I_xx = 34.832;    % [slug-ft^2] IAI, MSS notes
+I_yy = 67.08;     % [slug-ft^2] IAI, MSS notes
+I_zz = 82.22;     % [slug-ft^2] IAI, MSS notes
+I_xz = -4.902;    % [slug-ft^2] IAI, MSS notes
 
 bw   =  16.90;    % [ft]        Bray pg 31
 cbar =  1.80;     % [ft]        Bray pg 31
@@ -30,7 +27,7 @@ rho = 0.002379;
 % need to initialize 6DOF block and aero coef data
 %%%
 %initial position in inertial axes [Xe, Ye, Ze]
-Posini = [0 0 -1000];
+Posini = [0 100 0];
 
 %initial velocity in body axes [U, v, w] - relative to wind i think?
 Velini = [118.1 0 0];    % 65.3 knots  - zero elevator trim from Bray pg 35

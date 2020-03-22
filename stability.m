@@ -54,6 +54,9 @@ function plane = stability(plane)
         if (C_nb < 0) && (C_nr > 0) && (C_yr < 0)
             plane.data.stability.yaw_is_stable = false;
         end
+        
+        plane.data.aero.C_yb = C_y_b_tail;
+        
     end
 
     

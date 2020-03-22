@@ -1,38 +1,44 @@
-function [] = runDatcom(plane)
+function [plane] = runDatcom(plane)
 
-writeDatcomInput(plane);
+writeFastDatcomInput(plane);
 [~,~] = system('datcom.exe < DATINTXT.txt');
 dat = datcomimport('datcom.out',true,0);
 dat = dat{1};
 %% Static stability derivatives /rad
-plane.data.aerodcom.aoa = dat.cl;
-plane.data.aerodcom.cd = dat.cd;
-plane.data.aerodcom.cl = dat.cl;
-plane.data.aerodcom.cm = dat.cm;
-plane.data.aerodcom.cn = dat.cn;
-plane.data.aerodcom.ca = dat.ca;
-plane.data.aerodcom.cla = dat.cla;
-plane.data.aerodcom.cma = dat.cma;
-plane.data.aerodcom.cnb = dat.cnb;
-plane.data.aerodcom.clb = dat.clb;
+plane.data.aero.aoa = dat.alpha;
+plane.data.aero.cd = dat.cd(:,:,1,10);
+plane.data.aero.cl = dat.cl(:,:,1,10);
+plane.data.aero.cm = dat.cm(:,:,1,10);
+plane.data.aero.cn = dat.cn(:,:,1,10);
+plane.data.aero.ca = dat.ca(:,:,1,10);
+plane.data.aero.cla = dat.cla(:,:,1,10);
+plane.data.aero.cma = dat.cma(:,:,1,10);
+plane.data.aero.cnb = dat.cnb(1,:,1,10);
+plane.data.aero.clb = dat.clb(:,:,1,10);
+
+% Get wing-body Cl (Cyb = Clwb/beta)
+plane.data.aero.clwb = dat.cl(:,:,1,5);
 
 %% Dynamic Stability Derivatives /rad
 % pitching
-plane.data.aerodcom.clq = dat.clq;
-plane.data.aerodcom.cmq = dat.cmq;
+plane.data.aero.clq = dat.clq(1,:,1,10);
+plane.data.aero.cmq = dat.cmq(1,:,1,10);
+
 % acceleration
-plane.data.aerodcom.clad = dat.clad;
-plane.data.aerodcom.clq = dat.clq;
+plane.data.aero.clad = dat.clad(:,:,1,10);
+plane.data.aero.clq = dat.clq(:,:,1,10);
+plane.data.aero.cmad = dat.cmad(:,:,1,10);
+
 % rolling
-plane.data.aerodcom.clp = dat.clp;
-plane.data.aerodcom.cyp = dat.cyp;
-plane.data.aerodcom.cnp = dat.cnp;
+plane.data.aero.clp = dat.clp(:,:,1,10);
+plane.data.aero.cyp = dat.cyp(:,:,1,10);
+plane.data.aero.cnp = dat.cnp(:,:,1,10);
 % yawing
-plane.data.aerodcom.cnr = dat.cnr;
-plane.data.aerodcom.clr = dat.clr;
+plane.data.aero.cnr = dat.cnr(:,:,1,10);
+plane.data.aero.clr = dat.clr(:,:,1,10);
 
 % center of pressure
-plane.data.aerodcom.xcp = dat.xcp;
+plane.data.aero.xcp = dat.xcp(:,:,1,10);
 
 
 end
