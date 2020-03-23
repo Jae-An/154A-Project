@@ -20,7 +20,7 @@ Jxz = plane.geo.Ixz(1);    % [slug-ft^2] IAI, MSS notes
  gamma_e = 0.0;
 
 Vt = plane.data.aero.v_cruise(1); %fps
-rho = 0.002379;    %slug/ft^3
+rho = 0.001267;    %slug/ft^3
 qbar = 0.5*rho*Vt^2;
 
 %stability derivatives for Pioneer
@@ -88,9 +88,9 @@ if numunstable > 1
 end
 
 %%
-figure
-plot(real_roots_4th,imag_roots_4th,'mx','Linewidth',2)
-grid on
+% figure
+% plot(real_roots_4th,imag_roots_4th,'mx','Linewidth',2)
+% grid on
 
 %%
 % 

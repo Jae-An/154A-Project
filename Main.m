@@ -7,7 +7,7 @@ g = 0; % good planes
 b = 0; % bad planes
 n = 0;
 vg = 0;
-numGoodPlanes = 20;
+numGoodPlanes = 1000;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
@@ -44,7 +44,7 @@ while  g < numGoodPlanes
                resultPlanes(vg+1).VGood = newPlane;
                vg = vg+1;
                fprintf('GOOD')
-               beep
+               %beep
            end
        else
            resultPlanes(g+1).plane = newPlane; %   store plane if above is good
@@ -253,7 +253,7 @@ figure
 bar(1:g,W)
 ylabel('Wet Weight, lb')
 %%
-N=vg;
+N=26;%vg;
 hf=figure('units','normalized','outerposition',[0 0 1 1]);
 hf.ToolBar='none';
 nS   = sqrt(N);
