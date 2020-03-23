@@ -34,7 +34,7 @@ plane.geo.wing.ac = plane.geo.wing.h_ac*plane.geo.wing.c; %ft, distance from win
 
 %% horizontal tail
 %%%%%% We're using the same airfoil for the tail? %%%%%%%%%%%
-plane.geo.h_tail.cl_a = 2*pi; %Cl/rad for NACA 6412 airfoil
+plane.geo.h_tail.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.h_tail.TR = 0.1 + rand()*(1 - 0.1);
 St_Sw = 0.25 + rand(1)*(0.7 - 0.25);
