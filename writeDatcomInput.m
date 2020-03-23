@@ -1,5 +1,5 @@
 function [] = writeDatcomInput(plane)
-aoa = 0;
+aoa = [-2,-1,0,1,3,5,7];
 Re = plane.data.aero.Re_cruise;
 M = plane.data.aero.v_cruise(1)/1125;
 
@@ -17,7 +17,7 @@ fprintf(fid,'CBARR=%.2f, ',plane.geo.wing.c);
 fprintf(fid,'BLREF=%.2f$',plane.geo.wing.b);
 % Synthesis
 fprintf(fid,'\n $SYNTHS '); %
-fprintf(fid,'XCG=%.2f, ',plane.data.weight.CG(1)); % longitudinal location of CG, (moment reference center)
+fprintf(fid,'XCG=%.2f, ',plane.data.weight.CGx(1)); % longitudinal location of CG, (moment reference center)
 fprintf(fid,'ZCG=%.1f, ',0.0); % vertical location of CG relative to reference plane
 fprintf(fid,'XW=%.2f, ',plane.geo.wing.LE); % longitudinal location of theoretical wing apex
 fprintf(fid,'ZW=%.2f, ',0.9*plane.geo.body.D); % vertical location of theoretical wing apex relative to reference plane

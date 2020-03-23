@@ -2,24 +2,27 @@ tic
 clc; clear variables; close all;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
-load('bessieMk4')
-bestPlane = bessieMk4;
-for i = 1:10
+load('bessieMk6')
+bestPlane = bessieMk6;
+for i = 1:9
 g = 0; % good planes
 b = 0; % bad planes
 n = 0; % num planes
 
-numGoodPlanes = 1000;
+numGoodPlanes = 300;
 resultPlanes(numGoodPlanes) = struct('plane',[]);
 
 % while we have less than (n) good planes:
 fprintf('Finding good planes... \n')
 while  g < numGoodPlanes
-    %fprintf('.')
+    fprintf('.')
+    if mod(g+b,100) == 0
+        fprintf('\n')
+    end
     
     newPlane = plane();
     newPlane = getRandomPlane(newPlane,bestPlane,i);
-    newPlane = getPropulsionDetails(newPlane,bestPlane,i);
+    newPlane = getPropulsionDetails(newPlane);
     newPlane = weight_function(newPlane);
     newPlane = aerodynamics(newPlane);
     newPlane = getCG(newPlane);
@@ -29,11 +32,18 @@ while  g < numGoodPlanes
        
     % check for imagnary lift or drag values
     if isGood(newPlane)
-       n = n + 1;
-       g = g + 1;
-       resultPlanes(g).plane = newPlane; %   store plane if above is good
+           newPlane = runDatcom(newPlane);
+           newPlane = getInertias(newPlane);
+           fprintf('o')
+           if dynamicStability(newPlane)
+               n = n + 1;
+               g = g + 1;
+               resultPlanes(g).plane = newPlane;
+               fprintf('GOOD')
+               beep
+           end
     else
-       n = n + 1; 
+       n = n + 1;
        %resultPlanes(numPlanes-b).plane = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
        b = b + 1;
     end    

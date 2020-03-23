@@ -44,31 +44,31 @@ end
 %% geometry good
 geo = plane.geo;
 GeoIsGood = false;
-    WingTailLocationGood = false;    
-    AreaRatioGood = false;
-    fitsRetardent = false;    
-    fitsFuel = false;
+    GeoWingTailLocationGood = false;    
+    GeoAreaRatioGood = false;
+    GeoFitsRetardent = false;    
+    GeoFitsFuel = false;
     % location of wing, tails are ok
     if all([geo.wing.LE, geo.h_tail.LE, geo.v_tail.LE] > 0)...
     && all([geo.wing.LE+geo.wing.c, geo.h_tail.LE+geo.h_tail.c, geo.v_tail.LE+geo.v_tail.c] < geo.body.L)...
     && all([geo.h_tail.LE, geo.v_tail.LE] > geo.wing.LE+geo.wing.c)
-        WingTailLocationGood = true;
+        GeoWingTailLocationGood = true;
     end
     % check wing area ratios
     if geo.wing.S > geo.h_tail.S && geo.wing.S > geo.v_tail.S
-        AreaRatioGood = true;
+        GeoAreaRatioGood = true;
     end
     % fits retardent
     if (geo.body.L * 0.25*pi*geo.body.D^2 > 256 * 2) %fuselage volume at least 2x water volume
-        fitsRetardent = true;
+        GeoFitsRetardent = true;
     end
     % fits fuel in wing
     wingVolume = 0.5*geo.wing.c*geo.wing.b*(geo.wing.TR+1) * 0.0815662901; % number from area of airfoil per chord length
     if plane.prop.fuel_volume < 0.5*wingVolume % Allow half volume margin for wing "fuel box"
-        fitsFuel = true;
+        GeoFitsFuel = true;
     end
 % Overall geo check
-if all([WingTailLocationGood, AreaRatioGood, fitsRetardent, fitsFuel])
+if all([GeoWingTailLocationGood, GeoAreaRatioGood, GeoFitsRetardent, GeoFitsFuel])
     GeoIsGood = true;
 end
     

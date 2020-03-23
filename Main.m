@@ -111,51 +111,51 @@ LD = zeros(g,1);
 
 % extract data for n planes
 for n = 1:g
-   fuel_weight(n) = resultPlanes(n).plane.data.weight.fuel;
-   R(n) =  resultPlanes(n).plane.data.performance.R; % ft
-   ROC(n) =  resultPlanes(n).plane.data.performance.ROC;
-   RE(n) =  resultPlanes(n).plane.data.aero.Re_cruise(1);
-   v_stall(n) =  resultPlanes(n).plane.data.performance.v_stall;
-   v_max(n) =  resultPlanes(n).plane.data.performance.v_max;
-   L(n) =  resultPlanes(n).plane.geo.body.L;
-   d(n) = resultPlanes(n).plane.geo.body.W;
+   fuel_weight(n) = resultPlanes(n).Good.data.weight.fuel;
+   R(n) =  resultPlanes(n).Good.data.performance.R; % ft
+   ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
+   RE(n) =  resultPlanes(n).Good.data.aero.Re_cruise(1);
+   v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
+   v_max(n) =  resultPlanes(n).Good.data.performance.v_max;
+   L(n) =  resultPlanes(n).Good.geo.body.L;
+   d(n) = resultPlanes(n).Good.geo.body.W;
    
-   wing_S(n) =  resultPlanes(n).plane.geo.wing.S;
-   wing_AR(n) = resultPlanes(n).plane.geo.wing.AR;
-   wing_b(n) =  resultPlanes(n).plane.geo.wing.b;
-   wing_c(n) =  resultPlanes(n).plane.geo.wing.c;
-   wing_LE(n) =  resultPlanes(n).plane.geo.wing.LE;
-   wing_sweep(n) =  resultPlanes(n).plane.geo.wing.sweep;
-   wing_TR(n) =  resultPlanes(n).plane.geo.wing.TR;
+   wing_S(n) =  resultPlanes(n).Good.geo.wing.S;
+   wing_AR(n) = resultPlanes(n).Good.geo.wing.AR;
+   wing_b(n) =  resultPlanes(n).Good.geo.wing.b;
+   wing_c(n) =  resultPlanes(n).Good.geo.wing.c;
+   wing_LE(n) =  resultPlanes(n).Good.geo.wing.LE;
+   wing_sweep(n) =  resultPlanes(n).Good.geo.wing.sweep;
+   wing_TR(n) =  resultPlanes(n).Good.geo.wing.TR;
    
-   h_tail_S(n) =  resultPlanes(n).plane.geo.h_tail.S;
-   h_tail_AR(n) = resultPlanes(n).plane.geo.h_tail.AR;
-   h_tail_b(n) =  resultPlanes(n).plane.geo.h_tail.b;
-   h_tail_c(n) =  resultPlanes(n).plane.geo.h_tail.c;
-   h_tail_LE(n) =  resultPlanes(n).plane.geo.h_tail.LE;
-   h_tail_sweep(n) =  resultPlanes(n).plane.geo.h_tail.sweep;
-   h_tail_TR(n) =  resultPlanes(n).plane.geo.h_tail.TR; 
+   h_tail_S(n) =  resultPlanes(n).Good.geo.h_tail.S;
+   h_tail_AR(n) = resultPlanes(n).Good.geo.h_tail.AR;
+   h_tail_b(n) =  resultPlanes(n).Good.geo.h_tail.b;
+   h_tail_c(n) =  resultPlanes(n).Good.geo.h_tail.c;
+   h_tail_LE(n) =  resultPlanes(n).Good.geo.h_tail.LE;
+   h_tail_sweep(n) =  resultPlanes(n).Good.geo.h_tail.sweep;
+   h_tail_TR(n) =  resultPlanes(n).Good.geo.h_tail.TR; 
    
-   v_tail_S(n) =  resultPlanes(n).plane.geo.v_tail.S;
-   v_tail_AR(n) = resultPlanes(n).plane.geo.v_tail.AR;
-   v_tail_b(n) =  resultPlanes(n).plane.geo.v_tail.b;
-   v_tail_c(n) =  resultPlanes(n).plane.geo.v_tail.c;
-   v_tail_LE(n) =  resultPlanes(n).plane.geo.v_tail.LE;
-   v_tail_sweep(n) =  resultPlanes(n).plane.geo.v_tail.sweep;   
-   v_tail_TR(n) =  resultPlanes(n).plane.geo.v_tail.TR; 
+   v_tail_S(n) =  resultPlanes(n).Good.geo.v_tail.S;
+   v_tail_AR(n) = resultPlanes(n).Good.geo.v_tail.AR;
+   v_tail_b(n) =  resultPlanes(n).Good.geo.v_tail.b;
+   v_tail_c(n) =  resultPlanes(n).Good.geo.v_tail.c;
+   v_tail_LE(n) =  resultPlanes(n).Good.geo.v_tail.LE;
+   v_tail_sweep(n) =  resultPlanes(n).Good.geo.v_tail.sweep;   
+   v_tail_TR(n) =  resultPlanes(n).Good.geo.v_tail.TR; 
 
-   W(n) =  resultPlanes(n).plane.data.weight.wet;
-%    CL(n,:) = resultPlanes(n).plane.data.aero.CL(:,1);
-%    CD(:,n) = resultPlanes(n).plane.data.aero.CD(:,1);
-%    D1(:,n) = resultPlanes(n).plane.data.aero.D(:,1);
-%    v_cruise(n,:) = resultPlanes(n).plane.data.aero.v_cruise;
-%    LD(n) = resultPlanes(n).plane.data.aero.LD(1);
+   W(n) =  resultPlanes(n).Good.data.weight.wet;
+%    CL(n,:) = resultPlanes(n).Good.data.aero.CL(:,1);
+%    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,1);
+%    D1(:,n) = resultPlanes(n).Good.data.aero.D(:,1);
+%    v_cruise(n,:) = resultPlanes(n).Good.data.aero.v_cruise;
+%    LD(n) = resultPlanes(n).Good.data.aero.LD(1);
 end
 [W, wI] = sort(W);
 
 dummy = resultPlanes;
 for n = 1:g
-    resultPlanes(n).plane = dummy(wI(n)).plane;
+    resultPlanes(n).Good = dummy(wI(n)).Good;
 end
 
 fuel_weight = fuel_weight(wI);
@@ -272,8 +272,8 @@ end
 % for n = 1:g
 %     plot(v_ref,D1(:,n))
 % end
-% eta = resultPlanes(1).plane.prop.eta_p; % eta and hp same for all planes so I just used the first one
-% hp = resultPlanes(1).plane.prop.hp;
+% eta = resultPlanes(1).Good.prop.eta_p; % eta and hp same for all planes so I just used the first one
+% hp = resultPlanes(1).Good.prop.hp;
 % thrust = (hp * 550 * eta) ./ v_ref;
 % plot(v_ref,thrust);
 % hold off
