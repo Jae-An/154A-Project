@@ -64,7 +64,7 @@ GeoIsGood = false;
     end
     % fits fuel in wing
     wingVolume = 0.5*geo.wing.c*geo.wing.b*(geo.wing.TR+1) * 0.0815662901; % number from area of airfoil per chord length
-    if plane.prop.fuel_volume < 0.5*wingVolume % Allow half volume margin for wing "fuel box"
+    if plane.prop.fuel_volume < wingVolume % Allow half volume margin for wing "fuel box"
         GeoFitsFuel = true;
     end
 % Overall geo check

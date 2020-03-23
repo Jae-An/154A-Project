@@ -6,9 +6,9 @@ function [plane] = getRandomPlaneOld(plane)
 %rand_value = min_value + rand(1)*(max_value - min_value)
 V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 %fuselage
-plane.geo.body.W = 5 + rand()*(30 - 5); %ft, fuselage width
+plane.geo.body.W = 8 + rand()*(20 - 8); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
-plane.geo.body.L = 40 + rand()*(150 - 40); %ft, fuselage L
+plane.geo.body.L = 30 + rand()*(80 - 30); %ft, fuselage L
 plane.geo.body.tank_length = V_tank / (pi*(plane.geo.body.D/4)^2);%[(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 
@@ -19,8 +19,7 @@ plane.geo.wing.TR = 0.34; % taper ratio
 plane.geo.wing.S = 450 + rand()*(900 - 450); %ft^2, wing area
 plane.geo.wing.AR = 5 + rand()*(15 - 5); %wing aspect ratio
 plane.geo.wing.b = (plane.geo.wing.S * plane.geo.wing.AR )^0.5; %ft, wing span length
-plane.geo.wing.c = 4*plane.geo.wing.S/plane.geo.wing.b/(1+plane.geo.wing.TR); %ft, wing chord length
-
+plane.geo.wing.c = 2*plane.geo.wing.S/plane.geo.wing.b/(1+plane.geo.wing.TR); %ft, wing chord length
 
 plane.geo.wing.ThR = 0.12; % thickness ratio
 plane.geo.wing.sweep = 25 + rand()*(45-25); %degrees, sweep length
@@ -34,14 +33,14 @@ plane.geo.wing.ac = plane.geo.wing.h_ac*plane.geo.wing.c; %ft, distance from win
 
 %% horizontal tail
 %%%%%% We're using the same airfoil for the tail? %%%%%%%%%%%
-plane.geo.h_tail.cl_a = 2*pi; %Cl/rad for NACA 6412 airfoil
+plane.geo.h_tail.cl_a = 6.88; %Cl/rad for NACA 6412 airfoil
 plane.geo.h_tail.cl_0 = 0.7626; %Cl for 0 AOA for NACA 6412 airfoil
 plane.geo.h_tail.TR = 0.4;
-St_Sw = 0.25 + rand()*(0.7 - 0.25);
+St_Sw = 0.1 + rand()*(0.7 - 0.1);
 plane.geo.h_tail.S = St_Sw*plane.geo.wing.S; %ft^2, h_tail area
 plane.geo.h_tail.AR = 3 + rand()*(8 - 3); %h_tail aspect ratio
 plane.geo.h_tail.b = (plane.geo.h_tail.S * plane.geo.h_tail.AR)^0.5; %ft, h_tail span length
-plane.geo.h_tail.c = 4*plane.geo.h_tail.S / (plane.geo.h_tail.b*(1+plane.geo.h_tail.TR)); %ft, h_tail chord length
+plane.geo.h_tail.c = 2*plane.geo.h_tail.S / (plane.geo.h_tail.b*(1+plane.geo.h_tail.TR)); %ft, h_tail chord length
 plane.geo.h_tail.ThR = 0.12;
 plane.geo.h_tail.sweep = 10 + rand()*(30-10); %degrees, sweep length
 plane.geo.h_tail.S_wet = plane.geo.h_tail.S*(1.977 + 0.52*plane.geo.h_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
@@ -56,12 +55,12 @@ plane.geo.h_tail.h_ac = plane.geo.h_tail.ac/plane.geo.wing.c; %nondimensional, d
 %% vertical tail
 plane.geo.v_tail.ThR = 0.12;
 plane.geo.v_tail.TR = 0.57;
-plane.geo.v_tail.S = 200 + rand()*(500 - 200); %ft^2, v_tail area
+plane.geo.v_tail.S = 100 + rand()*(500 - 100); %ft^2, v_tail area
 plane.geo.v_tail.AR = 0.8 + rand()*(2.2 - 0.8); %v_tail aspect ratio
 plane.geo.v_tail.b = (plane.geo.v_tail.S*plane.geo.v_tail.AR)^0.5; %ft, v_tail span length, root to tip
-plane.geo.v_tail.c = 4*plane.geo.v_tail.S/(plane.geo.v_tail.b*(1+plane.geo.v_tail.TR)); %ft, v_tail chord length
+plane.geo.v_tail.c = 2*plane.geo.v_tail.S/(plane.geo.v_tail.b*(1+plane.geo.v_tail.TR)); %ft, v_tail chord length
 % (c+c*tr)/2*b=S
-plane.geo.v_tail.sweep = 0 + rand()*(15-0); %degrees, sweep length
+plane.geo.v_tail.sweep = 15 + rand()*(30-15); %degrees, sweep length
 plane.geo.v_tail.S_wet = plane.geo.v_tail.S*(1.977 + 0.52*plane.geo.v_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 plane.geo.v_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 

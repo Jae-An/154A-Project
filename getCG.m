@@ -19,7 +19,7 @@ cg_htail = 0.25*h_tail.c + h_tail.b*tan(deg2rad(h_tail.sweep))/3 + ((2*h_tail.c*
 cg_vtail = 0.25*v_tail.c + v_tail.b*tan(deg2rad(v_tail.sweep))/3 + ((2*v_tail.c*h/3 - v_tail.b*tan(deg2rad(v_tail.sweep))/6)/(v_tail.TR+1)) + 2*v_tail.c*h*v_tail.TR;
 
 x(1) = wing.LE + cg_wing;   %ft, wing lcg location
-x(2) = body.L/3;              %fuselage cg location  
+x(2) = body.L/2;              %fuselage cg location  
 x(3) = h_tail.LE + cg_htail;   %tail cg location
 x(4) = v_tail.LE + cg_vtail;   %tail cg location
 x(5) = wing.LE + wing.c/2;   %landing gear cg location
