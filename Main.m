@@ -37,11 +37,11 @@ while  g < numGoodPlanes
        if checkVeryGoodPlanes
            newPlane = runDatcom(newPlane);
            newPlane = getInertias(newPlane);
-           resultPlanes(g+1).plane = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
+           resultPlanes(g+1).Good = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
            g = g + 1;
            fprintf('o')
            if dynamicStability(newPlane)
-               resultPlanes(g+1).Good = newPlane;
+               resultPlanes(vg+1).VGood = newPlane;
                vg = vg+1;
                fprintf('GOOD')
                beep
@@ -253,7 +253,7 @@ figure
 bar(1:g,W)
 ylabel('Wet Weight, lb')
 %%
-N=g;
+N=vg;
 hf=figure('units','normalized','outerposition',[0 0 1 1]);
 hf.ToolBar='none';
 nS   = sqrt(N);
@@ -261,7 +261,7 @@ nCol = ceil(nS);
 nRow = nCol - (nCol * nCol - N > nCol - 1);
 for k = 1:N-2
   subplot(nRow, nCol, k);
-  plotPlaneGeo(resultPlanes(k).plane);
+  plotPlaneGeo(resultPlanes(k).VGood);
   set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
   title(k)
 end

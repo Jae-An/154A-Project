@@ -21,32 +21,42 @@ fprintf(fid,'BLREF=%.2f$',plane.geo.wing.b);
 fprintf(fid,'\n $SYNTHS '); %
 fprintf(fid,'XCG=%.2f, ',plane.data.weight.CG(1)); % longitudinal location of CG, (moment reference center)
 fprintf(fid,'ZCG=%.1f, ',0.0); % vertical location of CG relative to reference plane
-fprintf(fid,'XW=%.2f, ',0.95*plane.geo.wing.LE); % longitudinal location of theoretical wing apex
-fprintf(fid,'ZW=%.2f, ',0.6*plane.geo.body.D); % vertical location of theoretical wing apex relative to reference plane
+fprintf(fid,'XW=%.2f, ',plane.geo.wing.LE); % longitudinal location of theoretical wing apex
+fprintf(fid,'ZW=%.2f, ',0.4*plane.geo.body.D/2); % vertical location of theoretical wing apex relative to reference plane
 fprintf(fid,'ALIW=%.1f, ',0.0); % wing root chord incidence angle measured from reference plane
-fprintf(fid,'XH=%.2f,',0.95*plane.geo.h_tail.LE); % longitudinal location of theoretical horizontal tail apex
-fprintf(fid,'\n   ZH=%.1f, ',0.8*plane.geo.body.D); % vertical location of theoretical horizontal tail apex relative to reference plane
+fprintf(fid,'XH=%.2f,',plane.geo.h_tail.LE); % longitudinal location of theoretical horizontal tail apex
+fprintf(fid,'\n   ZH=%.1f, ',1.4*plane.geo.body.D/2); % vertical location of theoretical horizontal tail apex relative to reference plane
 fprintf(fid,'ALIH=%.1f, ',0.0); % horizontal tail root chord incidence angle measured from reference plane
-fprintf(fid,'XV=%.2f, ',0.95*plane.geo.v_tail.LE); % longitudinal location of theoretical vertical tail apex
+fprintf(fid,'XV=%.2f, ',plane.geo.v_tail.LE); % longitudinal location of theoretical vertical tail apex
+%fprintf(fid,'ZV=%.2f, ',0.95*plane.geo.body.D/2); % longitudinal location of theoretical vertical tail apex
 fprintf(fid,'VERTUP=.TRUE.$'); %  =TRUE if vertical panel is above reference plane, =FALSE if vertical panel is below reference plane
 
 
 % Body
 body_length = plane.geo.body.L;
-body_r = plane.geo.body.D;
-nose_length = body_length*0.15;
+body_r = plane.geo.body.D/2;
+nose_length = body_length*0.1;
 nose_x = linspace(0,nose_length,8);
 nose_r = body_r.*([0 .2 .4 .65 .8 .9 .95, 1]).*(sin(linspace(0,pi/2,8)).^.2);
-tail_length = body_length*0.15;
-x = [nose_x, nose_length+0.7*body_length, nose_length+0.7*body_length+tail_length];
-r = [nose_r, body_r,body_r/3];
-fprintf(fid,'\n $BODY NX=10.0, BNOSE=2.0, ');
+tail_length = body_length*0.1;
+x = [nose_x, nose_length+0.8*body_length, nose_length+0.8*body_length+tail_length];
+r = [nose_r, body_r,body_r];
+S = pi.*r.^2;
+fprintf(fid,'\n $BODY NX=10.0, BTAIL=2.0, BNOSE=2.0, ');
 fprintf(fid,'BLN=%.2f, BLA=%.2f,\n',nose_length,tail_length);
 fprintf(fid,'   X(1)=');
 fprintf(fid,'%.1f, ',x);
-fprintf(fid,'\n   R(1)=');
+fprintf(fid,'\n   S(1)=');
+fprintf(fid,'%.1f,',S(1:9));
+fprintf(fid,'%.1f, ',S(10));
+fprintf(fid,'\n   ZU(1)=');
 fprintf(fid,'%.1f,',r(1:9));
-fprintf(fid,'%.1f$',r(10));
+fprintf(fid,'%.1f, ',r(10));
+fprintf(fid,'\n   ZL(1)=');
+fprintf(fid,'%.1f,',-r(1:9));
+fprintf(fid,'%.1f$',0.2*r(10));
+
+
 
 % Wing Planform
 fprintf(fid,'\n $WGPLNF ');
@@ -74,11 +84,11 @@ fprintf(fid,'\nNACA-W-4-6412');
 % Vertical Tail Planform
 fprintf(fid,'\n $VTPLNF ');
 fprintf(fid,'CHRDTP=%.2f, ',plane.geo.v_tail.c* plane.geo.v_tail.TR); % tip chord
-fprintf(fid,'SSPNE=%.2f, ', plane.geo.v_tail.b/2); % semispan of exposed panel
-fprintf(fid,'SSPN=%.2f, ', plane.geo.v_tail.b/2); % semispan theoretical panel from theoretical root chord
+fprintf(fid,'SSPNE=%.2f, ', plane.geo.v_tail.b); % semispan of exposed panel
+fprintf(fid,'SSPN=%.2f, ', plane.geo.v_tail.b); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.v_tail.c); % root chord
-fprintf(fid,'   SAVSI=%.2f, ', plane.geo.v_tail.sweep); % inboard pael sweep angle
-fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
+fprintf(fid,'   SAVSI=%.2f, ', 0); % inboard pael sweep angle
+fprintf(fid,'CHSTAT=1.0, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
 fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
 %fprintf(fid,'SSPNDD=0.0,\n'); % semispan of outboard panel w/ dihedral
@@ -95,7 +105,7 @@ fprintf(fid,'SSPNE=%.2f, ', plane.geo.h_tail.b/2); % semispan of exposed panel
 fprintf(fid,'SSPN=%.2f, ', plane.geo.h_tail.b/2); % semispan theoretical panel from theoretical root chord
 fprintf(fid,'CHRDR=%.2f,\n', plane.geo.h_tail.c); % root chord
 fprintf(fid,'   SAVSI=%.2f, ', plane.geo.h_tail.sweep); % inboard pael sweep angle
-fprintf(fid,'CHSTAT=0.25, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
+fprintf(fid,'CHSTAT=1.0, '); % reference chod station for in/outboard panel sweep angles, fraction of chord
 fprintf(fid,'SWAFP=0.0, '); % ???
 fprintf(fid,'TWISTA=0.0, '); % twist angle
 fprintf(fid,'SSPNDD=0.0,\n'); % semispan of outboard panel w/ dihedral
