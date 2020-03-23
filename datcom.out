@@ -1,0 +1,620 @@
+  ****************************************************
+  *    USAF STABILITY AND CONTROL  DIGITAL DATCOM    *
+  *    PROGRAM REV. JAN 96   DIRECT INQUIRIES TO:    *
+  *    WRIGHT LABORATORY  (WL/FIGC)  ATTN: W. BLAKE  *
+  *      WRIGHT PATTERSON AFB, OHIO  45433           *
+  *    PHONE (513) 255-6764,   FAX (513) 258-4054    *
+  ****************************************************
+1                         CONERR - INPUT ERROR CHECKING
+0 ERROR CODES - N* DENOTES THE NUMBER OF OCCURENCES OF EACH ERROR
+0 A - UNKNOWN VARIABLE NAME
+0 B - MISSING EQUAL SIGN FOLLOWING VARIABLE NAME
+0 C - NON-ARRAY VARIABLE HAS AN ARRAY ELEMENT DESIGNATION - (N)
+0 D - NON-ARRAY VARIABLE HAS MULTIPLE VALUES ASSIGNED
+0 E - ASSIGNED VALUES EXCEED ARRAY DIMENSION
+0 F - SYNTAX ERROR
+
+0******************************  INPUT DATA CARDS  ******************************
+
+ BUILD                                                                           
+  $FLTCON NMACH=1.0, MACH(1)=0.258,                                              
+   NALPHA=7.0, ALSCHD(1)=-2.0,-1.0,0.0,1.0,3.0,5.0,7.0,                          
+   RNNUB(1)=3.539E7$                                                             
+  $OPTINS SREF=703.65, CBARR=19.66, BLREF=106.84$                                
+  $SYNTHS XCG=29.41, ZCG=0.0, XW=19.38, ZW=7.98, ALIW=0.0, XH=56.89,             
+    ZH=10.6, ALIH=0.0, XV=50.86, VERTUP=.TRUE.$                                  
+  $BODY NX=10.0, BNOSE=2.0, BLN=11.98, BLA=11.98,                                
+    X(1)=0.0, 1.7, 3.4, 5.1, 6.8, 8.6, 10.3, 12.0, 67.9, 79.9,                   
+    R(1)=0.0,2.0,4.5,7.9,10.1,11.7,12.6,13.3,13.3,4.4$                           
+  $WGPLNF CHRDTP=6.68, SSPNE=53.42, SSPN=53.42, CHRDR=19.66,                     
+    SAVSI=2.60, CHSTAT=0.25, SWAFP=0.0, TWISTA=0.0, SSPNDD=0.0,                  
+    DHDADI=0.0, DHDADO=0.0, TYPE=1.0$                                            
+ NACA-W-4-6412                                                                   
+  $VTPLNF CHRDTP=14.73, SSPNE=8.96, SSPN=8.96, CHRDR=25.84,                      
+    SAVSI=6.79, CHSTAT=0.25, SWAFP=0.0, TWISTA=0.0, TYPE=1.0$                    
+ NACA-V-4-0009                                                                   
+  $HTPLNF CHRDTP=7.93, SSPNE=14.46, SSPN=14.46, CHRDR=19.81,                     
+    SAVSI=18.83, CHSTAT=0.25, SWAFP=0.0, TWISTA=0.0, SSPNDD=0.0,                 
+    DHDADI=0.0, DHDADO=0.0, TYPE=1.0$                                            
+ NACA-H-4-0009                                                                   
+ DIM FT                                                                          
+ DAMP                                                                            
+ DERIV RAD                                                                       
+ CASEID 154A PLANE, CASE 1                                                       
+ DUMP DYN                                                                        
+ NEXT CASE                                                                       
+1          THE FOLLOWING IS A LIST OF ALL INPUT CARDS FOR THIS CASE.
+0
+ BUILD                                                                           
+  $FLTCON NMACH=1.0, MACH(1)=0.258,                                              
+   NALPHA=7.0, ALSCHD(1)=-2.0,-1.0,0.0,1.0,3.0,5.0,7.0,                          
+   RNNUB(1)=3.539E7$                                                             
+  $OPTINS SREF=703.65, CBARR=19.66, BLREF=106.84$                                
+  $SYNTHS XCG=29.41, ZCG=0.0, XW=19.38, ZW=7.98, ALIW=0.0, XH=56.89,             
+    ZH=10.6, ALIH=0.0, XV=50.86, VERTUP=.TRUE.$                                  
+  $BODY NX=10.0, BNOSE=2.0, BLN=11.98, BLA=11.98,                                
+    X(1)=0.0, 1.7, 3.4, 5.1, 6.8, 8.6, 10.3, 12.0, 67.9, 79.9,                   
+    R(1)=0.0,2.0,4.5,7.9,10.1,11.7,12.6,13.3,13.3,4.4$                           
+  $WGPLNF CHRDTP=6.68, SSPNE=53.42, SSPN=53.42, CHRDR=19.66,                     
+    SAVSI=2.60, CHSTAT=0.25, SWAFP=0.0, TWISTA=0.0, SSPNDD=0.0,                  
+    DHDADI=0.0, DHDADO=0.0, TYPE=1.0$                                            
+ NACA-W-4-6412                                                                   
+  $VTPLNF CHRDTP=14.73, SSPNE=8.96, SSPN=8.96, CHRDR=25.84,                      
+    SAVSI=6.79, CHSTAT=0.25, SWAFP=0.0, TWISTA=0.0, TYPE=1.0$                    
+ NACA-V-4-0009                                                                   
+  $HTPLNF CHRDTP=7.93, SSPNE=14.46, SSPN=14.46, CHRDR=19.81,                     
+    SAVSI=18.83, CHSTAT=0.25, SWAFP=0.0, TWISTA=0.0, SSPNDD=0.0,                 
+    DHDADI=0.0, DHDADO=0.0, TYPE=1.0$                                            
+ NACA-H-4-0009                                                                   
+ DIM FT                                                                          
+ DAMP                                                                            
+ DERIV RAD                                                                       
+ CASEID 154A PLANE, CASE 1                                                       
+ DUMP DYN                                                                        
+ NEXT CASE                                                                       
+0 INPUT DIMENSIONS ARE IN FT, SCALE FACTOR IS 1.0000
+
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                        WING SECTION DEFINITION
+0                                 IDEAL ANGLE OF ATTACK =   0.77271 DEG.
+
+                              ZERO LIFT ANGLE OF ATTACK =  -5.56684 DEG.
+
+                                 IDEAL LIFT COEFFICIENT =   0.76807
+
+                  ZERO LIFT PITCHING MOMENT COEFFICIENT =  -0.15229
+
+                             MACH ZERO LIFT-CURVE-SLOPE =   0.09840 /DEG.
+
+                                    LEADING EDGE RADIUS =   0.01587 FRACTION CHORD
+
+                              MAXIMUM AIRFOIL THICKNESS =   0.12000 FRACTION CHORD
+
+                                                DELTA-Y =   3.16898 PERCENT CHORD
+
+
+0                         MACH= 0.2580 LIFT-CURVE-SLOPE =   0.11799 /DEG.      XAC =   0.25738
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                   HORIZONTAL TAIL SECTION DEFINITION
+0                                 IDEAL ANGLE OF ATTACK =   0.00000 DEG.
+
+                              ZERO LIFT ANGLE OF ATTACK =   0.00000 DEG.
+
+                                 IDEAL LIFT COEFFICIENT =   0.00000
+
+                  ZERO LIFT PITCHING MOMENT COEFFICIENT =   0.00000
+
+                             MACH ZERO LIFT-CURVE-SLOPE =   0.09830 /DEG.
+
+                                    LEADING EDGE RADIUS =   0.00893 FRACTION CHORD
+
+                              MAXIMUM AIRFOIL THICKNESS =   0.09000 FRACTION CHORD
+
+                                                DELTA-Y =   2.37673 PERCENT CHORD
+
+
+0                         MACH= 0.2580 LIFT-CURVE-SLOPE =   0.11777 /DEG.      XAC =   0.25596
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                    VERTICAL TAIL SECTION DEFINITION
+0                                 IDEAL ANGLE OF ATTACK =   0.00000 DEG.
+
+                              ZERO LIFT ANGLE OF ATTACK =   0.00000 DEG.
+
+                                 IDEAL LIFT COEFFICIENT =   0.00000
+
+                  ZERO LIFT PITCHING MOMENT COEFFICIENT =   0.00000
+
+                             MACH ZERO LIFT-CURVE-SLOPE =   0.09830 /DEG.
+
+                                    LEADING EDGE RADIUS =   0.00893 FRACTION CHORD
+
+                              MAXIMUM AIRFOIL THICKNESS =   0.09000 FRACTION CHORD
+
+                                                DELTA-Y =   2.37673 PERCENT CHORD
+
+
+0                         MACH= 0.2580 LIFT-CURVE-SLOPE =   0.11806 /DEG.      XAC =   0.25594
+ 
+   DYN(  1)= 1.00000E-30   DYN(  2)=-1.21916E-02   DYN(  3)= 1.00000E-30   DYN(  4)= 1.00000E-30   DYN(  5)= 1.00000E-30
+   DYN(  6)= 1.00000E-30   DYN(  7)= 1.00000E-30   DYN(  8)= 1.00000E-30   DYN(  9)= 1.00000E-30   DYN( 10)= 1.00000E-30
+   DYN( 11)= 1.00000E-30   DYN( 12)= 1.00000E-30   DYN( 13)= 1.00000E-30   DYN( 14)= 1.00000E-30   DYN( 15)= 1.00000E-30
+   DYN( 16)= 1.00000E-30   DYN( 17)= 1.00000E-30   DYN( 18)= 1.00000E-30   DYN( 19)= 1.00000E-30   DYN( 20)= 1.00000E-30
+   DYN( 21)= 2.08613E-01   DYN( 22)= 1.00000E-30   DYN( 23)= 1.00000E-30   DYN( 24)= 1.00000E-30   DYN( 25)= 1.00000E-30
+   DYN( 26)= 1.00000E-30   DYN( 27)= 1.00000E-30   DYN( 28)= 1.00000E-30   DYN( 29)= 1.00000E-30   DYN( 30)= 1.00000E-30
+   DYN( 31)= 1.00000E-30   DYN( 32)= 1.00000E-30   DYN( 33)= 1.00000E-30   DYN( 34)= 1.00000E-30   DYN( 35)= 1.00000E-30
+   DYN( 36)= 1.00000E-30   DYN( 37)= 1.00000E-30   DYN( 38)= 1.00000E-30   DYN( 39)= 1.00000E-30   DYN( 40)= 3.78603E+04
+   DYN( 41)= 1.00000E-30   DYN( 42)= 1.00000E-30   DYN( 43)= 1.00000E-30   DYN( 44)=-5.42940E+00   DYN( 45)= 1.97685E-01
+   DYN( 46)=-1.09319E-01   DYN( 47)= 1.96114E-01   DYN( 48)= 1.99256E-01   DYN( 49)= 2.02185E-01   DYN( 50)= 2.04609E-01
+   DYN( 51)= 2.08125E-01   DYN( 52)= 2.02766E-01   DYN( 53)= 1.89279E-01   DYN( 54)= 1.00000E-30   DYN( 55)= 1.00000E-30
+   DYN( 56)= 1.00000E-30   DYN( 57)= 1.00000E-30   DYN( 58)= 1.00000E-30   DYN( 59)= 1.00000E-30   DYN( 60)= 1.00000E-30
+   DYN( 61)= 1.00000E-30   DYN( 62)= 1.00000E-30   DYN( 63)= 1.00000E-30   DYN( 64)= 1.00000E-30   DYN( 65)= 1.00000E-30
+   DYN( 66)= 1.00000E-30   DYN( 67)= 7.98000E+00   DYN( 68)= 1.00000E+00   DYN( 69)=-3.44563E-03   DYN( 70)= 7.53985E+00
+   DYN( 71)=-4.48902E-01   DYN( 72)=-1.06457E-03   DYN( 73)=-1.32921E-03   DYN( 74)=-1.66701E-03   DYN( 75)=-2.08030E-03
+   DYN( 76)=-3.13971E-03   DYN( 77)=-4.51389E-03   DYN( 78)=-6.07359E-03   DYN( 79)= 1.00000E-30   DYN( 80)= 1.00000E-30
+   DYN( 81)= 1.00000E-30   DYN( 82)= 1.00000E-30   DYN( 83)= 1.00000E-30   DYN( 84)= 1.00000E-30   DYN( 85)= 1.00000E-30
+   DYN( 86)= 1.00000E-30   DYN( 87)= 1.00000E-30   DYN( 88)= 1.00000E-30   DYN( 89)= 1.00000E-30   DYN( 90)= 1.00000E-30
+   DYN( 91)= 1.00000E-30   DYN( 92)=-1.10580E-01   DYN( 93)= 9.66216E-01   DYN( 94)= 1.06950E-02   DYN( 95)= 3.89905E-04
+   DYN( 96)= 1.36029E-02   DYN( 97)= 1.54239E-02   DYN( 98)= 1.91059E-02   DYN( 99)= 2.28727E-02   DYN(100)= 3.05793E-02
+   DYN(101)= 3.76368E-02   DYN(102)= 4.07989E-02   DYN(103)= 1.00000E-30   DYN(104)= 1.00000E-30   DYN(105)= 1.00000E-30
+   DYN(106)= 1.00000E-30   DYN(107)= 1.00000E-30   DYN(108)= 1.00000E-30   DYN(109)= 1.00000E-30   DYN(110)= 1.00000E-30
+   DYN(111)= 1.00000E-30   DYN(112)= 1.00000E-30   DYN(113)= 1.00000E-30   DYN(114)= 1.00000E-30   DYN(115)= 1.00000E-30
+   DYN(116)= 3.35637E-03   DYN(117)= 3.82036E-03   DYN(118)= 4.76306E-03   DYN(119)= 5.73393E-03   DYN(120)= 7.71629E-03
+   DYN(121)= 9.30261E-03   DYN(122)= 9.89085E-03   DYN(123)= 1.00000E-30   DYN(124)= 1.00000E-30   DYN(125)= 1.00000E-30
+   DYN(126)= 1.00000E-30   DYN(127)= 1.00000E-30   DYN(128)= 1.00000E-30   DYN(129)= 1.00000E-30   DYN(130)= 1.00000E-30
+   DYN(131)= 1.00000E-30   DYN(132)= 1.00000E-30   DYN(133)= 1.00000E-30   DYN(134)= 1.00000E-30   DYN(135)= 1.00000E-30
+   DYN(136)= 3.01357E-03   DYN(137)= 3.43017E-03   DYN(138)= 4.27659E-03   DYN(139)= 5.14830E-03   DYN(140)= 6.92820E-03
+   DYN(141)= 8.35250E-03   DYN(142)= 8.88067E-03   DYN(143)= 1.00000E-30   DYN(144)= 1.00000E-30   DYN(145)= 1.00000E-30
+   DYN(146)= 1.00000E-30   DYN(147)= 1.00000E-30   DYN(148)= 1.00000E-30   DYN(149)= 1.00000E-30   DYN(150)= 1.00000E-30
+   DYN(151)= 1.00000E-30   DYN(152)= 1.00000E-30   DYN(153)= 1.00000E-30   DYN(154)= 1.00000E-30   DYN(155)= 1.00000E-30
+   DYN(156)= 9.67628E-01   DYN(157)= 9.67467E-01   DYN(158)= 9.67196E-01   DYN(159)= 9.66959E-01   DYN(160)= 9.66679E-01
+   DYN(161)= 9.67556E-01   DYN(162)= 9.68351E-01   DYN(163)= 1.00000E-30   DYN(164)= 1.00000E-30   DYN(165)= 1.00000E-30
+   DYN(166)= 1.00000E-30   DYN(167)= 1.00000E-30   DYN(168)= 1.00000E-30   DYN(169)= 1.00000E-30   DYN(170)= 1.00000E-30
+   DYN(171)= 1.00000E-30   DYN(172)= 1.00000E-30   DYN(173)= 1.00000E-30   DYN(174)= 1.00000E-30   DYN(175)= 1.00000E-30
+   DYN(176)=-4.82988E-01   DYN(177)= 0.00000E+00   DYN(178)= 1.54000E-07   DYN(179)= 2.42333E-01   DYN(180)=-1.24665E-01
+   DYN(181)= 2.07266E+00   DYN(182)=-6.96173E-03   DYN(183)=-3.03242E-01   DYN(184)= 5.86135E-03   DYN(185)= 6.20415E-03
+   DYN(186)= 6.64173E-03   DYN(187)= 7.17709E-03   DYN(188)= 8.54940E-03   DYN(189)= 1.03295E-02   DYN(190)= 1.23498E-02
+   DYN(191)= 1.00000E-30   DYN(192)= 1.00000E-30   DYN(193)= 1.00000E-30   DYN(194)= 1.00000E-30   DYN(195)= 1.00000E-30
+   DYN(196)= 1.00000E-30   DYN(197)= 1.00000E-30   DYN(198)= 1.00000E-30   DYN(199)= 1.00000E-30   DYN(200)= 1.00000E-30
+   DYN(201)= 1.00000E-30   DYN(202)= 1.00000E-30   DYN(203)= 1.00000E-30   DYN(204)= 1.00000E-30   DYN(205)= 1.00000E-30
+   DYN(206)= 1.00000E-30   DYN(207)= 1.00000E-30   DYN(208)= 1.00000E-30   DYN(209)= 1.00000E-30   DYN(210)= 1.00000E-30
+   DYN(211)= 1.00000E-30   DYN(212)= 1.00000E-30   DYN(213)= 1.00000E-30
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                   DATCOM BODY ALONE CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.062   -0.026   -0.0795  -0.028    0.061    2.828    7.442E-01    2.278E+00   -7.442E-01   -4.192E-01    0.000E+00
+   -1.0    0.061   -0.013   -0.0398  -0.014    0.061    2.830    7.442E-01    2.278E+00   -7.442E-01   -4.192E-01    0.000E+00
+    0.0    0.061    0.000    0.0000   0.000    0.061   ******    7.442E-01    2.278E+00   -7.442E-01   -4.192E-01    0.000E+00
+    1.0    0.061    0.013    0.0398   0.014    0.061    2.830    7.442E-01    2.278E+00   -7.442E-01   -4.192E-01    0.000E+00
+    3.0    0.063    0.039    0.1193   0.042    0.061    2.827    7.442E-01    2.278E+00   -7.442E-01   -4.192E-01    0.000E+00
+    5.0    0.066    0.065    0.1988   0.070    0.061    2.820    7.442E-01    2.278E+00   -7.442E-01   -4.192E-01    0.000E+00
+    7.0    0.072    0.091    0.2783   0.099    0.060    2.811    7.442E-01    2.278E+00   -7.442E-01   -4.192E-01    0.000E+00
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                   DATCOM BODY ALONE CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00   -1.191E-01    6.438E-01     1.222E+00   -6.708E-01      NDM          NDM          NDM          NDM        0.000E+00
+    -1.00                                                                                                             0.000E+00
+     0.00                                                                                                             0.000E+00
+     1.00                                                                                                             0.000E+00
+     3.00                                                                                                             0.000E+00
+     5.00                                                                                                             0.000E+00
+     7.00                                                                                                             0.000E+00
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                      WING ALONE CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.021    0.678   -0.0388   0.677    0.044   -0.057    1.040E+01    2.114E+00    1.890E-05    2.534E-03    2.709E-03
+   -1.0    0.027    0.876    0.0013   0.875    0.043    0.001    1.142E+01    2.318E+00    3.155E-05    4.227E-03    3.499E-03
+    0.0    0.036    1.076    0.0421   1.076    0.036    0.039    1.158E+01    2.355E+00    4.773E-05    6.389E-03    4.302E-03
+    1.0    0.047    1.280    0.0835   1.281    0.024    0.065    1.172E+01    2.389E+00    6.755E-05    9.034E-03    5.115E-03
+    3.0    0.073    1.693    0.1680   1.695   -0.015    0.099    1.192E+01    2.447E+00    1.184E-04    1.581E-02    6.767E-03
+    5.0    0.108    2.112    0.2543   2.114   -0.076    0.120    1.162E+01    2.410E+00    1.846E-04    2.461E-02    8.442E-03
+    7.0    0.148    2.505    0.3362   2.504   -0.159    0.134    1.084E+01    2.282E+00    2.627E-04    3.459E-02    1.001E-02
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                      WING ALONE CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00   -4.626E-01   -7.227E-01       NDM          NDM       -9.603E-01   -8.178E-02   -6.985E-02   -5.154E-03    1.607E-01
+    -1.00                                                        -9.762E-01   -1.056E-01   -9.015E-02   -6.431E-03    2.075E-01
+     0.00                                                        -9.911E-01   -1.298E-01   -1.107E-01   -8.062E-03    2.551E-01
+     1.00                                                        -1.004E+00   -1.543E-01   -1.316E-01   -1.006E-02    3.034E-01
+     3.00                                                        -1.023E+00   -2.041E-01   -1.739E-01   -1.517E-02    4.014E-01
+     5.00                                                        -9.997E-01   -2.548E-01   -2.175E-01   -2.180E-02    5.007E-01
+     7.00                                                        -9.369E-01   -3.023E-01   -2.586E-01   -2.933E-02    5.936E-01
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                    HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.004   -0.055    0.0962  -0.055    0.002   -1.736    1.613E+00   -2.797E+00    5.314E-05    5.942E-05    3.449E-03
+   -1.0    0.003   -0.027    0.0478  -0.027    0.003   -1.739    1.585E+00   -2.757E+00    1.305E-05    1.459E-05    1.709E-03
+    0.0    0.003    0.000    0.0000   0.000    0.003   ******    1.571E+00   -2.738E+00    0.000E+00    0.000E+00    0.000E+00
+    1.0    0.003    0.027   -0.0478   0.027    0.003   -1.741    1.585E+00   -2.772E+00    1.305E-05    1.459E-05   -1.709E-03
+    3.0    0.005    0.084   -0.1468   0.084    0.000   -1.752    1.633E+00   -2.907E+00    1.215E-04    1.359E-04   -5.216E-03
+    5.0    0.008    0.141   -0.2508   0.142   -0.004   -1.771    1.668E+00   -3.049E+00    3.471E-04    3.883E-04   -8.816E-03
+    7.0    0.014    0.200   -0.3597   0.200   -0.011   -1.795    1.697E+00   -3.191E+00    6.952E-04    7.780E-04   -1.248E-02
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                    HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00    6.228E+00   -9.132E+00       NDM          NDM       -4.147E-03    0.000E+00    0.000E+00    0.000E+00      NDM 
+    -1.00                                                        -4.070E-03                                             NDM 
+     0.00                                                        -4.032E-03                                             NDM 
+     1.00                                                        -4.069E-03                                             NDM 
+     3.00                                                        -4.204E-03                                             NDM 
+     5.00                                                        -4.317E-03                                             NDM 
+     7.00                                                        -4.425E-03                                             NDM 
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                     VERTICAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.001    0.000    0.0000   0.000    NDM     ******    0.000E+00    0.000E+00   -2.766E-01    7.352E-02   -1.310E-02
+   -1.0                                                                                                             -1.182E-02
+    0.0                                                                                                             -1.054E-02
+    1.0                                                                                                             -9.256E-03
+    3.0                                                                                                             -6.679E-03
+    5.0                                                                                                             -4.093E-03
+    7.0                                                                                                             -1.502E-03
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                     VERTICAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00    0.000E+00    0.000E+00     0.000E+00    0.000E+00   -2.424E-04   -5.119E-03    1.353E-03   -3.864E-02    6.924E-03
+    -1.00                                                        -1.095E-04   -2.563E-03    6.794E-04   -3.887E-02    6.268E-03
+     0.00                                                         0.000E+00    0.000E+00    0.000E+00   -3.908E-02    5.603E-03
+     1.00                                                         8.598E-05    2.569E-03   -6.845E-04   -3.926E-02    4.932E-03
+     3.00                                                         1.865E-04    7.725E-03   -2.066E-03   -3.956E-02    3.572E-03
+     5.00                                                         1.908E-04    1.290E-02   -3.457E-03   -3.976E-02    2.195E-03
+     7.00                                                         9.818E-05    1.808E-02   -4.853E-03   -3.987E-02    8.066E-04
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                       WING-BODY CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.087    0.652   -0.1003   0.649    0.110   -0.155    1.198E+01    4.578E+00   -Inf         -8.843E-01    2.538E-03
+   -1.0    0.093    0.863   -0.0211   0.861    0.108   -0.025    1.216E+01    4.499E+00                              3.358E-03
+    0.0    0.101    1.076    0.0567   1.076    0.101    0.053    1.233E+01    4.417E+00                              4.191E-03
+    1.0    0.112    1.293    0.1331   1.295    0.089    0.103    1.247E+01    4.330E+00                              5.034E-03
+    3.0    0.141    1.732    0.2810   1.737    0.050    0.162    1.267E+01    4.141E+00                              6.745E-03
+    5.0    0.179    2.177    0.4222   2.185   -0.011    0.193    1.236E+01    3.855E+00                              8.477E-03
+    7.0    0.224    2.595    0.5502   2.603   -0.094    0.211    1.159E+01    3.479E+00                              1.010E-02
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                       WING-BODY CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00   -5.817E-01   -7.889E-02       NDM          NDM       -9.603E-01   -8.178E-02   -6.985E-02   -5.154E-03    1.607E-01
+    -1.00                                                        -9.762E-01   -1.056E-01   -9.015E-02   -6.431E-03    2.075E-01
+     0.00                                                        -9.911E-01   -1.298E-01   -1.107E-01   -8.062E-03    2.551E-01
+     1.00                                                        -1.004E+00   -1.543E-01   -1.316E-01   -1.006E-02    3.034E-01
+     3.00                                                        -1.023E+00   -2.041E-01   -1.739E-01   -1.517E-02    4.014E-01
+     5.00                                                        -9.997E-01   -2.548E-01   -2.175E-01   -2.180E-02    5.007E-01
+     7.00                                                        -9.369E-01   -3.023E-01   -2.586E-01   -2.933E-02    5.936E-01
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                 BODY-HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.069   -0.081    0.0177  -0.084    0.066   -0.211    2.358E+00   -4.859E-01   -Inf         -8.843E-01    4.999E-03
+   -1.0    0.068   -0.040    0.0094  -0.042    0.067   -0.226    2.329E+00   -4.622E-01                              2.484E-03
+    0.0    0.068    0.000    0.0016   0.000    0.068   ******    2.315E+00   -4.601E-01                              6.853E-11
+    1.0    0.068    0.040   -0.0066   0.042    0.067   -0.160    2.329E+00   -5.105E-01                             -2.484E-03
+    3.0    0.072    0.123   -0.0273   0.126    0.065   -0.216    2.377E+00   -6.799E-01                             -7.540E-03
+    5.0    0.079    0.206   -0.0541   0.212    0.060   -0.255    2.413E+00   -8.560E-01                             -1.269E-02
+    7.0    0.090    0.291   -0.0871   0.300    0.054   -0.290    2.441E+00   -1.032E+00                             -1.789E-02
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                 BODY-HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00    6.108E+00   -8.488E+00       NDM          NDM       -4.147E-03      NDM          NDM          NDM          NDM 
+    -1.00                                                        -4.070E-03                                             NDM 
+     0.00                                                        -4.032E-03                                             NDM 
+     1.00                                                        -4.069E-03                                             NDM 
+     3.00                                                        -4.204E-03                                             NDM 
+     5.00                                                        -4.317E-03                                             NDM 
+     7.00                                                        -4.425E-03                                             NDM 
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                  BODY-VERTICAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.063   -0.026   -0.0795  -0.028    0.062    2.824    7.442E-01    2.278E+00   -1.021E+00   -3.457E-01   -1.310E-02
+   -1.0    0.062   -0.013   -0.0398  -0.014    0.062    2.825    7.442E-01    2.278E+00                             -1.182E-02
+    0.0    0.062    0.000    0.0000   0.000    0.062   ******    7.442E-01    2.278E+00                             -1.054E-02
+    1.0    0.062    0.013    0.0398   0.014    0.062    2.825    7.442E-01    2.278E+00                             -9.256E-03
+    3.0    0.064    0.039    0.1193   0.042    0.062    2.822    7.442E-01    2.278E+00                             -6.679E-03
+    5.0    0.068    0.065    0.1988   0.071    0.062    2.816    7.442E-01    2.278E+00                             -4.093E-03
+    7.0    0.073    0.091    0.2783   0.099    0.061    2.807    7.442E-01    2.278E+00                             -1.502E-03
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                  BODY-VERTICAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00   -1.191E-01    6.438E-01     1.222E+00   -6.708E-01      NDM          NDM          NDM          NDM          NDM 
+    -1.00                                                                                                               NDM 
+     0.00                                                                                                               NDM 
+     1.00                                                                                                               NDM 
+     3.00                                                                                                               NDM 
+     5.00                                                                                                               NDM 
+     7.00                                                                                                               NDM 
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                               WING-BODY-HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.089    0.550    0.0763   0.547    0.108    0.140    1.281E+01    3.214E+00   -Inf         -8.842E-01    5.987E-03
+   -1.0    0.094    0.775    0.1311   0.773    0.108    0.170    1.298E+01    3.109E+00                              5.068E-03
+    0.0    0.102    1.003    0.1848   1.003    0.102    0.184    1.314E+01    3.037E+00                              4.191E-03
+    1.0    0.113    1.234    0.2372   1.236    0.091    0.192    1.326E+01    2.964E+00                              3.324E-03
+    3.0    0.142    1.700    0.3381   1.705    0.052    0.198    1.344E+01    2.809E+00                              1.528E-03
+    5.0    0.182    2.172    0.4333   2.179   -0.008    0.199    1.316E+01    2.460E+00                             -3.395E-04
+    7.0    0.230    2.619    0.5099   2.627   -0.091    0.194    1.246E+01    1.929E+00                             -2.373E-03
+0                                    ALPHA     Q/QINF    EPSLON  D(EPSLON)/D(ALPHA)
+0
+                                     -2.0      1.000      1.668        0.484
+                                     -1.0      1.000      2.151        0.488
+                                      0.0      1.000      2.643        0.495
+                                      1.0      1.000      3.140        0.503
+                                      3.0      1.000      4.166        0.517
+                                      5.0      1.000      5.208        0.495
+                                      7.0      1.000      6.145        0.468
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                               WING-BODY-HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00    5.042E+00   -9.879E+00     2.720E+00   -4.740E+00   -9.644E-01   -8.178E-02   -6.985E-02   -5.154E-03      NDM 
+    -1.00                               2.742E+00   -4.779E+00   -9.802E-01   -1.056E-01   -9.015E-02   -6.431E-03      NDM 
+     0.00                               2.782E+00   -4.848E+00   -9.952E-01   -1.298E-01   -1.107E-01   -8.062E-03      NDM 
+     1.00                               2.828E+00   -4.928E+00   -1.008E+00   -1.543E-01   -1.316E-01   -1.006E-02      NDM 
+     3.00                               2.907E+00   -5.067E+00   -1.027E+00   -2.041E-01   -1.739E-01   -1.517E-02      NDM 
+     5.00                               2.782E+00   -4.848E+00   -1.004E+00   -2.548E-01   -2.175E-01   -2.180E-02      NDM 
+     7.00                               2.634E+00   -4.591E+00   -9.413E-01   -3.023E-01   -2.586E-01   -2.933E-02      NDM 
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                WING-BODY-VERTICAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.088    0.652   -0.1003   0.648    0.111   -0.155    1.198E+01    4.578E+00   -Inf         -8.108E-01   -1.056E-02
+   -1.0    0.094    0.863   -0.0211   0.861    0.109   -0.025    1.216E+01    4.499E+00                             -8.464E-03
+    0.0    0.103    1.076    0.0567   1.076    0.103    0.053    1.233E+01    4.417E+00                             -6.350E-03
+    1.0    0.113    1.293    0.1331   1.295    0.091    0.103    1.247E+01    4.330E+00                             -4.223E-03
+    3.0    0.142    1.732    0.2810   1.737    0.051    0.162    1.267E+01    4.141E+00                              6.574E-05
+    5.0    0.180    2.177    0.4222   2.185   -0.010    0.193    1.236E+01    3.855E+00                              4.384E-03
+    7.0    0.225    2.595    0.5502   2.604   -0.093    0.211    1.159E+01    3.479E+00                              8.602E-03
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                WING-BODY-VERTICAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00   -5.817E-01   -7.889E-02       NDM          NDM       -9.605E-01   -8.690E-02   -6.850E-02   -4.380E-02    1.676E-01
+    -1.00                                                        -9.763E-01   -1.082E-01   -8.947E-02   -4.530E-02    2.138E-01
+     0.00                                                        -9.911E-01   -1.298E-01   -1.107E-01   -4.714E-02    2.607E-01
+     1.00                                                        -1.004E+00   -1.517E-01   -1.323E-01   -4.932E-02    3.083E-01
+     3.00                                                        -1.023E+00   -1.964E-01   -1.760E-01   -5.473E-02    4.050E-01
+     5.00                                                        -9.995E-01   -2.419E-01   -2.209E-01   -6.156E-02    5.029E-01
+     7.00                                                        -9.368E-01   -2.843E-01   -2.634E-01   -6.919E-02    5.944E-01
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                        WING-BODY-VERTICAL TAIL-HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+   -2.0    0.090    0.550    0.0763   0.547    0.109    0.140    1.281E+01    3.214E+00   -Inf         -8.107E-01   -7.113E-03
+   -1.0    0.095    0.775    0.1311   0.773    0.109    0.170    1.298E+01    3.109E+00                             -6.755E-03
+    0.0    0.103    1.003    0.1848   1.003    0.103    0.184    1.314E+01    3.037E+00                             -6.350E-03
+    1.0    0.114    1.234    0.2372   1.236    0.092    0.192    1.326E+01    2.964E+00                             -5.932E-03
+    3.0    0.143    1.700    0.3381   1.706    0.054    0.198    1.344E+01    2.809E+00                             -5.151E-03
+    5.0    0.183    2.172    0.4333   2.179   -0.007    0.199    1.316E+01    2.460E+00                             -4.433E-03
+    7.0    0.231    2.619    0.5099   2.628   -0.090    0.194    1.246E+01    1.929E+00                             -3.876E-03
+0                                    ALPHA     Q/QINF    EPSLON  D(EPSLON)/D(ALPHA)
+0
+                                     -2.0      1.000      1.668        0.484
+                                     -1.0      1.000      2.151        0.488
+                                      0.0      1.000      2.643        0.495
+                                      1.0      1.000      3.140        0.503
+                                      3.0      1.000      4.166        0.517
+                                      5.0      1.000      5.208        0.495
+                                      7.0      1.000      6.145        0.468
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                        WING-BODY-VERTICAL TAIL-HORIZONTAL TAIL CONFIGURATION
+                                                        154A PLANE, CASE 1
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+             FT       FT/SEC     LB/FT**2       DEG R         1/FT               FT**2        FT        FT        FT        FT
+0 0.258                                                    3.5390E+07           703.650     19.660   106.840    29.410     0.000
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+    -2.00    5.042E+00   -9.879E+00     2.720E+00   -4.740E+00   -9.647E-01   -8.690E-02   -6.850E-02   -4.380E-02    1.676E-01
+    -1.00                               2.742E+00   -4.779E+00   -9.803E-01   -1.082E-01   -8.947E-02   -4.530E-02    2.138E-01
+     0.00                               2.782E+00   -4.848E+00   -9.952E-01   -1.298E-01   -1.107E-01   -4.714E-02    2.607E-01
+     1.00                               2.828E+00   -4.928E+00   -1.008E+00   -1.517E-01   -1.323E-01   -4.932E-02    3.083E-01
+     3.00                               2.907E+00   -5.067E+00   -1.027E+00   -1.964E-01   -1.760E-01   -5.473E-02    4.050E-01
+     5.00                               2.782E+00   -4.848E+00   -1.004E+00   -2.419E-01   -2.209E-01   -6.156E-02    5.029E-01
+     7.00                               2.634E+00   -4.591E+00   -9.412E-01   -2.843E-01   -2.634E-01   -6.919E-02    5.944E-01
+1          THE FOLLOWING IS A LIST OF ALL INPUT CARDS FOR THIS CASE.
+0
+1 END OF JOB.
