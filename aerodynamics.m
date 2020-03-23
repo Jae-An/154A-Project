@@ -15,6 +15,7 @@ function plane = aerodynamics(plane)
     v_ref = linspace(v_stall, v_max);
 
     air_density = 0.001267;      %slug/ft3, 20,000 ft.
+    %air_density = 0.002;      %slug/ft3, 20,000 ft.
     viscosity = 3.324*10^-7;     %slug/ft/s, 20,000 ft.
     
     air_density_ground = 0.00238; %quantities at sea
@@ -148,6 +149,7 @@ function plane = aerodynamics(plane)
     [~, maxDiff_index] = max(Difference,[],1);
     CruiseDrag = D(maxDiff_index);
     plane.data.aero.CL_cruise = [CL(maxDiff_index(1),1) CL(maxDiff_index(2),2)];
+    plane.data.aero.CD_cruise = [CD(maxDiff_index(1),1) CD(maxDiff_index(2),2)];
     plane.data.aero.v_cruise = v_ref(maxDiff_index);
     LD = [L(maxDiff_index(1),1)/CruiseDrag(1), L(maxDiff_index(2),2)/CruiseDrag(2)];
     eta_cruise = eta(maxDiff_index);

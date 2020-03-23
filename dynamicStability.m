@@ -88,9 +88,9 @@ if numunstable > 1
 end
 
 %%
-% figure
-% plot(real_roots_4th,imag_roots_4th,'mx','Linewidth',2)
-% grid on
+figure
+plot(real_roots_4th,imag_roots_4th,'mx','Linewidth',2)
+grid on
 
 %%
 % 

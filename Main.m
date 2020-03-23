@@ -1,22 +1,23 @@
 tic
-clc; clear variables; close all;
+%clc; clear variables; close all;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
 stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
 n = 0;
-numGoodPlanes = 10;
+vg = 0;
+numGoodPlanes = 20;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
 fprintf('Finding good planes... \n')
 checkVeryGoodPlanes = 1;
 
-
+boolArray = zeros(1,7);
 while  g < numGoodPlanes
     fprintf('.')
-    if mod(g+b,100) == 0
+    if mod(n,100) == 0
         fprintf('\n')
     end
     
@@ -30,33 +31,42 @@ while  g < numGoodPlanes
     % check if plane performance and stability is good
     newPlane = stability(newPlane);
 
-   
+    [goodBool, b_arr] = isGood(newPlane);
     % check for imagnary lift or drag values
-    if isGood(newPlane)
+    if goodBool
        if checkVeryGoodPlanes
            newPlane = runDatcom(newPlane);
            newPlane = getInertias(newPlane);
+           resultPlanes(g+1).plane = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
+           g = g + 1;
            fprintf('o')
            if dynamicStability(newPlane)
                resultPlanes(g+1).Good = newPlane;
-               g = g+1;
+               vg = vg+1;
                fprintf('GOOD')
                beep
            end
        else
-           resultPlanes(g+1).Good = newPlane; %   store plane if above is good
+           resultPlanes(g+1).plane = newPlane; %   store plane if above is good
            g = g+1;
            fprintf('GOOD')
        end
     else
        n = n + 1; 
-       %resultPlanes(numPlanes-b).plane = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
-       b = b + 1;
-    end    
+       b = b+1;
+
+    end
+    boolArray = boolArray + b_arr;
 end
 %%
 fprintf('\n\n%d good planes found \n',g)
 fprintf('%d bad planes discarded \n',b)
+%%
+boolArray = n - boolArray;
+figure
+bar(boolArray)
+set(gca,'xticklabel',{'GeoBad', 'rocBad', 'VcBad', 'rangeBad', 'stabilityBad', 'Imaginary', 'minSpeedBad'})
+
 
 %%
 % initialize data variables
@@ -243,18 +253,18 @@ figure
 bar(1:g,W)
 ylabel('Wet Weight, lb')
 %%
-% N=g;
-% hf=figure('units','normalized','outerposition',[0 0 1 1]);
-% hf.ToolBar='none';
-% nS   = sqrt(N);
-% nCol = ceil(nS);
-% nRow = nCol - (nCol * nCol - N > nCol - 1);
-% for k = 1:N-2
-%   subplot(nRow, nCol, k);
-%   plotPlaneGeo(resultPlanes(k).plane);
-%   set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
-%   title(k)
-% end
+N=g;
+hf=figure('units','normalized','outerposition',[0 0 1 1]);
+hf.ToolBar='none';
+nS   = sqrt(N);
+nCol = ceil(nS);
+nRow = nCol - (nCol * nCol - N > nCol - 1);
+for k = 1:N-2
+  subplot(nRow, nCol, k);
+  plotPlaneGeo(resultPlanes(k).plane);
+  set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
+  title(k)
+end
 
 %%
 % figure

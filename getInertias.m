@@ -58,8 +58,10 @@ Izz_retardent = (2/5)*W(11)*body.W^2;
 Izz_dry = Izz_wing + Izz_tail  + Izz_fuel + Izz_engines + Izz_fuselage;
 Izz_wet = Izz_dry + Izz_retardent;
 %% TODO: add actual xz inertia
-Ixz_wet = (Ixx_wet+Iyy_wet)/2;
-Ixz_dry = (Ixx_dry+Iyy_dry)/2;
+%Ixz_wet = (Ixx_wet+Iyy_wet)/2;
+%Ixz_dry = (Ixx_dry+Iyy_dry)/2;
+Ixz_wet = -Iyy_wet/112.5;
+Ixz_dry = -Iyy_dry/112.5;
 
 plane.geo.Ixx = [Ixx_wet; Ixx_dry];
 plane.geo.Iyy = [Iyy_wet; Iyy_dry];

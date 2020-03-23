@@ -1,4 +1,4 @@
-function [planeGood, rocGood, VcGood, GeoIsGood] = isGood(plane)
+function [planeGood, goodArray] = isGood(plane)
 %% identifying good RoC
 if plane.data.performance.ROC >= 33
     rocGood = true;
@@ -30,8 +30,10 @@ end
 
 %% isStable
 stabilityGood = false;
+%plane.data.stability.yaw_is_stable = 1;
 if plane.data.stability.is_stable && plane.data.stability.yaw_is_stable 
     stabilityGood = true;
+    %plane.data.stability.stall = 0;
     if plane.data.stability.stall
         stabilityGood = false;
     end
@@ -79,10 +81,12 @@ end
 %% Overall Good
 planeGood = false;
 
+%stabilityGood = 1;
 if GeoIsGood && rocGood && VcGood && rangeGood && stabilityGood && real && minSpeedGood
     planeGood = true;
 end
 
+goodArray = [GeoIsGood, rocGood, VcGood, rangeGood, stabilityGood, real, minSpeedGood];
 
 end
 
