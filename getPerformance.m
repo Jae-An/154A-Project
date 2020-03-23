@@ -5,7 +5,7 @@ Dry_weight = plane.data.weight.wet - plane.data.weight.retardent;
 %% ROC = (Pav - Preq) / W
 Pe = plane.prop.hp * 550;
 eta_p = plane.prop.eta_p(1);
-eta_p = 0.65;
+% eta_p = 0.65;
 Pav = Pe*eta_p;
 
 S = plane.geo.wing.S;
