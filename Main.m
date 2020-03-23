@@ -55,10 +55,11 @@ while  vg < numGoodPlanes
            fprintf('GOOD')
        end
     else
-       n = n + 1; 
+ 
        b = b+1;
 
     end
+    n = n + 1;
     boolArray = boolArray + b_arr;
 end
 %%
@@ -242,8 +243,8 @@ bar(1:g,R/5280)
 ylabel('Range (miles)')
 %%
 figure
-bar(1:g,ROC.*60)
-ylabel('Rate of Climb, fpm')
+bar(1:g,ROC)
+ylabel('Rate of Climb, ft/s')
 
 %%
 % figure
