@@ -1,6 +1,6 @@
 function [plane] = runDatcom(plane)
 
-writeFastDatcomInput(plane);
+writeDatcomInput(plane);
 [~,~] = system('datcom.exe < DATINTXT.txt');
 dat = datcomimport('datcom.out',true,0);
 dat = dat{1};

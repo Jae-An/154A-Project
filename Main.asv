@@ -6,7 +6,7 @@ stable = 0;
 g = 0; % good planes
 b = 0; % bad planes
 n = 0;
-numGoodPlanes = 100;
+numGoodPlanes = 10;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:

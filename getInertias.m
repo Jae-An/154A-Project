@@ -22,7 +22,7 @@ z = plane.data.weight.z;
 cgx = plane.data.weight.CGx;
 cgz = plane.data.weight.CGz;
 
-W = [plane.data.weight.W, plane.data.weight.W, plane.data.weight.W];
+W = [plane.data.weight.W(1:11), plane.data.weight.W(1:11), plane.data.weight.W(1:11)];
 W(10,2:3) = plane.data.weight.fuel_2;
 W(11,3) = 0;
 W = W/32.174049; % FROM HERE ON OUT W IS MASS ARRAY

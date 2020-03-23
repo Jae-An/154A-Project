@@ -5,9 +5,9 @@ function [plane] = getRandomPlaneOld(plane)
 %rand_value = min_value + rand(1)*(max_value - min_value)
 V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 %fuselage
-plane.geo.body.W = 2 + rand(1)*(6 - 2); %ft, fuselage width
+plane.geo.body.W = 3 + rand(1)*(8 - 3); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
-plane.geo.body.L = 40 + rand(1)*(100 - 40); %ft, fuselage L
+plane.geo.body.L = 15 + rand(1)*(75 - 15); %ft, fuselage L
 plane.geo.body.tank_length = V_tank / (pi*(plane.geo.body.D/4)^2);%[(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
 
 %% wing
@@ -57,7 +57,7 @@ plane.geo.v_tail.ThR = 0.12;
 plane.geo.v_tail.TR = 0.3 + rand(1)*(1 - 0.3);
 Svt_Sw = 0.05 + rand(1)*(0.75 - 0.05);
 plane.geo.v_tail.S = Svt_Sw * plane.geo.wing.S; %ft^2, v_tail area
-plane.geo.v_tail.AR = 2 + rand(1)*(8 - 2); %v_tail aspect ratio
+plane.geo.v_tail.AR = 2 + rand(1)*(7 - 2); %v_tail aspect ratio
 plane.geo.v_tail.b = ((plane.geo.v_tail.S*plane.geo.v_tail.AR)^0.5)/2; %ft, v_tail span length
 plane.geo.v_tail.c = 4*plane.geo.v_tail.S / (plane.geo.v_tail.b*(1+plane.geo.v_tail.TR)); %ft, v_tail chord length
 plane.geo.v_tail.sweep = 0 + rand(1)*(15-0); %degrees, sweep length
