@@ -2,14 +2,14 @@ tic
 clc; clear variables; close all;
 fprintf('Optimization Started \n')
 % make an empty array of good planes
-load('bessieMk6')
-bestPlane = bessieMk6;
-for i = 1:9
+load('bessieMk9')
+bestPlane = bessieMk9;
+for i = 2:9
 g = 0; % good planes
 b = 0; % bad planes
 n = 0; % num planes
 
-numGoodPlanes = 300;
+numGoodPlanes = 100;
 resultPlanes(numGoodPlanes) = struct('plane',[]);
 
 % while we have less than (n) good planes:

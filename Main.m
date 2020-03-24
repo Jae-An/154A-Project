@@ -7,7 +7,7 @@ g = 0; % good planes
 b = 0; % bad planes
 n = 0;
 vg = 0;
-numGoodPlanes = 1000;
+numGoodPlanes = 10;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
@@ -15,7 +15,7 @@ fprintf('Finding good planes... \n')
 checkVeryGoodPlanes = 1;
 
 boolArray = zeros(1,7);
-while  g < numGoodPlanes
+while  vg < numGoodPlanes
     fprintf('.')
     if mod(n,100) == 0
         fprintf('\n')
@@ -35,17 +35,20 @@ while  g < numGoodPlanes
     % check for imagnary lift or drag values
     if goodBool
        if checkVeryGoodPlanes
-           newPlane = runDatcom(newPlane);
+           [newPlane, datcomfailed] = runDatcom(newPlane);
            newPlane = getInertias(newPlane);
-           resultPlanes(g+1).Good = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
+           %resultPlanes(g+1).VGood = newPlane; % stores bad planes in reverse order (end of result planes towards the good ones)
            g = g + 1;
-           fprintf('o')
+           fprintf('o') 
+           if ~datcomfailed
            if dynamicStability(newPlane)
                resultPlanes(vg+1).VGood = newPlane;
                vg = vg+1;
                fprintf('GOOD')
                %beep
            end
+           end
+           
        else
            resultPlanes(g+1).plane = newPlane; %   store plane if above is good
            g = g+1;
@@ -67,8 +70,7 @@ boolArray = n - boolArray;
 figure
 bar(boolArray)
 set(gca,'xticklabel',{'GeoBad', 'rocBad', 'VcBad', 'rangeBad', 'stabilityBad', 'Imaginary', 'minSpeedBad'})
-
-
+g = vg;
 %%
 % initialize data variables
 W = zeros(g,1);
@@ -112,51 +114,51 @@ LD = zeros(g,1);
 
 % extract data for n planes
 for n = 1:g
-   fuel_weight(n) = resultPlanes(n).Good.data.weight.fuel;
-   R(n) =  resultPlanes(n).Good.data.performance.R; % ft
-   ROC(n) =  resultPlanes(n).Good.data.performance.ROC;
-   RE(n) =  resultPlanes(n).Good.data.aero.Re_cruise(1);
-   v_stall(n) =  resultPlanes(n).Good.data.performance.v_stall;
-   v_max(n) =  resultPlanes(n).Good.data.performance.v_max;
-   L(n) =  resultPlanes(n).Good.geo.body.L;
-   d(n) = resultPlanes(n).Good.geo.body.W;
+   fuel_weight(n) = resultPlanes(n).VGood.data.weight.fuel;
+   R(n) =  resultPlanes(n).VGood.data.performance.R; % ft
+   ROC(n) =  resultPlanes(n).VGood.data.performance.ROC;
+   RE(n) =  resultPlanes(n).VGood.data.aero.Re_cruise(1);
+   v_stall(n) =  resultPlanes(n).VGood.data.performance.v_stall;
+   v_max(n) =  resultPlanes(n).VGood.data.performance.v_max;
+   L(n) =  resultPlanes(n).VGood.geo.body.L;
+   d(n) = resultPlanes(n).VGood.geo.body.W;
    
-   wing_S(n) =  resultPlanes(n).Good.geo.wing.S;
-   wing_AR(n) = resultPlanes(n).Good.geo.wing.AR;
-   wing_b(n) =  resultPlanes(n).Good.geo.wing.b;
-   wing_c(n) =  resultPlanes(n).Good.geo.wing.c;
-   wing_LE(n) =  resultPlanes(n).Good.geo.wing.LE;
-   wing_sweep(n) =  resultPlanes(n).Good.geo.wing.sweep;
-   wing_TR(n) =  resultPlanes(n).Good.geo.wing.TR;
+   wing_S(n) =  resultPlanes(n).VGood.geo.wing.S;
+   wing_AR(n) = resultPlanes(n).VGood.geo.wing.AR;
+   wing_b(n) =  resultPlanes(n).VGood.geo.wing.b;
+   wing_c(n) =  resultPlanes(n).VGood.geo.wing.c;
+   wing_LE(n) =  resultPlanes(n).VGood.geo.wing.LE;
+   wing_sweep(n) =  resultPlanes(n).VGood.geo.wing.sweep;
+   wing_TR(n) =  resultPlanes(n).VGood.geo.wing.TR;
    
-   h_tail_S(n) =  resultPlanes(n).Good.geo.h_tail.S;
-   h_tail_AR(n) = resultPlanes(n).Good.geo.h_tail.AR;
-   h_tail_b(n) =  resultPlanes(n).Good.geo.h_tail.b;
-   h_tail_c(n) =  resultPlanes(n).Good.geo.h_tail.c;
-   h_tail_LE(n) =  resultPlanes(n).Good.geo.h_tail.LE;
-   h_tail_sweep(n) =  resultPlanes(n).Good.geo.h_tail.sweep;
-   h_tail_TR(n) =  resultPlanes(n).Good.geo.h_tail.TR; 
+   h_tail_S(n) =  resultPlanes(n).VGood.geo.h_tail.S;
+   h_tail_AR(n) = resultPlanes(n).VGood.geo.h_tail.AR;
+   h_tail_b(n) =  resultPlanes(n).VGood.geo.h_tail.b;
+   h_tail_c(n) =  resultPlanes(n).VGood.geo.h_tail.c;
+   h_tail_LE(n) =  resultPlanes(n).VGood.geo.h_tail.LE;
+   h_tail_sweep(n) =  resultPlanes(n).VGood.geo.h_tail.sweep;
+   h_tail_TR(n) =  resultPlanes(n).VGood.geo.h_tail.TR; 
    
-   v_tail_S(n) =  resultPlanes(n).Good.geo.v_tail.S;
-   v_tail_AR(n) = resultPlanes(n).Good.geo.v_tail.AR;
-   v_tail_b(n) =  resultPlanes(n).Good.geo.v_tail.b;
-   v_tail_c(n) =  resultPlanes(n).Good.geo.v_tail.c;
-   v_tail_LE(n) =  resultPlanes(n).Good.geo.v_tail.LE;
-   v_tail_sweep(n) =  resultPlanes(n).Good.geo.v_tail.sweep;   
-   v_tail_TR(n) =  resultPlanes(n).Good.geo.v_tail.TR; 
+   v_tail_S(n) =  resultPlanes(n).VGood.geo.v_tail.S;
+   v_tail_AR(n) = resultPlanes(n).VGood.geo.v_tail.AR;
+   v_tail_b(n) =  resultPlanes(n).VGood.geo.v_tail.b;
+   v_tail_c(n) =  resultPlanes(n).VGood.geo.v_tail.c;
+   v_tail_LE(n) =  resultPlanes(n).VGood.geo.v_tail.LE;
+   v_tail_sweep(n) =  resultPlanes(n).VGood.geo.v_tail.sweep;   
+   v_tail_TR(n) =  resultPlanes(n).VGood.geo.v_tail.TR; 
 
-   W(n) =  resultPlanes(n).Good.data.weight.wet;
-%    CL(n,:) = resultPlanes(n).Good.data.aero.CL(:,1);
-%    CD(:,n) = resultPlanes(n).Good.data.aero.CD(:,1);
-%    D1(:,n) = resultPlanes(n).Good.data.aero.D(:,1);
-%    v_cruise(n,:) = resultPlanes(n).Good.data.aero.v_cruise;
-%    LD(n) = resultPlanes(n).Good.data.aero.LD(1);
+   W(n) =  resultPlanes(n).VGood.data.weight.wet;
+%    CL(n,:) = resultPlanes(n).VGood.data.aero.CL(:,1);
+%    CD(:,n) = resultPlanes(n).VGood.data.aero.CD(:,1);
+%    D1(:,n) = resultPlanes(n).VGood.data.aero.D(:,1);
+%    v_cruise(n,:) = resultPlanes(n).VGood.data.aero.v_cruise;
+%    LD(n) = resultPlanes(n).VGood.data.aero.LD(1);
 end
 [W, wI] = sort(W);
 
 dummy = resultPlanes;
 for n = 1:g
-    resultPlanes(n).Good = dummy(wI(n)).Good;
+    resultPlanes(n).VGood = dummy(wI(n)).VGood;
 end
 
 fuel_weight = fuel_weight(wI);
@@ -253,8 +255,17 @@ ylabel('Rate of Climb, ft/s')
 figure
 bar(1:g,W)
 ylabel('Wet Weight, lb')
+
 %%
-N=26;%vg;
+figure
+bar(1:g,L)
+ylabel('Length, ft')
+%%
+figure
+bar(1:g,d)
+ylabel('Diameter, ft')
+%%
+N=vg;%vg;
 hf=figure('units','normalized','outerposition',[0 0 1 1]);
 hf.ToolBar='none';
 nS   = sqrt(N);
@@ -273,8 +284,8 @@ end
 % for n = 1:g
 %     plot(v_ref,D1(:,n))
 % end
-% eta = resultPlanes(1).Good.prop.eta_p; % eta and hp same for all planes so I just used the first one
-% hp = resultPlanes(1).Good.prop.hp;
+% eta = resultPlanes(1).VGood.prop.eta_p; % eta and hp same for all planes so I just used the first one
+% hp = resultPlanes(1).VGood.prop.hp;
 % thrust = (hp * 550 * eta) ./ v_ref;
 % plot(v_ref,thrust);
 % hold off

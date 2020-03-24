@@ -20,7 +20,7 @@ fprintf(fid,'BLREF=%.2f$',plane.geo.wing.b);
 % Synthesis
 fprintf(fid,'\n $SYNTHS '); %
 fprintf(fid,'XCG=%.2f, ',plane.data.weight.CGx(1)); % longitudinal location of CG, (moment reference center)
-fprintf(fid,'ZCG=%.1f, ',0.0); % vertical location of CG relative to reference plane
+fprintf(fid,'ZCG=%.1f, ',plane.data.weight.CGz(1)); % vertical location of CG relative to reference plane
 fprintf(fid,'XW=%.2f, ',plane.geo.wing.LE); % longitudinal location of theoretical wing apex
 fprintf(fid,'ZW=%.2f, ',0.4*plane.geo.body.D/2); % vertical location of theoretical wing apex relative to reference plane
 fprintf(fid,'ALIW=%.1f, ',0.0); % wing root chord incidence angle measured from reference plane

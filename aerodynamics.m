@@ -156,6 +156,7 @@ function plane = aerodynamics(plane)
     plane.data.aero.LD = LD;
     plane.data.aero.D = D;
     plane.data.aero.Re_cruise = RE(maxDiff_index,:);
+    plane.data.aero.cruiseind = maxDiff_index;
     
     f = @(Wi1,Wf1,Wp,Wf2) (eta_cruise(1)*LD(1)*log(Wi1/Wf1) - eta_cruise(2)*LD(2)*log((Wf1-Wp)/Wf2)); %rearranged Bregeut eq whose zero gives weightFinal1
     fun = @(Wf1) f(weightInitial,Wf1,weightPayload,weightFinal2);

@@ -1,8 +1,8 @@
-function [plane] = runDatcom(plane)
-
+function [plane, datcomfailed] = runDatcom(plane)
+try
 writeFastDatcomInput(plane);
 [~,~] = system('datcom.exe < DATINTXT.txt');
-dat = datcomimport('datcom.out',true,0);
+dat = datcomimport('datcom.out',false,0);
 dat = dat{1};
 %% Static stability derivatives /rad
 plane.data.aero.aoa = dat.alpha;
@@ -39,6 +39,11 @@ plane.data.aero.clr = dat.clr(:,:,1,10);
 
 % center of pressure
 plane.data.aero.xcp = dat.xcp(:,:,1,10);
-
+datcomfailed = false;
+catch
+    datcomfailed = true;
+    warning('runDatcom failed somehow')
+    return
+end
 
 end
