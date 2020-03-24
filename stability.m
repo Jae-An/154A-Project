@@ -17,7 +17,12 @@ function plane = stability(plane)
     plane.data.stability.h_n = h_n;
     h_cg = plane.geo.wing.h_cg; %h_cg(1) = takeoff cg, h_cg(2) = predrop cg, h_cg(3) = postdrop cg
     
-    if all(h_n > h_cg)
+    l_t = plane.geo.h_tail.LE - plane.geo.wing.LE; 
+    c = plane.geo.wing.c;
+    V_t = l_t*S_t/(S_w*c);
+    h = (plane.data.weight.CG-(plane.geo.wing.ac+plane.geo.wing.LE)) - 0.65*c*V_t;
+    
+    if all(h < 0)
         plane.data.stability.is_stable = true;
     else
         plane.data.stability.is_stable = false;
