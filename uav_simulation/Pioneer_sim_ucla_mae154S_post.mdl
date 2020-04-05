@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.120"
+    ComputedModelVersion    "1.121"
     NumModelReferences	    0
     NumTestPointedSignals   0
     NumProvidedFunctions    0
@@ -72,7 +72,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [762.0, 0.0, 781.0, 840.0]
+      Location		      [-7.0, -7.0, 1550.0, 848.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -99,10 +99,10 @@ Model {
 	  IsTabbed		  [1]
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
-	  Extents		  [913.0, 757.0]
+	  Extents		  [1875.0, 767.0]
 	  ZoomFactor		  [1.0]
-	  Offset		  [468.87999999999982, 63.906666666665728]
-	  SceneRectInView	  [468.87999999999982, 63.906666666665728, 730.4, 605.6]
+	  Offset		  [4.08000000000005, 63.906666666665728]
+	  SceneRectInView	  [4.08000000000005, 63.906666666665728, 1500.0, 613.6]
 	}
 	Object {
 	  $ObjectID		  6
@@ -158,7 +158,7 @@ Model {
       "AAAAAAA+wAAABYARABvAGMAawBXAGkAZABnAGUAdAA0AAAAAAD/////AAAAAAAAAAD7AAAAUgBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0Ac"
       "ABvAG4AZQBuAHQALwBHAEwAVQBFADIAIAB0AHIAZQBlACAAYwBvAG0AcABvAG4AZQBuAHQAAAAAAP////8AAAB5AP///wAAAAEAAAAAAAAAAPwCA"
       "AAAAfsAAABUAEcATABVAEUAMgA6AFAAcgBvAHAAZQByAHQAeQBJAG4AcwBwAGUAYwB0AG8AcgAvAFAAcgBvAHAAZQByAHQAeQAgAEkAbgBzAHAAZ"
-      "QBjAHQAbwByAAAAAAD/////AAAARgD///8AAAO+AAADOwAAAAEAAAACAAAAAQAAAAL8AAAAAA=="
+      "QBjAHQAbwByAAAAAAD/////AAAARgD///8AAAeAAAADRQAAAAEAAAACAAAAAQAAAAL8AAAAAA=="
       Array {
 	Type			"Cell"
 	Dimension		0
@@ -175,9 +175,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Alex"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Mar 11 22:30:51 2020"
-  RTWModifiedTimeStamp	  505853228
-  ModelVersionFormat	  "1.%<AutoIncrement:120>"
+  LastModifiedDate	  "Tue Mar 24 06:40:38 2020"
+  RTWModifiedTimeStamp	  506910543
+  ModelVersionFormat	  "1.%<AutoIncrement:121>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "none"
@@ -1398,7 +1398,7 @@ Model {
   }
   System {
     Name		    "Pioneer_sim_ucla_mae154S_post"
-    Location		    [762, 0, 1543, 840]
+    Location		    [-7, -7, 1543, 841]
     Open		    on
     PortBlocksUseCompactNotation off
     SetExecutionDomain	    off
@@ -5011,6 +5011,7 @@ Model {
       Position		      [900, 307, 930, 343]
       ZOrder		      51
       ShowName		      off
+      CurrentSetting	      "0"
     }
     Block {
       BlockType		      Mux

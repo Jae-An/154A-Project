@@ -7,7 +7,7 @@ g = 0; % good planes
 b = 0; % bad planes
 n = 0;
 vg = 0;
-numGoodPlanes = 10;
+numGoodPlanes = 64;
 resultPlanes = struct(['Good','Bad'],{});
 
 % while we have less than (n) good planes:
@@ -63,6 +63,8 @@ while  vg < numGoodPlanes
     boolArray = boolArray + b_arr;
 end
 %%
+beep
+fprintf('\n\n%d Very good planes found \n',vg)
 fprintf('\n\n%d good planes found \n',g)
 fprintf('%d bad planes discarded \n',b)
 %%
@@ -255,7 +257,14 @@ ylabel('Rate of Climb, ft/s')
 figure
 bar(1:g,W)
 ylabel('Wet Weight, lb')
+%%
+figure
+bar(1:g,v_tail_b)
+ylabel('Tail span, ft')
 
+%%
+figure
+bar(1:g,wing_b./L)
 %%
 figure
 bar(1:g,L)
@@ -271,7 +280,7 @@ hf.ToolBar='none';
 nS   = sqrt(N);
 nCol = ceil(nS);
 nRow = nCol - (nCol * nCol - N > nCol - 1);
-for k = 1:N-2
+for k = 1:N
   subplot(nRow, nCol, k);
   plotPlaneGeo(resultPlanes(k).VGood);
   set(gca,'XTick',[], 'YTick', [], 'ZTick', [])
@@ -291,6 +300,7 @@ end
 % hold off
 toc
 %%
-
-%% 
- 
+%% max value function
+valf = (R./min(R)).*(ROC./min(ROC)).*(max(W)./W);
+figure
+bar(1:g,valf)

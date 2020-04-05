@@ -16,8 +16,8 @@ hold on
 plot(tar_E,tar_N,'xr')
 xlabel('pE')
 ylabel('pN')
-ylim([-1000 15000])
-xlim([-1000 15000])
+ylim([-1000 50000])
+xlim([-1000 25000])
 axis equal
 grid on
 subplot(212)

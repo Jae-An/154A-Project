@@ -4,7 +4,7 @@ function stable = dynamicStability(plane)
 %Roots also computed based on approximate equations derived in class
 %D.Toohey
 
-plots = 0; % 1 to plot, 0 to not plot root locus diagrams
+plots = 1; % 1 to plot, 0 to not plot root locus diagrams
 
 b   =  plane.geo.wing.b;    % [ft]        Bray pg 31
 cbar =  plane.geo.wing.c;     % [ft]        Bray pg 31
@@ -118,7 +118,7 @@ for r = 1:length(real_roots_lat)
     end
 end
 if numunstablelat > 1 % allow for one slightly unstable pole
-   stablelat = false; 
+   stablelat = false;
 else
    stablelat = true;
 end
@@ -139,7 +139,7 @@ imag_roots_long = imag(roots_long);
 
 numunstablelong = 0;
 for r = 1:length(real_roots_long)
-    if real_roots_lat(r) > 0
+    if real_roots_long(r) > 0
         numunstablelong = numunstablelong + 1;
     end
 end
@@ -148,6 +148,7 @@ if numunstablelong > 0
 else
    stablelong = true;
 end
+
 
 %% Check if lateral and longitudinal are stable
 stable = false;
@@ -174,13 +175,15 @@ if plots
     a = findobj(gca,'type','line');
     for i = 1:length(a)
         set(a(i),'markersize',12) %change marker size
-        set(a(i), 'linewidth',2)  %change linewidth
+        set(a(i), 'linewidth',3)  %change linewidth
     end
     legend('Longitudinal','Lateral')
     grid on
     
 end
 
-% omegnd = (real_roots_4th(2)^2 + imag_roots_4th(2)^2)^.5;
-% omegnr = max(-real_roots_4th);
+
+%omegnd = (real_roots_4th(2)^2 + imag_roots_4th(2)^2)^.5;
+%omegnr = max(-real_roots_4th);
+
 end

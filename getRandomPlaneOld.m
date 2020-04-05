@@ -6,7 +6,7 @@ function [plane] = getRandomPlaneOld(plane)
 %rand_value = min_value + rand(1)*(max_value - min_value)
 V_tank = 256; %ft3 volume of retardent tank, sized to fit 16000 lbs of retardent
 %fuselage
-plane.geo.body.W = 8 + rand()*(20 - 8); %ft, fuselage width
+plane.geo.body.W = 5 + rand()*(18 - 5); %ft, fuselage width
 plane.geo.body.D = plane.geo.body.W; %ft, fuselage depth, for a circular cross section plane
 plane.geo.body.L = 30 + rand()*(80 - 30); %ft, fuselage L
 plane.geo.body.tank_length = V_tank / (pi*(plane.geo.body.D/4)^2);%[(V_tank - (8*3.1415/3)*(plane.geo.body.D/2)^3)/(3.1415*(plane.geo.body.D/2)^2)]+plane.geo.body.D;
@@ -22,7 +22,7 @@ plane.geo.wing.b = (plane.geo.wing.S * plane.geo.wing.AR )^0.5; %ft, wing span l
 plane.geo.wing.c = 2*plane.geo.wing.S/plane.geo.wing.b/(1+plane.geo.wing.TR); %ft, wing chord length
 
 plane.geo.wing.ThR = 0.12; % thickness ratio
-plane.geo.wing.sweep = 25 + rand()*(45-25); %degrees, sweep length
+plane.geo.wing.sweep = 0 + rand()*(15-0); %degrees, sweep length
 plane.geo.wing.S_wet = plane.geo.wing.S*(1.977 + 0.52*plane.geo.wing.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 plane.geo.wing.h_t = 0.301; %nondimensional distance to maximum thickness
 
@@ -42,7 +42,7 @@ plane.geo.h_tail.AR = 3 + rand()*(8 - 3); %h_tail aspect ratio
 plane.geo.h_tail.b = (plane.geo.h_tail.S * plane.geo.h_tail.AR)^0.5; %ft, h_tail span length
 plane.geo.h_tail.c = 2*plane.geo.h_tail.S / (plane.geo.h_tail.b*(1+plane.geo.h_tail.TR)); %ft, h_tail chord length
 plane.geo.h_tail.ThR = 0.12;
-plane.geo.h_tail.sweep = 10 + rand()*(30-10); %degrees, sweep length
+plane.geo.h_tail.sweep = 0 + rand()*(10-0); %degrees, sweep length
 plane.geo.h_tail.S_wet = plane.geo.h_tail.S*(1.977 + 0.52*plane.geo.h_tail.ThR); %ft^2, wetted area formula from http://www.ipublishing.co.in/jarvol1no12010/EIJAER2011.pdf
 plane.geo.h_tail.h_t = 0.301; %nondimensional distance to maximum thickness
 
